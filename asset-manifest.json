@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/vp-app/static/css/main.a617e044.chunk.css",
+    "main.js": "/vp-app/static/js/main.7b5ca18c.chunk.js",
+    "main.js.map": "/vp-app/static/js/main.7b5ca18c.chunk.js.map",
+    "runtime-main.js": "/vp-app/static/js/runtime-main.10c62f1a.js",
+    "runtime-main.js.map": "/vp-app/static/js/runtime-main.10c62f1a.js.map",
+    "static/js/2.9c13acd2.chunk.js": "/vp-app/static/js/2.9c13acd2.chunk.js",
+    "static/js/2.9c13acd2.chunk.js.map": "/vp-app/static/js/2.9c13acd2.chunk.js.map",
+    "static/js/3.8497ee7d.chunk.js": "/vp-app/static/js/3.8497ee7d.chunk.js",
+    "static/js/3.8497ee7d.chunk.js.map": "/vp-app/static/js/3.8497ee7d.chunk.js.map",
+    "index.html": "/vp-app/index.html",
+    "service-worker.js": "/vp-app/service-worker.js",
+    "service-worker.js.map": "/vp-app/service-worker.js.map",
+    "static/css/main.a617e044.chunk.css.map": "/vp-app/static/css/main.a617e044.chunk.css.map",
+    "static/js/2.9c13acd2.chunk.js.LICENSE.txt": "/vp-app/static/js/2.9c13acd2.chunk.js.LICENSE.txt",
+    "static/media/logo.103b5fa1.svg": "/vp-app/static/media/logo.103b5fa1.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.10c62f1a.js",
+    "static/js/2.9c13acd2.chunk.js",
+    "static/css/main.a617e044.chunk.css",
+    "static/js/main.7b5ca18c.chunk.js"
+  ]
+}
