@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import Home from "./Components/Home";
+import AddNewData from "./Components/VillageProfile/AddNewData";
+import PendingData from "./Components/VillageProfile/PendingData";
+import VillageProfileHome from "./Components/VillageProfileHome";
+import "./App.css"
+import { db } from "./db/db";
 
-function App() {
+export default function App() {
+  db.open();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/vpapp/add-new">
+          <AddNewData />
+        </Route>
+        <Route path="/vpapp/pending">
+          <PendingData />
+        </Route>
+        <Route path="/vpapp">
+          <VillageProfileHome />
+        </Route>
+        <Route path="/">
+          <Home />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
-
-export default App;

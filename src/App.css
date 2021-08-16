@@ -1,38 +1,115 @@
-.App {
+body {
+  overflow-y: hidden;
+}
+a {
+  text-decoration: none;
+  color: #0007;
+}
+
+.home {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+.home .title {
   text-align: center;
+  margin-bottom: 50px;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.home a {
+  font-size: 30px;
+  padding: 15px;
+  background-color: #eee;
+  border-radius: 5px;
+  color: #ff9800;
+  box-shadow: 0 0 5px 0px #0007;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.vp-home {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.vp-home .welcome {
+  position: absolute;
+  left: 50%;
+  top: 25px;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 25px;
+  color: #0007;
+}
+.vp-home .welcome .logout {
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+  color: red;
+}
+.vp-home a {
+  font-size: 30px;
+  padding: 15px;
+  background-color: #eee;
+  border-radius: 5px;
+  color: #ff9800;
+  box-shadow: 0 0 5px 0px #0007;
+  margin-bottom: 20px;
+}
+.vp-home form {
+  max-width: 300px;
+  width: 100%;
+}
+.vp-home form button {
+  padding: 5px 15px;
+  background: royalblue;
+  color: seashell;
+  font-size: 28px;
+  border: none;
+  border-radius: 5px;
+  margin-left: 50%;
+  transform:  translateX(-50%);
+}
+.vp-home .form-group {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
-
-.App-link {
-  color: #61dafb;
+.form-group input {
+  padding: 5px 15px;
+  font-size: 28px;
+  background: #fff;
+  border-radius: 5px;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.vp-form-wrapper {
+  padding: 20px;
+}
+.vp-form {
+  overflow-y: scroll;
+  height: 100vh;
+  scroll-snap-type: y mandatory;
+}
+.vp-form .form-group {
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+  scroll-snap-align: start;
+  min-height: 100vh;
+}
+.vp-form .form-group .label {
+  font-weight: bold;
+  margin-bottom: 40px;
+}
+.vp-form .form-group .options-verical {
+  display: flex;
+  flex-direction: column;
+}
+.vp-form .form-group .options-horizontal {
+  display: flex;
+  flex-direction: row;
+}
+.vp-form .form-group .radio {
+  display: flex;
+  height: 50px;
+}
+.radio input {
+  margin-right: 20px;
 }
