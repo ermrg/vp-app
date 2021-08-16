@@ -142,9 +142,9 @@ export default function VillageProfileHome() {
         {auth?.name}
         <p className="logout" onClick={logout}>Logout</p>
       </div>
-      <Link to="/vpapp/add-new">Add New Household</Link>
-      <Link to="/vpapp/pending">Pending Data</Link>
-      <Link to="/vpapp/incomplete">Incomplete Data</Link>
+      <Link to="/vp-app/app/add-new">Add New Household</Link>
+      <Link to="/vp-app/app/pending">Pending Data</Link>
+      <Link to="/vp-app/app/incomplete">Incomplete Data</Link>
     </div>
   );
 }

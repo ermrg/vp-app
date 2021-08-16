@@ -12,16 +12,19 @@ export default function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/vpapp/add-new">
+        <Route path="/vp-app/app/add-new">
           <AddNewData />
         </Route>
-        <Route path="/vpapp/pending">
+        <Route path="/vp-app/app/pending">
           <PendingData />
         </Route>
-        <Route path="/vpapp">
+        <Route path="/vp-app/app">
           <VillageProfileHome />
         </Route>
         <Route path="/">
+          <Home />
+        </Route>
+        <Route path="/vp-app">
           <Home />
         </Route>
       </Switch>
