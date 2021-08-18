@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { getAllBasti, getBastiByWardId, IBasti } from "../../../db/models/BastiModel";
+import {
+  getAllBasti,
+  getBastiByWardId,
+  IBasti,
+} from "../../../db/models/BastiModel";
 import { getAllWards, IWard } from "../../../db/models/WardModel";
 
 export default function GharKoBiabarn(props: any) {
@@ -16,11 +20,18 @@ export default function GharKoBiabarn(props: any) {
   const loadBastiByWadaId = async (e: any) => {
     let wardId = e.target.value;
     let bastis = await getBastiByWardId(wardId);
-    setBastis([...bastis])
+    setBastis([...bastis]);
+  };
+  const checkRequired = (id: number) => {
+    let requiredFields = data?.requiredFields || [];
+    return requiredFields.indexOf(id) > -1;
   };
   return (
     <div className="vp-form">
-      <div className="form-group" id="1">
+      <div
+        className={`form-group ${data && checkRequired(1) ? "required" : ""}`}
+        id="1"
+      >
         <label className="label">1. Ward No</label>
         <div className="options-verical" onChange={loadBastiByWadaId}>
           {wards.map((w, key) => (
@@ -34,10 +45,10 @@ export default function GharKoBiabarn(props: any) {
         </div>
       </div>
 
-      <div className="form-group" id="2">
+      <div className={`form-group ${data && checkRequired(2) ? "required" : ""}`} id="2">
         <label className="label">2. Basti ko Naam</label>
         <div className="options-verical">
-        {bastis.map((b, key) => (
+          {bastis.map((b, key) => (
             <div className="radio" key={key}>
               <label>
                 <input type="radio" value={b.id} name="basti" />

@@ -13,7 +13,7 @@ export default function App() {
     <Router>
       <Switch>
         <Route path="/vp-app/app/add-new">
-          <AddNewData />
+          <AddNewData data={{}} />
         </Route>
         <Route path="/vp-app/app/pending">
           <PendingData />

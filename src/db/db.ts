@@ -34,7 +34,7 @@ export class AppDatabase extends Dexie {
     db.open()
       .then(async function (db) {
         console.log("DB opened Succefully");
-        // await syncDb();
+        await syncDb();
         console.log("Sync Complete");
       })
       .catch(function (err) {

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const server = "http://127.0.0.1:8000/api/";
+const server = `${process.env.REACT_APP_SERVER}/api/`;
 const api = {
   loadCollectors: () => axios.get(`${server}collectors/`),
   loadWada: () => axios.get(`${server}wards/`),

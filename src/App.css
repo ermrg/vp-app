@@ -1,5 +1,7 @@
 body {
   overflow-y: hidden;
+  margin: 0;
+  padding: 0;
 }
 a {
   text-decoration: none;
@@ -67,7 +69,7 @@ a {
   border: none;
   border-radius: 5px;
   margin-left: 50%;
-  transform:  translateX(-50%);
+  transform: translateX(-50%);
 }
 .vp-home .form-group {
   display: flex;
@@ -80,7 +82,7 @@ a {
   border-radius: 5px;
 }
 .vp-form-wrapper {
-  padding: 20px;
+  /* padding: 20px; */
 }
 .vp-form {
   overflow-y: scroll;
@@ -92,7 +94,19 @@ a {
   flex-direction: column;
   font-size: 18px;
   scroll-snap-align: start;
-  min-height: 100vh;
+  min-height: calc(100vh - 20px);
+  padding: 5%;
+}
+.vp-form .form-group:nth-of-type(odd) {
+  background-color: #ddd;
+}
+
+.vp-form .form-group:nth-of-type(even) {
+  background-color: #fff;
+}
+.vp-form .form-group.required{
+  border:2px solid red;
+  border-radius: 5px;
 }
 .vp-form .form-group .label {
   font-weight: bold;
