@@ -1,0 +1,450 @@
+{% include 'app/backend/_scripts/vp_form_script.html' %}
+<form class="family_details" method="post" id="familyDetailsForm">
+    {% csrf_token %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+
+                {# ward number#}
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="ward_no" class="">वडा नं.</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <select class="form-control" id="ward_no" name="ward_no">
+                                <option value="">--- वडा छान्नुहोस् ---</option>
+                                {% for ward in wards %}
+                                    <option value="{{ ward.id }}">{{ ward }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+
+                {#basti name#}
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="place_name">बस्तीको नाम</label>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <select class="form-control" id="place_name" name="place_name">
+                                <option value="">--- बस्तीको नाम छान्नुहोस् ---</option>
+                                {#                           {% for basti in basti %}#}
+                                {#                               <option value="{{ basti.id }}">{{ basti.name }}</option>#}
+                                {#                           {% endfor %}#}
+
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
+                {#new basti name#}
+                {#                <div class="form-group">#}
+                {#                    <div class="form-row">#}
+                {#                        <label for="new_place_name" class="col-sm-4 col-form-label">नयाँ बस्तीको नाम </label>#}
+                {#                    </div>#}
+                {#                    <div class="col-sm-8">#}
+                {#                        <input type="text" class="form-control" id="new_place_name" name="new_place_name" placeholder="नयाँ बस्तीको नाम"/>#}
+                {#                    </div>#}
+                {#                </div>#}
+
+                {#marga name#}
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="marg_name">मार्गको नाम</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <select class="form-control" id="marg_name" name="marg_name" required="">
+                                <option value="">--- मार्गको नाम ---</option>
+                                {% for marga in margas %}
+                                    <option value="{{ marga.id }}">{{ marga.name }}</option>
+                                {% endfor %}
+                                <option value="add">अन्य मार्ग थप्नुहोस्</option>
+                            </select>
+                            <!-- Modal -->
+                            <div id="otherMarga" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close closeMarga" aria-label="Close"><span
+                                                    aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title">नयाँ मार्गको नाम थप्नुहोस्</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input class="form-control" name="other_marg_name" id="other_marg_name"
+                                                   placeholder="मुख्य श्रोतक अन्य प्रकार" type="text">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary" id="addMargaButton">थप्नुहोस्
+                                            </button>
+                                            <button type="button" class="btn btn-default closeMarga">Close</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                {#religion name#}
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="religion">धर्म</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <select type="text" class="form-control" name="religion" id="religion" required="">
+                                <option value="">--- धर्म छान्नुहोस् ---</option>
+                                {% for religion in religion %}
+                                    <option value="{{ religion.id }}">{{ religion.name }}</option>
+                                {% endfor %}
+                                <option value="add">अन्य धर्म थप्नुहोस्</option>
+                            </select>
+                            <!-- Modal -->
+                            <div id="otherReligion" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close closeReligion" aria-label="Close"><span
+                                                    aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title">नयाँ धर्म थप्नुहोस्</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input type="text" class="form-control" name="other_religion"
+                                                   id="other_religion" placeholder="अन्य धर्म">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary" id="addReligionButton">
+                                                थप्नुहोस्
+                                            </button>
+                                            <button type="button" class="btn btn-default closeReligion">Close</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                {#caste#}
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="caste">जाती</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <select type="text" class="form-control" name="caste" id="caste" required="">
+                                <option value="">--- जाती छान्नुहोस् ---</option>
+                                {% for jaati in jaatis %}
+                                    <option value="{{ jaati.id }}">{{ jaati }}</option>
+                                {% endfor %}
+                                <option value="add">अन्य जाती थप्नुहोस्</option>
+                            </select>
+                            <!-- Modal -->
+                            <div id="otherCaste" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close closeCaste" aria-label="Close"><span
+                                                    aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title">नयाँ पेशा थप्नुहोस्</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input type="text" class="form-control" name="other_caste" id="other_caste"
+                                                   placeholder="अन्य जाती"></div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary" id="addCasteButton">
+                                                थप्नुहोस्
+                                            </button>
+                                            <button type="button" class="btn btn-default closeCaste">Close</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                {# mother Tongue#}
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="mother_tongue">मातृभाषा</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <select type="text" class="form-control" name="mother_tongue" id="mother_tongue"
+                                    required="">
+                                <option value="">--- मातृभाषा छान्नुहोस् ---</option>
+                                {% for mother_tongue in mother_tongue %}
+                                    <option value="{{ mother_tongue.id }}">{{ mother_tongue.name }}</option>
+                                {% endfor %}
+                                <option value="add">अन्य मातृभाषा थप्नुहोस्</option>
+                            </select>
+                            <!-- Modal -->
+                            <div id="otherMotherTongue" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close closeMotherTongue" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title">नयाँ मातृभाषा थप्नुहोस्</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input type="text" class="form-control" name="other_mother_tongue"
+                                                   id="other_mother_tongue" placeholder="अन्य मातृभाषा">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary" id="addMotherTongueButton">
+                                                थप्नुहोस्
+                                            </button>
+                                            <button type="button" class="btn btn-default closeMotherTongue">Close
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {# main occupation#}
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="main_occupation">परिवारको मुख्य पेशा</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <select type="text" class="form-control" name="main_occupation" id="main_occupation"
+                                    required="">
+                                <option value="">--- परिवारको मुख्य पेशा छान्नुहोस् ---</option>
+                                {% for main_occupation in main_occupation %}
+                                    <option value="{{ main_occupation.id }}">{{ main_occupation.name }}</option>
+                                {% endfor %}
+                                <option value="add">अन्य पेशा थप्नुहोस्</option>
+                            </select>
+                            <!-- Modal -->
+                            <div id="otherMainOccupation" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close closeMainOccupation" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title">नयाँ परिवारको मुख्य पेशा थप्नुहोस्</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input type="text" class="form-control" name="other_main_occupation"
+                                                   id="other_main_occupation" placeholder="अन्य मुख्य पेशा">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary" id="addMainOccupationButton">
+                                                थप्नुहोस्
+                                            </button>
+                                            <button type="button" class="btn btn-default closeMainOccupation">Close
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {#  bank account  #}
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="bank_ac">बैंक खाता</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="radio" name="bank_ac" value="0" checked> "छ"
+                            <input type="radio" name="bank_ac" value="1"> "छैन"
+                        </div>
+                    </div>
+
+                </div>
+
+                {# co-operative account#}
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="co_ac">सहकारी खाता</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="radio" name="co_ac" value="0" checked> "छ"
+                            <input type="radio" name="co_ac" value="1"> "छैन"
+                        </div>
+
+                    </div>
+                </div>
+
+                {#Garden#}
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="garden">करेसाबारी</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="radio" name="garden" value="0" checked> "छ"
+                            <input type="radio" name="garden" value="1"> "छैन"
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                {#Life Insurance#}
+
+
+                {#health insurance#}
+
+
+                {#responder name#}
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="responder_name">उत्तरदाताको नाम</label>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" name="responder_name" id="responder_name"
+                                   placeholder="उत्तरदाताको नाम">
+                        </div>
+                    </div>
+
+                </div>
+
+                {#house number#}
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="house_no">घर नम्वर</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="number" name="house_no" id="house_no"
+                                   placeholder="घर नम्वर">
+                        </div>
+                    </div>
+                </div>
+
+                {#family count#}
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="member_no">परिवार संख्या</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="number" name="member_no" id="member_no"
+                                   placeholder="उदहारण: 5, 10, ...">
+                        </div>
+                    </div>
+
+                </div>
+
+                {# Migration type #}
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="migration_status">बसोबासको प्रकार</label>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <select class="form-control" name="migration_status" id="migration_status">
+                                <option value="">--- बसोबासको प्रकार छान्नुहोस् ---</option>
+                                <option value="from_birth">जन्मसिद्ध</option>
+                                <option value="migrated">बसाईसराई</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                {# Telephone NO #}
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="mobile_no">सम्पर्क टेलिफोन / मोबाइल नं.</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input class="form-control" name="mobile_no" type="number" id="mobile_no"
+                                   placeholder="उदहारण: 98xxxxxxxx">
+                        </div>
+                    </div>
+
+                </div>
+
+                {# geolocation  #}
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="geo_location">घरको जियो कोड</label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input class="form-control" type="number" name="lat" id="geo_location" value="longitude">
+                        </div>
+                        <div class="col-sm-4">
+                            <input class="form-control" type="number" name="long" id="geo_location" value="latitude">
+                        </div>
+                    </div>
+
+
+                </div>
+
+                {# Responder Photo #}
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="responder_photo">उत्तरदाताको फोटो</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="file" name="responder_photo" id="responder_photo">
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="form-row">
+                        <label for="floating_panel" class="col-sm-12 col-form-label">Geolocation</label>
+                    </div>
+                    <div class="col-sm-12">
+                        <div id="map-container-google-11" class="z-depth-1-half map-container-6" style="height: 450px">
+                            <iframe src="https://maps.google.com/maps?q=khadadevi&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                                    frameborder="0" style="border:0" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" id="houseHoldDetailButton" class="btn btn-primary" style="margin-top: 15px">Save
+                    and Continue
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

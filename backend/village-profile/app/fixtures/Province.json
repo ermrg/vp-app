@@ -1,0 +1,72 @@
+[
+  {
+    "model": "app.Province",
+    "pk": 1,
+    "fields": {
+      "id": 1,
+      "name": "Province 1",
+      "code": "P1",
+      "status": 1
+    }
+  },
+  {
+    "model": "app.Province",
+    "pk": 2,
+    "fields": {
+      "id": 2,
+      "name": "Province 2",
+      "code": "P2",
+      "status": 1
+    }
+  },
+  {
+    "model": "app.Province",
+    "pk": 3,
+    "fields": {
+      "id": 3,
+      "name": "Province 3",
+      "code": "P3",
+      "status": 1
+    }
+  },
+  {
+    "model": "app.Province",
+    "pk": 4,
+    "fields": {
+      "id": 4,
+      "name": "Province 4",
+      "code": "P4",
+      "status": 1
+    }
+  },
+  {
+    "model": "app.Province",
+    "pk": 5,
+    "fields": {
+      "id": 5,
+      "name": "Province 5",
+      "code": "P5",
+      "status": 1
+    }
+  },
+  {
+    "model": "app.Province",
+    "pk": 6,
+    "fields": {
+      "id": 6,
+      "name": "Province 6",
+      "code": "P6",
+      "status": 1
+    }
+  },
+  {
+    "model": "app.Province",
+    "pk": 7,
+    "fields": {
+      "id": 7,
+      "name": "Province 7",
+      "code": "P7",
+      "status": 1
+    }
+  }
+]

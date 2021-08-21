@@ -1,0 +1,258 @@
+{% extends "app/backend/layouts/app.html" %}
+{% block title %}Animal Report{% endblock %}
+{% load static %}
+{% load role_check %}
+{% block content %}
+    <style>
+        .form-group {
+            margin-bottom: 10px !important;
+        }
+    </style>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="row">
+
+                <div class="col-md-10">
+                    <!-- general form elements -->
+                    <h5>
+                        <button class="btn btn-primary float-left -filter" id="animalReportFilter"> Search Filters
+                        </button>
+                    </h5>
+                    <div class="filterbox">
+                        <div class="searchCriteria" style="display: none">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <select class="form-control" id="selectOption">
+                                            <option value="">--- फिल्टर छान्नुहोस् ---</option>
+                                            <option value="ward_no">वडा नं</option>
+                                            <option value="owner_name">घरमुलीको नाम</option>
+                                            <option value="animal_type">चौपायाको प्रकार</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-success" type="button" onclick="animalFilter()" id="search">
+                                        Search
+                                    </button>
+                                    <button class="btn btn-danger" type="button" onclick="resetFields()">Reset</button>
+                                </div>
+
+
+                            </div>
+
+                            <div class="row" id="animalRow">
+
+                                <div id="ward_div" class="form-control-sm col-md-2" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="ward_no">वडा नं</label>
+                                        <select class="form-control form-control-sm" name="ward_no" id="filterWard">
+                                            <option value="">--- वडा छान्नुहोस् ---</option>
+                                            {% for wards in wards %}
+                                                <option value="{{ wards.id }}">{{ wards }}</option>
+                                            {% endfor %}
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div id="owner_div" class="form-control-sm col-md-3" style="display: none;">
+                                    <div class="form-group">
+                                        <label> घरमुलीको नाम</label>
+                                        <input class="form-control form-control-sm" name="owner_name" id="owner_name"
+                                               type="text" placeholder="घरमुलीको नाम">
+                                    </div>
+                                </div>
+
+                                <div id="animal_div" class=" form-control-sm col-md-4 offset-md-3"
+                                     style="display: none;">
+                                    <div class="form-group">
+                                        <label for="aniaml"> पशु चौपायाको प्रकार </label>
+                                        <select class="form-control form-control-sm" name="animal" id="filterAnimal">
+                                            <option value="">--- पशु चौपायाको प्रकार छान्नुहोस् ---</option>
+                                            {% for animals in animal_types %}
+                                                <option value="{{ animals.id }}">{{ animals.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box -->
+                </div>
+            </div>
+            <h2 style="text-align: center">
+                घरपालुवा जनावरको रिपोर्ट
+            </h2>
+            {% include 'app/backend/layouts/_notification.html' %}
+            <ol class="breadcrumb">
+                <li><a type="button" class="btn btn-default" href="#" onClick="javascript:history.go(-1);"><i
+                        class="fa fa-arrow-left"></i> Back</a>
+                    <a type="button" class="btn btn-success" href="{% url 'create_household' %}"><i
+                            class="fa fa-plus"></i>नयाँ सृजना गर्नुहोस्</a>
+
+                </li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section style="margin-left: 20px;">
+
+        </section>
+
+        {#------------------------------------------------------------ report table -------------------------------------------- #}
+
+        <section>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-primary" id="animalReportTable">
+
+                        <div class="box-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                <th>SN</th>
+                                <th title="Head Of House"> घरमुलीको नाम</th>
+                                <th title="ward"> वडा नं.</th>
+                                <th title="animal"> चौपायाको प्रकार</th>
+                                <th title="number"> संख्या</th>
+                                {#    <th>Creating Step</th>#}
+                                <th>Action</th>
+                                </thead>
+                                <tbody>
+                                {% for household_animal in household_animals %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ household_animal.household }}</td>
+                                        <td>{{ household_animal.household.ward }}</td>
+                                        <td>{{ household_animal.animal_type }}</td>
+                                        <td>{{ household_animal.count }}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle"
+                                                        data-toggle="dropdown" aria-expanded="false">Action
+                                                    <span class="caret"></span></button>
+
+                                                <ul class="dropdown-menu" role="menu">
+
+                                                    <li><a href=""><i class="fa fa-eye"></i> View</a></li>
+
+                                                    {#                    <li class="divider"></li>#}
+
+                                                    <li><a href="{% url 'edit_household_animal' household_animal.id %}"
+                                                           class="edit-data"><i class="fa fa-edit"></i> Edit</a></li>
+
+                                                    <li class="divider"></li>
+
+                                                    <li>
+                                                        <a href="{% url 'delete_household_animal' household_animal.id %}"
+                                                           class="delete-data"><i class="fa fa-trash-o"></i> Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+
+{% endblock %}
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            makeFullPage();
+        });
+    </script>
+    {#    Dates #}
+
+    <script>
+
+        $('#invoiceDate').nepaliDatePicker({
+            dateFormat: "%M %d, %y",
+            closeOnDateSelect: true,
+        });
+
+    </script>
+
+    {#    Data Tables #}
+    <script>
+        $(function () {
+            $('#example1').DataTable({
+                'paging': true,
+                'lengthChange': true,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': true
+            });
+            $('#type').select2({});
+            $('#parent').select2({});
+        })
+    </script>
+
+    {# filter #}
+    <script>
+        $('button#animalReportFilter').click(function () {
+            $('.searchCriteria').toggle("slow");
+        });
+    </script>
+
+    {# Ward Filter #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'ward_no') {
+                $("#ward_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# Animal Filter #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'animal_type') {
+                $("#animal_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# house head #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'owner_name') {
+                $("#owner_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+{% endblock %}
+
+
+{#<script>#}
+{#        $(document).on('change', 'select#animal_type', function() {#}
+{#        let animalValue = $(this).val();#}
+{#            if (animalValue == 'add') {#}
+{#                $("#otherAnimal").modal('show');#}
+{#            } else {#}
+{#                $("#otherAnimal").modal('hide');#}
+{#            }#}
+{#        });#}
+{#    </script>#}

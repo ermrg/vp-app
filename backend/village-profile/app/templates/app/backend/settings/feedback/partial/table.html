@@ -1,0 +1,57 @@
+<table class="table table-bordered">
+    <thead>
+    <th>SN</th>
+    <th>Reporter</th>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Assign To</th>
+    <th>Status</th>
+
+    <th>Action</th>
+    </thead>
+    <tbody>
+    {% for feedback in feedbacks %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+
+
+            <td>{{ feedback.reporter }}</td>
+            <td>{{ feedback.title }}</td>
+            <td>{{ feedback.description }}</td>
+            <td>{{ feedback.assigned_to }}</td>
+            <td>
+                {% if feedback.status == 1 %}
+                    <span class="label label-danger">Not Assigned</span>
+                {% elif feedback.status == 2 %}
+                    <span class="label label-info">In Progress</span>
+                {% elif feedback.status == 3 %}
+                    <span class="label label-success">Completed</span>
+                {% else %}
+                     <span class="label label-primary">Completed,</span>
+                {% endif %}
+            </td>
+
+        <td>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle"
+                        data-toggle="dropdown" aria-expanded="false">Action
+                    <span class="caret"></span></button>
+
+                <ul class="dropdown-menu" role="menu">
+
+                    <li><a href=""><i class="fa fa-eye"></i> View</a></li>
+
+{#                    <li class="divider"></li>#}
+
+                    <li><a href="" class="edit-data"><i class="fa fa-edit"></i> Edit</a></li>
+
+                    <li class="divider"></li>
+
+                    <li><a href="" class="delete-data"><i class="fa fa-trash-o"></i> Delete</a></li>
+                </ul>
+            </div>
+        </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

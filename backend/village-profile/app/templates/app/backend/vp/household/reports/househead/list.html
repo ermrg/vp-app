@@ -1,0 +1,449 @@
+{% extends "app/backend/layouts/app.html" %}
+{% block title %}Househead Report{% endblock %}
+{% load static %}
+{% load role_check %}
+{% block content %}
+    <style>
+        .form-group {
+            margin-bottom: 10px !important;
+        }
+    </style>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+
+            {% include 'app/backend/layouts/_notification.html' %}
+            <div class="row">
+
+                <div class="col-md-10">
+                    <!-- general form elements -->
+                    <h5>
+                        <button class="btn btn-primary float-left -filter" id="househeadReportFilter"> Search Filters
+                        </button>
+                    </h5>
+                    <div class="filterbox">
+                        <div class="searchCriteria" style="display: none">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <select class="form-control" id="selectOption">
+                                            <option value="">--- फिल्टर छान्नुहोस् ---</option>
+                                            <option value="ward_no">वडा नं</option>
+                                            <option value="basti_name">बस्तीको नाम</option>
+                                            <option value="marga_name">मार्गको नाम</option>
+                                            <option value="owner_name">घरमुलीको नाम</option>
+                                            <option value="owner_gender">घरमुलीको लिङ्ग</option>
+                                            <option value="family_count">परिवार सख्यां</option>
+                                            <option value="religion">धर्म</option>
+                                            <option value="ethnics">जाती</option>
+                                            <option value="mother_tongue">मातृभाषा</option>
+                                            <option value="residence_type">बसोबास प्रकार</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-success" type="button" onclick="househeadFilter()"
+                                            id="search">
+                                        Search
+                                    </button>
+                                    <button class="btn btn-danger" type="button" onclick="resetFields()">Reset</button>
+                                </div>
+
+                            </div>
+
+                            <div class="row" id="househeadRow">
+
+                                <div id="ward_div" class="form-control-sm col-md-2" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="ward_no">वडा नं</label>
+                                        <select class="form-control form-control-sm" name="ward_no" id="filterWard">
+                                            <option value="">--- वडा छान्नुहोस् ---</option>
+                                            {% for wards in wards %}
+                                                <option value="{{ wards.id }}">{{ wards }}</option>
+                                            {% endfor %}
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="basti_div" class="form-control-sm col-md-2" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="basti_name">बस्तीको नाम</label>
+                                        <select class="form-control form-control-sm" name="basti_name" id="filterBasti">
+                                            <option value="">--- बस्ती छान्नुहोस् ---</option>
+                                            {% for bastis in bastis %}
+                                                <option value="{{ bastis.id }}">{{ bastis }}</option>
+                                            {% endfor %}
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="marga_div" class="form-control-sm col-md-2" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="marga_name">मार्गको नाम</label>
+                                        <select class="form-control form-control-sm" name="marga_name" id="filterMarga">
+                                            <option value="">--- मार्ग छान्नुहोस् ---</option>
+                                            {% for margas in margas %}
+                                                <option value="{{ margas.id }}">{{ margas }}</option>
+                                            {% endfor %}
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="gender_div" class="form-control-sm col-md-2" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="gender">लिङ्ग</label>
+                                        <select class="form-control form-control-sm" name="gender" id="filterGender">
+                                            <option value="">--- लिङ्ग छान्नुहोस् ---</option>
+                                            {% for genders in genders %}
+                                                <option value="{{ genders.id }}">{{ genders }}</option>
+                                            {% endfor %}
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="owner_div" class="form-control-sm col-md-3" style="display: none;">
+                                    <div class="form-group">
+                                        <label> घरमुलीको नाम</label>
+                                        <input class="form-control form-control-sm" name="owner_name" id="owner_name"
+                                               type="text" placeholder="घरमुलीको नाम">
+                                    </div>
+                                </div>
+                                <div id="family_count_div" class="form-control-sm col-md-3" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="family_count"> सदस्य सख्यां</label>
+                                        <input class="form-control form-control-sm" name="family_count"
+                                               id="family_count"
+                                               type="text" placeholder="सदस्य सख्यां">
+                                    </div>
+                                </div>
+                                <div id="religion_div" class=" form-control-sm col-md-4 offset-md-3"
+                                     style="display: none;">
+                                    <div class="form-group">
+                                        <label for="religion"> धर्म </label>
+                                        <select class="form-control form-control-sm" name="religion"
+                                                id="filterReligion">
+                                            <option value="">--- धर्म छान्नुहोस् ---</option>
+                                            {% for religions in religions %}
+                                                <option value="{{ religions.id }}">{{ religions.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="ethnics_div" class=" form-control-sm col-md-4 offset-md-3"
+                                     style="display: none;">
+                                    <div class="form-group">
+                                        <label for="ethnics"> जाती </label>
+                                        <select class="form-control form-control-sm" name="ethnics"
+                                                id="filterEthnics">
+                                            <option value="">--- जाती छान्नुहोस् ---</option>
+                                            {% for ethnics in ethnics %}
+                                                <option value="{{ ethnics.id }}">{{ ethnics.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="mother_tongue_div" class=" form-control-sm col-md-4 offset-md-3"
+                                     style="display: none;">
+                                    <div class="form-group">
+                                        <label for="mother_tongue"> मातृभाषा </label>
+                                        <select class="form-control form-control-sm" name="mother_tongue"
+                                                id="filterMotherTongue">
+                                            <option value="">--- मातृभाषा छान्नुहोस् ---</option>
+                                            {% for mother_tongues in mother_tongues %}
+                                                <option value="{{ mother_tongues.id }}">{{ mother_tongues.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="residence_type_div" class=" form-control-sm col-md-4 offset-md-3"
+                                     style="display: none;">
+                                    <div class="form-group">
+                                        <label for="residence_type"> बसोबास प्रकार </label>
+                                        <select class="form-control form-control-sm" name="residence_type"
+                                                id="filterResidenceType">
+                                            <option value="">--- बसोबास प्रकार छान्नुहोस् ---</option>
+                                            <option value="migrated"> बसाईसराई</option>
+                                            <option value="from_birth"> जन्मसिद्ध</option>
+                                            {#                                            {% for reasons in death_reasons %}#}
+                                            {#                                                <option value="{{ reasons.id }}">{{ reasons.name }}</option>#}
+                                            {#                                            {% endfor %}#}
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box -->
+                </div>
+            </div>
+
+            <h2 style="text-align: center">
+                घरमुलीको बिवरण
+            </h2>
+
+            <ol class="breadcrumb">
+
+                <li><a type="button" class="btn btn-default" href="#" onClick="javascript:history.go(-1);"><i
+                        class="fa fa-arrow-left"></i> Back</a>
+                    <a type="button" class="btn btn-success" href="{% url 'create_household' %}"><i
+                            class="fa fa-plus"></i>Create New</a>
+
+                </li>
+            </ol>
+        </section>
+
+        <section style="margin-left: 20px;">
+
+
+        </section>
+
+        <!-- Main content -->
+        <section>
+
+            <div class="row">
+
+                <div class="col-md-12 col-sm-12">
+                    <!-- general form elements -->
+                    <div class="box box-primary">
+                        <div class="box-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                <th>SN</th>
+                                <th title="Head Of House"> घरमुलीको नाम</th>
+                                <th title="ward"> वडा नं.</th>
+                                <th title="age"> उमेर</th>
+                                <th title="gender"> लिंग</th>
+                                <th title="basti"> बस्ती</th>
+                                <th title="marga"> मार्ग</th>
+                                <th title="number of member"> परिवार संख्या</th>
+                                <th title="religion"> धर्म</th>
+                                <th title="resident type"> बसोबासको प्रकार</th>
+                                <th title="jaati"> जाती</th>
+                                <th title="mother tongue"> मातृभाषा</th>
+                                <th title="contact no."> सम्पर्क न.</th>
+                                <th title="occupation"> पेशा</th>
+                                {#    <th>Creating Step</th>#}
+                                <th>Action</th>
+                                </thead>
+                                <tbody>
+                                {% for househead in househead %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ househead.name_nep }}</td>
+                                        <td>{{ househead.hh.ward }}</td>
+                                        <td>{{ househead.age }}</td>
+                                        <td>{{ househead.gender.name }}</td>
+                                        <td>{{ househead.hh.basti }}</td>
+                                        <td>{{ househead.hh.marga }}</td>
+                                        <td>{{ househead.hh.num_of_member }}</td>
+                                        <td>{{ househead.hh.religion }}</td>
+                                        <td>{{ househead.hh.resident_type }}</td>
+                                        <td>{{ househead.hh.jaati }}</td>
+                                        <td>{{ househead.hh.mother_tongue }}</td>
+                                        <td>{{ househead.mobile_num }}</td>
+                                        <td>{{ househead.main_occupation }}</td>
+                                        {#                {% if household.step < 10 %}#}
+                                        {#                <span class="label label-warning">Incomplete {{ household.step }}</span>#}
+                                        {#                {% else %}#}
+                                        {#                <span class="label label-primary">Complete</span>#}
+                                        {#                {% endif %}#}
+                                        {#            </td>#}
+
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle"
+                                                        data-toggle="dropdown" aria-expanded="false">Action
+                                                    <span class="caret"></span></button>
+
+                                                <ul class="dropdown-menu" role="menu">
+
+                                                    <li><a href=""><i class="fa fa-eye"></i> View</a></li>
+
+                                                    {#                    <li class="divider"></li>#}
+
+                                                    <li><a href="{% url 'househead.edit' househead.id %}"
+                                                           class="edit-data"><i class="fa fa-edit"></i> Edit</a></li>
+
+                                                    <li class="divider"></li>
+
+                                                    <li><a href="{% url 'delete_househead' househead.id %}"
+                                                           class="delete-data"><i class="fa fa-trash-o"></i> Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.box -->
+                </div>
+            </div>
+
+        </section>
+        <!-- /.content -->
+    </div>
+
+{% endblock %}
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            makeFullPage();
+        });
+    </script>
+    {#    Dates #}
+
+    <script>
+
+        $('#invoiceDate').nepaliDatePicker({
+            dateFormat: "%M %d, %y",
+            closeOnDateSelect: true,
+        });
+
+    </script>
+
+    {#    Data Tables #}
+    <script>
+        $(function () {
+            $('#example1').DataTable({
+                'paging': true,
+                'lengthChange': true,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': true
+            });
+            $('#type').select2({});
+            $('#parent').select2({});
+        })
+    </script>
+    {# filter #}
+    <script>
+        $('button#househeadReportFilter').click(function () {
+            $('.searchCriteria').toggle("slow");
+        });
+    </script>
+
+    {# Ward Filter #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'ward_no') {
+                $("#ward_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# Basti Filter #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'basti_name') {
+                $("#basti_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# Marga head #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'marga_name') {
+                $("#marga_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# Gender Filter #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'owner_gender') {
+                $("#gender_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# Religion Filter #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'religion') {
+                $("#religion_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# house head #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'owner_name') {
+                $("#owner_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# Family Count #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'family_count') {
+                $("#family_count_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# Ethnics Filter #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'ethnics') {
+                $("#ethnics_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'mother_tongue') {
+                $("#mother_tongue_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'residence_type') {
+                $("#residence_type_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+{% endblock %}

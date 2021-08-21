@@ -1,0 +1,885 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12" style="height: 50px">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-sm-2 col-form-label">
+                        <label for="mem_name">नाम</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input id="mem_name" name="mem_name" class="form-control" placeholder="सदस्यको नाम ...">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group ">
+                <div class="form-row">
+                    <div class="col-sm-4 col-form-label">
+                        <label for="mem_gender">लिंग</label>
+                    </div>
+
+                    <div class="col-sm-8">
+                        <select class="form-control" name="mem_gender" id="mem_gender">
+                            <option value="">--- लिंग छान्नुहोस् ---</option>
+                            {% for gender in genders %}
+                                <option value="{{ gender.id }}">{{ gender.name }}</option>
+                            {% endfor %}
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-sm-4 col-form-label">
+                        <label for="mem_dob">जन्म मिति</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="date" class="form-control" name="mem_dob" id="mem_dob" placeholder="">
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-sm-4 col-form-label">
+                        <label for="mem_citizen">नागरिकता नं.</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="mem_citizen" id="mem_citizen"
+                               placeholder="नागरिकता नं ...">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-sm-4 col-form-label">
+                        <label for="mem_contact">सम्पर्क नं.</label>
+                    </div>
+
+                    <div class="col-sm-8">
+                        <input type="number" class="form-control numOnly" name="mem_contact" id="mem_contact"
+                               placeholder="सम्पर्क नं ...">
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-sm-4 col-form-label">
+                        <label for="mem_edu_status">पढाइको अवस्था </label>
+                    </div>
+
+                    <div class="col-sm-8">
+                        <select type="" class="form-control" name="mem_edu_status" id="mem_edu_status">
+                            <option value="">पढाइको अवस्था छान्नुहोस्</option>
+                            {% for education_status in education_status %}
+                                <option value="{{ education_status.id }}">{{ education_status }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-sm-4 col-form-label">
+                        <label for="mem_edu_level">शैक्षिकस्तर</label>
+                    </div>
+
+                    <div class="col-sm-8">
+                        <select type="text" class="form-control" name="mem_edu_level" id="mem_edu_level">
+                            <option value="">--- पढाइको अवस्था छान्नुहोस् ---</option>
+                            {% for education_level in education_level %}
+                                <option value="{{ education_level.id }}">{{ education_level.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <small class="form-text text-muted">
+                            (२० बर्ष मुनिको लागि मात्र)
+                        </small>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-sm-4 col-form-label">
+                        <label for="life_insurance">जीवन बिमा गरेको </label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="radio" name="life_insurance" value="0"> "छ"
+                        <input type="radio" name="life_insurance" value="1" checked> "छैन"
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-sm-4 col-form-label">
+                        <label for="health_insurance">स्वास्थ्य बिमा गरेको</label>
+                    </div>
+
+                    <div class="col-sm-8">
+                        <input type="radio" name="health_insurance" value="0"> "छ"
+                        <input type="radio" name="health_insurance" value="1" checked> "छैन"
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-sm-4 col-form-label">
+                        <label for="mem_profession">पेशा</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <select type="text" class="form-control" name="mem_profession" id="mem_profession">
+                            <option value="">--- पेशा छान्नुहोस् ---</option>
+                            {% for main_occupation in main_occupation %}
+                                <option value="{{ main_occupation.id }}">{{ main_occupation.name }}</option>
+                            {% endfor %}
+                            <option value="add">अन्य पेशा थप्नुहोस्</option>
+                        </select>
+                        <!-- Modal -->
+                        <div id="otherMemOccupation" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close closeMemOccupation" aria-label="Close"><span
+                                                aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title">नयाँ पेशा थप्नुहोस्</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input class="form-control" name="other_mem_profession"
+                                               id="other_mem_profession"
+                                               placeholder="मुख्य श्रोतक अन्य प्रकार" type="text">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary" id="addMemOccupationButton">
+                                            थप्नुहोस्
+                                        </button>
+                                        <button type="button" class="btn btn-default closeMemOccupation">Close</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-sm-4 col-form-label">
+                        <label for="mem_monthly_salary">मासिक आय</label>
+                    </div>
+
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control numOnly" name="mem_monthly_salary"
+                               id="mem_monthly_salary"
+                               placeholder="मासिक आय (अंकमा)">
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group ">
+                <div class="form-row">
+                    <div class="col-sm-4 col-form-label">
+                        <label for="mem_marital_status">बैबाहिक अवस्था</label>
+                    </div>
+
+                    <div class="col-sm-8">
+                        <select type="text" class="form-control" name="mem_marital_status" id="mem_marital_status">
+                            <option value="">--- बैबाहिक अवस्था छान्नुहोस् ---</option>
+                            {% for marital_status in marital_status %}
+                                <option value="{{ marital_status.id }}">{{ marital_status.name }}</option>
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-sm-4 col-form-label">
+                        <label for="relation_with_owner">घरमुलीसंग नाता</label>
+                    </div>
+
+                    <div class="col-sm-8">
+                        <select type="text" class="form-control" name="relation_with_owner" id="relation_with_owner">
+                            {% for relation in relation %}
+                                <option value="{{ relation.id }}">{{ relation.name }}</option>
+                            {% endfor %}
+
+                            <option value="add">अन्य नाता थप्नुहोस्</option>
+                        </select>
+                        <!-- Modal -->
+                        <div id="otherMemRelation" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close closeMemRelation" aria-label="Close"><span
+                                                aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title">नयाँ घरमुलीसंग नाता थप्नुहोस्</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="text" class="form-control" name="other_mem_relationship"
+                                               id="other_mem_relationship" placeholder="घरमुलीसंग अन्य नाता">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary" id="addMemRelationButton">
+                                            थप्नुहोस्
+                                        </button>
+                                        <button type="button" class="btn btn-default closeMemRelation">Close</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <hr>
+            <strong>अन्य विवरणहरु</strong><br><br>
+            <div class="custom-control custom-checkbox custom custom-control-inline">
+                <input type="checkbox" class="custom-control-input" name="familydisability_flag"
+                       id="disabilityMemberClick">
+                <label class="custom-control-label" for="customClick1">अपाङ्गता छ</label>
+            </div>
+            <div class="custom-control custom-checkbox custom custom-control-inline">
+                <input type="checkbox" class="custom-control-input" name="familydisease_flag" id="diseaseMemberClick">
+                <label class="custom-control-label" for="customClick2">दीर्घरोगी छ</label>
+            </div>
+            <div class="custom-control custom-checkbox custom custom-control-inline">
+                <input type="checkbox" class="custom-control-input" name="familytech_knowl_flag"
+                       id="technicalSkillMemberClick">
+                <label class="custom-control-label" for="customClick3">प्राविधिक तालिम</label>
+            </div>
+            <div class="custom-control custom-checkbox custom custom-control-inline">
+                <input type="checkbox" class="custom-control-input" name="familyforeign_stay_flag"
+                       id="abroadStayMemberClick">
+                <label class="custom-control-label" for="customClick4">बिदेशमा बसेको</label>
+            </div>
+            <div class="custom-control custom-checkbox custom custom-control-inline">
+                <input type="checkbox" class="custom-control-input" name="familychild_marry_flag"
+                       id="childMarriageMemberClick">
+                <label class="custom-control-label" for="customClick5">बालबिबाह गरेको</label>
+            </div>
+            <div class="custom-control custom-checkbox custom custom-control-inline">
+                <input type="checkbox" class="custom-control-input" name="familybasic_inject_flag"
+                       id="vaccineMemberClick">
+                <label class="custom-control-label" for="customClick6">आधारभूत खोप नलिएको</label>
+            </div>
+
+        </div>
+
+        {# other details #}
+
+        {# Disability Type #}
+        <div class="col-md-12">
+            <div id="disabilityMemberForm" style="display: none">
+                <h5>अपाङ्ग सदस्य : <small>परिवारमा रहेका अपांग सदस्यहरुको विवरण उल्लेख गर्नुहोस</small>
+                </h5>
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-sm-4 col-form-label">
+                                        <label for="member_disability_type">अपांगताको प्रकार</label>
+                                    </div>
+
+                                    <div class="col-sm-8">
+                                        <select type="text" class="form-control" name="member_disability_type"
+                                                id="member_disability_type">
+                                            <option value="">--- अपांगताको प्रकार छान्नुहोस् ---</option>
+                                            {% for disability in disability %}
+                                                <option value="{{ disability.id }}">{{ disability.name }}</option>
+                                            {% endfor %}
+                                            <option value="add">अन्य प्रकार थप्नुहोस्</option>
+                                        </select>
+
+                                        <!-- Modal -->
+                                        <div id="otherMemDisabilityType" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close closeMemDisabilityType"
+                                                                aria-label="Close"><span
+                                                                aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        <h4 class="modal-title">नयाँ अपांगताको प्रकार थप्नुहोस्</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <input type="text" class="form-control"
+                                                               name="member_other_dis_type"
+                                                               id="member_other_dis_type"
+                                                               placeholder="अपांगताको अन्य प्रकार">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary"
+                                                                id="addMemDisabilityTypeButton">थप्नुहोस्
+                                                        </button>
+                                                        <button type="button"
+                                                                class="btn btn-default closeMemDisabilityType">Close
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-sm-4 col-form-label">
+                                        <label for="member_disability_card">परिचय पत्र</label>
+                                    </div>
+
+                                    <div class="col-sm-8">
+                                        <select type="text" class="form-control" name="disability_card"
+                                                id="member_disability_card">
+                                            <option value="">--- परिचय पत्र छान्नुहोस् ---</option>
+                                            <option value="available">पाएको</option>
+                                            <option value="not_available">नपाएको</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-sm-4 col-form-label">
+                                        <label for="member_disability_card_type">परिचय पत्रको प्रकार</label>
+                                    </div>
+
+                                    <div class="col-sm-8">
+                                        <select type="text" class="form-control" name="member_disability_card_type"
+                                                id="member_disability_card_type">
+                                            {% for card in disability_cards %}
+                                                <option value="{{ card.id }}">{{ card.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <small class="form-text text-muted">
+                                            (पाएको भए मात्र)
+                                        </small>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# Incurable Disease #}
+        <div class="col-md-12">
+            <div id="diseaseMemberForm" style="display: none">
+                <h5>दिर्घरोगी : <small>परिवारमा दिर्घ रोगीहरु छन् भने उल्लेख गर्नुहोस</small>
+                </h5>
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-sm-4 col-form-label">
+                                        <label for="member_disease_name">रोगको नाम</label>
+                                    </div>
+
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" name="member_disease_name"
+                                               id="member_disease_name" placeholder="रोगको नाम ...">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-sm-4 col-form-label">
+                                        <label for="member_tret_present_status">हालको
+                                            अवस्था</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <select type="text" class="form-control" name="member_tret_present_status"
+                                                id="member_tret_present_status">
+                                            <option value="reforming">सुधार हुँदै</option>
+                                            <option value="even_more">अझ खस्कँदो</option>
+                                            <option value="healed">निको भैसकेको</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group ">
+                                <div class="form-row">
+                                    <div class="col-sm-4 col-form-label">
+                                        <label for="member_treatatment_status">उपचारको
+                                            अवस्था</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <select type="text" class="form-control" name="member_treatatment_status"
+                                                id="member_treatatment_status">
+                                            <option value="on_medicine">औषधी गरिरहेको</option>
+                                            <option value="left_medicine">नगएको / छाडेको</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# Technical Skill #}
+        <div class="col-md-12">
+            <div id="technicalSkillMemberForm" style="display: none">
+                <h5>प्राविधिक दक्षता : <small>प्राविधिक तालिम लिएका सदस्यहरुको विवरण उल्लेख गर्नुहोस</small>
+                </h5>
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-sm-4 col-form-label">
+                                        <label for="member_tech_know_type">भएको शिप</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <select type="text" class="form-control" name="member_tech_know_type"
+                                                id="member_tech_know_type">
+                                            <option value="">--- भएको शिप छान्नुहोस् ---</option>
+                                            {% for technical_skill in technical_skill %}
+                                                <option value="{{ technical_skill.id }}">{{ technical_skill.name }}</option>
+                                            {% endfor %}
+                                            <option value="add">अन्य शिप थप्नुहोस्</option>
+                                        </select>
+
+                                        <!-- Modal -->
+                                        <div id="otherMemTechnicalSkill" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close closeMemTechnicalSkill"
+                                                                aria-label="Close"><span
+                                                                aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        <h4 class="modal-title">नयाँ शिप थप्नुहोस्</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <input type="text" class="form-control"
+                                                               name="member_other_member_tech_name"
+                                                               id="member_other_member_tech_name"
+                                                               placeholder="अन्य शिप ...">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary"
+                                                                id="addMemTechnicalSkillButton">थप्नुहोस्
+                                                        </button>
+                                                        <button type="button"
+                                                                class="btn btn-default closeMemTechnicalSkill"
+                                                                id="closeMemTechnicalSkill">Close
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-sm-4 col-form-label">
+                                        <label for="member_tech_know_source">शिप ज्ञान
+                                            श्रोत</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <select type="text" class="form-control" name="member_tech_know_source"
+                                                id="member_tech_know_source"
+                                                onchange="member_checkTraining(this.value)">
+                                            <option value="">--- शिप ज्ञान श्रोत छान्नुहोस् ---</option>
+                                            <option value="training_granted">तालिम लिएको</option>
+                                            <option value="self_learned">स्वज्ञान</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="form-group" id="member_training_duration_div" hidden="">
+                                <div class="form-row">
+                                    <div class="col-sm-4 col-form-label">
+                                        <label for="member_tech_training_duration">तालिम
+                                            अवधि</label>
+                                    </div>
+
+                                    <div class="col-sm-8">
+                                        <select type="text" class="form-control" name="member_tech_training_duration"
+                                                id="member_tech_training_duration">
+                                            <option value="">--- तालिम अवधि छान्नुहोस् ---</option>
+                                            <option value="7_days">७ दिन</option>
+                                            <option value="15_days">१५ दिन</option>
+                                            <option value="1_month">१ महिना</option>
+                                            <option value="1.5_months">१.५ महिना</option>
+                                            <option value="3_months">३ महिना</option>
+                                            <option value="6_months">६ महिना</option>
+                                            <option value="1_year">१ बर्ष</option>
+                                            <option value="1_year_plus">१ बर्ष माथि</option>
+                                        </select>
+                                        <small class="form-text text-muted">
+                                            (पाएको भए मात्र)
+                                        </small>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# Abroad Stay #}
+        <div class="col-md-12">
+            <div id="abroadStayMemberForm" style="display: none">
+                <h5>बैदेशिक रोजगारी : <small>बिदेशमा रहेका वा पहिले विदेशमा रहेर फर्केका सदस्यहरुको विवरण उल्लेख
+                    गर्नुहोस</small>
+                </h5>
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-sm-4 col-form-label">
+                                        <label for="member_foreign_stay_objective">विदेश जानुको
+                                            उद्देश्य</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <select type="text" class="form-control" name="member_foreign_stay_objective"
+                                                id="member_foreign_stay_objective">
+                                            <option value="">--- विदेश जानुको उद्देश्य छान्नुहोस् ---</option>
+                                            {% for abroad_reason in abroad_reason %}
+                                                <option value="{{ abroad_reason.id }}">{{ abroad_reason.name }}</option>
+                                            {% endfor %}
+                                            <option value="add">अन्य उद्देश्य थप्नुहोस्</option>
+                                        </select>
+
+                                        <!-- Modal -->
+                                        <div id="otherMemAbroadReason" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close"
+                                                                aria-label="Close closeMemAbroadReason"><span
+                                                                aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title">नयाँ विदेश जानुको उद्देश्य
+                                                            थप्नुहोस्</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <input type="text" class="form-control"
+                                                               name="member_other_foreign_objective"
+                                                               id="member_other_foreign_objective"
+                                                               placeholder="विदेश जानुको अन्य उद्देश्य ...">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary"
+                                                                id="addMemAbroadReasonButton">थप्नुहोस्
+                                                        </button>
+                                                        <button type="button"
+                                                                class="btn btn-default closeMemAbroadReason">
+                                                            Close
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-sm-4 col-form-label">
+                                        <label for="member_foreign_country">देश</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <select type="text" class="form-control" name="member_foreign_country"
+                                                id="member_foreign_country">
+                                            <option value="">--- देश छान्नुहोस् ---</option>
+                                            {% for country in country %}
+                                                <option value="{{ country.id }}">{{ country.name }}</option>
+                                            {% endfor %}
+                                            <option value="add">ADD OTHERS</option>
+                                        </select>
+                                        <!-- Modal -->
+                                        <div id="otherMemCountry" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close closeMemCountry"
+                                                                aria-label="Close"><span
+                                                                aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        <h4 class="modal-title">नयाँ देश थप्नुहोस्</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <input type="text" class="form-control"
+                                                               name="member_other_countries" id="member_other_countries"
+                                                               placeholder="अन्य देश ...">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary"
+                                                                id="addMemCountryButton">थप्नुहोस्
+                                                        </button>
+                                                        <button type="button" class="btn btn-default closeMemCountry">
+                                                            Close
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-sm-4 col-form-label">
+                                        <label for="member_foreign_gone_year">गएको बर्ष</label>
+                                    </div>
+
+                                    <div class="col-sm-8">
+
+                                        <input type="number" class="form-control" name="member_foreign_gone_year"
+                                               id="member_foreign_gone_year" min="1900" max="2099" step="1"
+                                               placeholder="Eg: 2000">
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-sm-4 col-form-label">
+                                        <label for="member_foreign_return_year">फर्केको
+                                            बर्ष</label>
+                                    </div>
+
+                                    <div class="col-sm-8">
+
+
+                                        <input type="number" class="form-control" name="member_foreign_return_year"
+                                               id="member_foreign_return_year" min="1900" max="2099" step="1"
+                                               placeholder="Eg: 2000">
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        {# Child Marriage #}
+        <div class="col-md-12">
+            <div id="childMarriageMemberForm" style="display: none">
+                <h5>बालविवाह : <small>परिवारमा बालबिबाह भएका सदस्यहरु छन् भने उल्लेख गर्ने</small>
+                </h5>
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+
+                            <div class="form-group row">
+                                <div class="form-row">
+                                    <div class="col-sm-4 col-form-label">
+                                        <label for="member_child_marry_year">बिबाह भएको साल</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input type="number" class="form-control" name="member_child_marry_year"
+                                               id="member_child_marry_year" min="1900" max="2099" step="1"
+                                               placeholder="Eg: 2000">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-sm-4 col-form-label">
+                                        <label for="member_child_marry_age">बिबाह हुँदाको उमेर</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input class="form-control" name="member_child_marry_age"
+                                               id="member_child_marry_age" placeholder="(अंकमा)" type="number">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-sm-4 col-form-label">
+                                        <label for="member_child_marry_remarks">कैफियत</label>
+
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <textarea class="form-control" name="member_child_marry_remarks"
+                                                  id="member_child_marry_remarks" placeholder="कैफियत ..."></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# Vaccine #}
+        <div class="col-md-12">
+            <div id="vaccineMemberForm" style="display: none">
+                <h5>आधारभुत खोप : <small>आधारभुत खोप नलिएका बालबालिकाहरुको विवरण (५ वर्ष वा सो भन्दा कम उमेरका
+                    बालबालिकाहरु मात्र)</small>
+                </h5>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group ">
+                                <div class="form-row">
+                                    <div class="col-sm-4 col-form-label">
+                                        <label for="member_injection_type">खोपको नाम</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <select type="text" class="form-control" name="member_injection_type"
+                                                id="member_injection_type">
+                                            <option value="">खोपको नाम छान्नुहोस्</option>
+                                            {% for vaccine in vaccine %}
+                                                <option value="{{ vaccine.id }}"> {{ vaccine.name }}</option>
+                                            {% endfor %}
+                                            <option value="add">अन्य नाम थप्नुहोस्</option>
+                                        </select>
+                                        <!-- Modal -->
+                                        <div id="otherMemVaccine" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close closeMemVaccine"
+                                                                aria-label="Close"><span
+                                                                aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        <h4 class="modal-title">नयाँ खोपको नाम थप्नुहोस्</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <input type="text" class="form-control"
+                                                               name="member_other_injection" id="member_other_injection"
+                                                               placeholder="अन्य खोप"></div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary"
+                                                                id="addMemVaccineButton">थप्नुहोस्
+                                                        </button>
+                                                        <button type="button" class="btn btn-default closeMemVaccine">
+                                                            Close
+                                                        </button>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group ">
+                                <div class="form-row">
+                                    <div class="col-sm-4 col-form-label">
+                                        <label for="member_basic_inject_remarks">कैफियत</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <textarea class="form-control" name="member_basic_inject_remarks"
+                                                  id="member_basic_inject_remarks" placeholder="कैफियत ..."></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

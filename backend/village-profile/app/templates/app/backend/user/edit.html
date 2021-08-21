@@ -1,0 +1,179 @@
+{% extends "app/backend/layouts/app.html" %}
+{% block title %}| User Edit{% endblock %}
+{% load static %}
+{% load role_check %}
+{% block content %}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                User
+                <small>Update</small>
+            </h1>
+            {% include 'app/backend/layouts/_notification.html' %}
+            <ol class="breadcrumb">
+                <li><a type="button" class="btn btn-default" href="#" onClick="javascript:history.go(-1);"><i
+                        class="fa fa-arrow-left"></i> Back</a>
+                <li><a type="button" class="btn btn-default" href="{% url 'edit_user' user.id %}"><i class="fa fa-list"></i> List User</a></li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-6">
+                    <!-- general form elements -->
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Update User</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <!-- form start -->
+                        <form class="form-horizontal" method="post" action="{% url 'edit_user' user.id%}" id="userForm">
+                        {% csrf_token %}
+                            <div class="box-body">
+
+                                <div class="form-group">
+
+                                    <label for="firstName" class="col-sm-2 control-label">First Name *</label>
+
+                                    <div class="col-sm-9 input-group">
+                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                        <input type="text" class="form-control" id="firstName" name="first_name"
+                                               placeholder="First Name" value="{{ user.first_name }}">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="lastName" class="col-sm-2 control-label">Last Name</label>
+
+                                    <div class="col-sm-9 input-group">
+                                        <span class="input-group-addon"><i class="fa fa-users"></i></span>
+                                        <input type="text" class="form-control" id="lastName" name="last_name"
+                                               placeholder="Last Name"  value="{{ user.last_name }}">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="username" class="col-sm-2 control-label">Username *</label>
+
+                                    <div class="col-sm-9 input-group">
+                                        <span class="input-group-addon"><i class="fa fa-user-secret"></i></span>
+                                        <input type="text" class="form-control" id="username" name="username"
+                                               placeholder="Username"  value="{{ user.username }}">
+                                    </div>
+                                    <div class="loading">
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="col-sm-2 control-label">Email</label>
+
+                                    <div class="col-sm-9 input-group">
+                                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                        <input type="text" class="form-control" id="email" name="email"
+                                               placeholder="Email"  value="{{ user.email }}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="station" class="col-sm-2 control-label">Station</label>
+
+                                    <div class="col-sm-9 input-group">
+                                        <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+
+                                        <select class="form-control" name="station" id="station">
+                                        {% if request.user.profile.station_id %}
+                                            <option value="{{ request.user.profile.station_id }}">{{ request.user.profile.station.name }}</option>
+                                        {% else %}
+                                            {% for station in stations %}
+                                                {% if user.profile.station == station %}
+                                                    <option value="{{ station.id }}" selected>{{ station.name }}</option>
+                                                {% else %}
+                                                    <option value="{{ station.id }}">{{ station.name }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="role" class="col-sm-2 control-label">Role</label>
+                                    {% if request.user|is_super_admin %}
+                                        <label class="" style="float: left;margin-right: 5px">
+                                            <div class="iradio_minimal-blue" aria-checked="false" aria-disabled="true" style="position: relative; float:left;margin-right: 5px">
+                                                <input type="radio" name="role" class="minimal" value="2" style="position: absolute; opacity: 0;"  {% if user|my_group == 'Admin' %}checked{% endif %}>
+                                                <ins class="iCheck-helper" style="position: absolute; top: 0; left: 0; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;" ></ins>
+                                            </div>
+                                            Admin
+                                        </label>
+                                    {% endif %}
+                                    <label class="" style="float: left;margin-right: 5px">
+                                        <div class="iradio_minimal-blue" aria-checked="false" aria-disabled="true" style="position: relative;float:left;margin-right: 5px">
+                                            <input type="radio" name="role" class="minimal" value="3" style="position: absolute; opacity: 0;" {% if user|my_group == 'Staff' %}checked{% endif %}>
+                                            <ins class="iCheck-helper" style="position: absolute; top: 0; left: 0; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;" ></ins>
+                                        </div>
+                                        Staff
+                                    </label>
+
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer">
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </div>
+                            <!-- /.box-footer -->
+                        </form>
+                    </div>
+                    <!-- /.box -->
+
+
+                </div>
+                <!--/.col (left) -->
+
+            </div>
+
+        </section>
+        <!-- /.content -->
+    </div>
+
+{% endblock %}
+{% block scripts %}
+    {#  Validation  #}
+    <script>
+        $(function () {
+            // validate signup form on keyup and submit
+
+            $("#userForm").validate({
+                rules: {
+                    first_name: "required",
+                    email: {
+                        email: true,
+                    },
+                    username: "required",
+                    role: "required",
+                    password : {
+                        required: true,
+                        minlength : 5
+                    },
+                    c_password : {
+                        minlength : 5,
+                        equalTo : "#password"
+                    }
+                },
+                messages: {
+                    first_name: "Please enter Customer Name",
+                    email: "Please enter valid Email Address",
+                    password: "Please enter valid password of minimum length 5",
+                    c_password:{
+                        equalTo: "Password do not match!",
+                    },
+                    username: "Please enter unique Username",
+                    role: "Please check Role",
+                }
+            });
+
+        })
+    </script>
+{% endblock %}

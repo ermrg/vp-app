@@ -1,0 +1,230 @@
+[
+{
+  "model": "app.jaati",
+  "pk": 1,
+  "fields": {
+    "name": "\u0915\u094d\u0937\u0947\u0924\u094d\u0930\u0940",
+    "status": 1,
+    "user": null,
+    "religion": null,
+    "created_at": "2019-12-05T10:49:32.271Z",
+    "updated_at": "2019-12-05T10:49:32.271Z"
+  }
+},
+{
+  "model": "app.jaati",
+  "pk": 2,
+  "fields": {
+    "name": "\u092c\u093e\u0939\u0941\u0928",
+    "status": 1,
+    "user": null,
+    "religion": null,
+    "created_at": "2019-12-05T10:49:53.677Z",
+    "updated_at": "2019-12-05T10:49:53.677Z"
+  }
+},
+{
+  "model": "app.jaati",
+  "pk": 3,
+  "fields": {
+    "name": "\u092e\u0917\u0930",
+    "status": 1,
+    "user": null,
+    "religion": null,
+    "created_at": "2019-12-05T10:50:01.858Z",
+    "updated_at": "2019-12-05T10:50:01.858Z"
+  }
+},
+{
+  "model": "app.jaati",
+  "pk": 4,
+  "fields": {
+    "name": "\u0925\u093e\u0930\u0941",
+    "status": 1,
+    "user": null,
+    "religion": null,
+    "created_at": "2019-12-05T10:50:08.980Z",
+    "updated_at": "2019-12-05T10:50:08.980Z"
+  }
+},
+{
+  "model": "app.jaati",
+  "pk": 5,
+  "fields": {
+    "name": "\u0924\u093e\u092e\u093e\u0919",
+    "status": 1,
+    "user": null,
+    "religion": null,
+    "created_at": "2019-12-05T10:50:15.464Z",
+    "updated_at": "2019-12-05T10:50:15.465Z"
+  }
+},
+{
+  "model": "app.jaati",
+  "pk": 6,
+  "fields": {
+    "name": "\u0928\u0947\u0935\u093e\u0930",
+    "status": 1,
+    "user": null,
+    "religion": null,
+    "created_at": "2019-12-05T10:50:23.488Z",
+    "updated_at": "2019-12-05T10:50:23.488Z"
+  }
+},
+{
+  "model": "app.jaati",
+  "pk": 7,
+  "fields": {
+    "name": "\u0915\u093e\u092e\u0940",
+    "status": 1,
+    "user": null,
+    "religion": null,
+    "created_at": "2019-12-05T10:50:30.744Z",
+    "updated_at": "2019-12-05T10:50:30.744Z"
+  }
+},
+{
+  "model": "app.jaati",
+  "pk": 8,
+  "fields": {
+    "name": "\u0928\u0947\u092a\u093e\u0932\u0940 \u092e\u0941\u0938\u093e\u0932\u092e\u093e\u0928",
+    "status": 1,
+    "user": null,
+    "religion": null,
+    "created_at": "2019-12-05T10:50:51.919Z",
+    "updated_at": "2019-12-05T10:50:51.919Z"
+  }
+},
+{
+  "model": "app.jaati",
+  "pk": 9,
+  "fields": {
+    "name": "\u092f\u093e\u0926\u0935",
+    "status": 1,
+    "user": null,
+    "religion": null,
+    "created_at": "2019-12-05T10:51:08.981Z",
+    "updated_at": "2019-12-05T10:51:08.981Z"
+  }
+},
+{
+  "model": "app.jaati",
+  "pk": 10,
+  "fields": {
+    "name": "\u0930\u093e\u200c\u200c\u0908",
+    "status": 1,
+    "user": null,
+    "religion": null,
+    "created_at": "2019-12-05T10:51:31.469Z",
+    "updated_at": "2019-12-05T10:51:31.469Z"
+  }
+},
+{
+  "model": "app.jaati",
+  "pk": 11,
+  "fields": {
+    "name": "\u0917\u0941\u0930\u0941\u0919",
+    "status": 1,
+    "user": null,
+    "religion": null,
+    "created_at": "2019-12-05T10:51:43.525Z",
+    "updated_at": "2019-12-05T10:51:43.525Z"
+  }
+},
+{
+  "model": "app.jaati",
+  "pk": 12,
+  "fields": {
+    "name": "\u0926\u092e\u093e\u0908",
+    "status": 1,
+    "user": null,
+    "religion": null,
+    "created_at": "2019-12-05T10:52:00.621Z",
+    "updated_at": "2019-12-05T10:52:00.621Z"
+  }
+},
+{
+  "model": "app.jaati",
+  "pk": 13,
+  "fields": {
+    "name": "\u0920\u0915\u0941\u0930\u0940",
+    "status": 1,
+    "user": null,
+    "religion": null,
+    "created_at": "2019-12-05T10:52:10.669Z",
+    "updated_at": "2019-12-05T10:52:10.669Z"
+  }
+},
+{
+  "model": "app.jaati",
+  "pk": 14,
+  "fields": {
+    "name": "\u0932\u093f\u092e\u094d\u092c\u0941",
+    "status": 1,
+    "user": null,
+    "religion": null,
+    "created_at": "2019-12-05T10:52:23.438Z",
+    "updated_at": "2019-12-05T10:52:23.438Z"
+  }
+},
+{
+  "model": "app.jaati",
+  "pk": 15,
+  "fields": {
+    "name": "\u0938\u093e\u0930\u094d\u0915\u093f",
+    "status": 1,
+    "user": null,
+    "religion": null,
+    "created_at": "2019-12-05T10:52:36.950Z",
+    "updated_at": "2019-12-05T10:52:36.950Z"
+  }
+},
+{
+  "model": "app.jaati",
+  "pk": 16,
+  "fields": {
+    "name": "\u0924\u0947\u0932\u0940",
+    "status": 1,
+    "user": null,
+    "religion": null,
+    "created_at": "2019-12-05T10:52:50.652Z",
+    "updated_at": "2019-12-05T10:52:50.653Z"
+  }
+},
+{
+  "model": "app.jaati",
+  "pk": 17,
+  "fields": {
+    "name": "\u092e\u0941\u0938\u0939\u0930",
+    "status": 1,
+    "user": null,
+    "religion": null,
+    "created_at": "2019-12-05T10:53:11.401Z",
+    "updated_at": "2019-12-05T10:53:11.402Z"
+  }
+},
+{
+  "model": "app.jaati",
+  "pk": 18,
+  "fields": {
+    "name": "\u0930\u093e\u090a\u091f\u0947",
+    "status": 1,
+    "user": null,
+    "religion": null,
+    "created_at": "2019-12-05T10:54:12.933Z",
+    "updated_at": "2019-12-05T10:54:12.933Z"
+  }
+},
+{
+  "model": "app.jaati",
+  "pk": 19,
+  "fields": {
+    "name": "\u092a\u093e\u0938\u0940",
+    "status": 1,
+    "user": null,
+    "religion": null,
+    "created_at": "2019-12-05T10:54:26.110Z",
+    "updated_at": "2019-12-05T10:54:26.110Z"
+  }
+}
+]

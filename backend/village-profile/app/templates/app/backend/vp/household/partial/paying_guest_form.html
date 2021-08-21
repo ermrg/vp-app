@@ -1,0 +1,74 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Title</title>#}
+{#</head>#}
+{#<body>#}
+{##}
+{#</body>#}
+{#</html>#}
+
+{% csrf_token %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                    <label for="rent_member_owner_name">भाँडामा बस्ने मुलीको नाम</label>
+                </div>
+                <div class="col-sm-8">
+                    <input class="form-control" name="rent_member_owner_name" id="rent_member_owner_name"
+                           placeholder="भाँडामा बस्ने मुलीको नाम" type="text">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                    <label for="rent_member_from_place">कहाँवाट आएको ?</label>
+                </div>
+                <div class="col-sm-8">
+                    <select type="text" class="form-control" name="rent_member_from_place" id="rent_member_from_place">
+                        <option value="">--- कहाँवाट आएको छान्नुहोस् ---</option>
+                        <option value="True">नगर भित्रैबाट आएको</option>
+                        <option value="False">बाहिरबाट आएको</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                    <label for="rent_member_count">जना (संख्या)</label>
+                </div>
+                <div class="col-sm-8">
+                    <input class="form-control" name="rent_member_count" id="rent_member_count"
+                           placeholder="जना (संख्या)" type="number">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                    <label for="rent_member_room_count">कोठा (संख्या)</label>
+                </div>
+                <div class="col-sm-8">
+                    <input class="form-control" name="rent_member_room_count" id="rent_member_room_count"
+                           placeholder="कोठा (संख्या)" type="number">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                    <label for="rent_member_reason">कारण</label>
+                </div>
+                <div class="col-sm-8">
+                    <textarea class="form-control" name="rent_member_reason" id="rent_member_reason"
+                              placeholder="कारण"></textarea>
+                </div>
+            </div>
+            <br>
+        </div>
+
+    </div>
+</div>

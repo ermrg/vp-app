@@ -1,0 +1,699 @@
+{#{% extends "app/backend/layouts/app.html" %}#}
+{#{% block title %}Import{% endblock %}#}
+{#{% load static %}#}
+{#{% load role_check %}#}
+{#{% block content %}#}
+{#    <style>#}
+{#        .form-group {#}
+{#            margin-bottom: 10px !important;#}
+{#        }#}
+{#    </style>#}
+{#    <!-- Content Wrapper. Contains page content -->#}
+{#    <div class="content-wrapper">#}
+{#        <!-- Content Header (Page header) -->#}
+{#        <section class="content-header">#}
+{#            <h1>#}
+{#                Import Excel File#}
+{#            </h1>#}
+{##}
+{#            {% include 'app/backend/layouts/_notification.html' %}#}
+{#            <ol class="breadcrumb">#}
+{#                <li>#}
+{#                    <a type="button" class="btn btn-default" href="#" onClick="javascript:history.go(-1);"><i#}
+{#                        class="fa fa-arrow-left"></i> Back</a>#}
+{#                </li>#}
+{#            </ol>#}
+{#        </section>#}
+{##}
+{#        <!-- Main content -->#}
+{#        <section class="content">#}
+{#            <div class="row">#}
+{##}
+{#                <div class="col-md-12 col-sm-12">#}
+{#                    <!-- general form elements -->#}
+{#                    <div class="box box-primary">#}
+{##}
+{##}
+{#                        <!-- /.box-header -->#}
+{#                        <!-- form start -->#}
+{##}
+                        {# HouseHold Details #}
+{#                        <div class="box-body">#}
+{#                            <div class="tab-content" >#}
+{#                                <table >#}
+{#                                    <tr>#}
+{#                                        <td class="col-md-12">Import Household Details</td>#}
+{#                                        <td class="col-md-2"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#householdUpload">upload</button></td>#}
+{#                                    </tr>#}
+{#                                    <div>#}
+{#                                        <div id="householdUpload" class="modal fade" role="dialog">#}
+{#                                            <div class="modal-dialog">#}
+{##}
+{#                                            <!-- Modal content-->#}
+{#                                                <div class="modal-content">#}
+{#                                                    <div class="modal-header">#}
+{#                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>#}
+{#                                                        <h4 class="modal-title">बालश्रम विवरण थप्नुहोस्</h4>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-body">#}
+{#                                                        <form method="post" enctype="multipart/form-data" action="{% url 'household_upload' %}">#}
+{#                                                            {% csrf_token %}#}
+{#                                                            <div class="form-row">#}
+{#                                                                <input type="file" name="household_file"><br>#}
+{#                                                                <button type="submit" class="btn btn-primary">Upload</button>#}
+{#                                                            </div>#}
+{#                                                        </form>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-footer">#}
+{#                                                        <button type="submit" class="btn btn-primary" id="a1">Upload</button>#}
+{#                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </table>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+                        {# HouseHead #}
+{#                        <div class="box-body">#}
+{#                            <div class="tab-content" >#}
+{#                                <table >#}
+{#                                    <tr>#}
+{#                                        <td class="col-md-12"> घरमुली विवरण थप्नुहोस् </td>#}
+{#                                        <td class="col-md-2"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#househeadUpload">upload</button></td>#}
+{#                                    </tr>#}
+{#                                    <div>#}
+{#                                        <div id="househeadUpload" class="modal fade" role="dialog">#}
+{#                                            <div class="modal-dialog">#}
+{##}
+{#                                            <!-- Modal content-->#}
+{#                                                <div class="modal-content">#}
+{#                                                    <div class="modal-header">#}
+{#                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>#}
+{#                                                        <h4 class="modal-title">बालश्रम विवरण थप्नुहोस्</h4>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-body">#}
+{#                                                        <form method="post" enctype="multipart/form-data" action="{% url 'househead_upload' %}">#}
+{#                                                            {% csrf_token %}#}
+{#                                                            <div class="form-row">#}
+{#                                                                <input type="file" name="househead_file"><br>#}
+{#                                                                <button type="submit" class="btn btn-primary">Upload</button>#}
+{#                                                            </div>#}
+{#                                                        </form>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-footer">#}
+{#                                                        <button type="submit" class="btn btn-primary" id="a1">Upload</button>#}
+{#                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </table>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+                        {# House Member #}
+{#                        <div class="box-body">#}
+{#                            <div class="tab-content" >#}
+{#                                <table >#}
+{#                                    <tr>#}
+{#                                        <td class="col-md-12">Import Member Details</td>#}
+{#                                        <td class="col-md-2"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#memberUpload">upload</button></td>#}
+{#                                    </tr>#}
+{#                                    <div>#}
+{#                                        <div id="memberUpload" class="modal fade" role="dialog">#}
+{#                                            <div class="modal-dialog">#}
+{##}
+{#                                            <!-- Modal content-->#}
+{#                                                <div class="modal-content">#}
+{#                                                    <div class="modal-header">#}
+{#                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>#}
+{#                                                        <h4 class="modal-title">बालश्रम विवरण थप्नुहोस्</h4>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-body">#}
+{#                                                        <form method="post" enctype="multipart/form-data" action="{% url 'member_upload' %}">#}
+{#                                                            {% csrf_token %}#}
+{#                                                            <div class="form-row">#}
+{#                                                                <input type="file" name="member_file"><br>#}
+{#                                                                <button type="submit" class="btn btn-primary">Upload</button>#}
+{#                                                            </div>#}
+{#                                                        </form>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-footer">#}
+{#                                                        <button type="submit" class="btn btn-primary" id="a1">Upload</button>#}
+{#                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </table>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+                        {# Deceased Member #}
+{#                        <div class="box-body">#}
+{#                            <div class="tab-content" >#}
+{#                                <table >#}
+{#                                    <tr>#}
+{#                                        <td class="col-md-12">Import Deceased Member Details</td>#}
+{#                                        <td class="col-md-2"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#decesdedUpload">upload</button></td>#}
+{#                                    </tr>#}
+{#                                    <div>#}
+{#                                        <div id="decesdedUpload" class="modal fade" role="dialog">#}
+{#                                            <div class="modal-dialog">#}
+{##}
+{#                                            <!-- Modal content-->#}
+{#                                                <div class="modal-content">#}
+{#                                                    <div class="modal-header">#}
+{#                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>#}
+{#                                                        <h4 class="modal-title">बालश्रम विवरण थप्नुहोस्</h4>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-body">#}
+{#                                                        <form method="post" enctype="multipart/form-data" action="{% url 'deceased_upload' %}">#}
+{#                                                            {% csrf_token %}#}
+{#                                                            <div class="form-row">#}
+{#                                                                <input type="file" name="deceased_file"><br>#}
+{#                                                                <button type="submit" class="btn btn-primary">Upload</button>#}
+{#                                                            </div>#}
+{#                                                        </form>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-footer">#}
+{#                                                        <button type="submit" class="btn btn-primary" id="a1">Upload</button>#}
+{#                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </table>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+                        {# House Details #}
+{#                        <div class="box-body">#}
+{#                            <div class="tab-content" >#}
+{#                                <table >#}
+{#                                    <tr>#}
+{#                                        <td class="col-md-12">Import House Details</td>#}
+{#                                        <td class="col-md-2"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#houseDetailsUpload">upload</button></td>#}
+{#                                    </tr>#}
+{#                                    <div>#}
+{#                                        <div id="houseDetailsUpload" class="modal fade" role="dialog">#}
+{#                                            <div class="modal-dialog">#}
+{##}
+{#                                            <!-- Modal content-->#}
+{#                                                <div class="modal-content">#}
+{#                                                    <div class="modal-header">#}
+{#                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>#}
+{#                                                        <h4 class="modal-title">बालश्रम विवरण थप्नुहोस्</h4>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-body">#}
+{#                                                        <form method="post" enctype="multipart/form-data" action="{% url 'house_upload' %}">#}
+{#                                                            {% csrf_token %}#}
+{#                                                            <div class="form-row">#}
+{#                                                                <input type="file" name="house_file"><br>#}
+{#                                                                <button type="submit" class="btn btn-primary">Upload</button>#}
+{#                                                            </div>#}
+{#                                                        </form>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-footer">#}
+{#                                                        <button type="submit" class="btn btn-primary" id="a1">Upload</button>#}
+{#                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </table>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+                        {# Rent Member Details #}
+{#                        <div class="box-body">#}
+{#                            <div class="tab-content" >#}
+{#                                <table >#}
+{#                                    <tr>#}
+{#                                        <td class="col-md-12">Import Rent Member Details</td>#}
+{#                                        <td class="col-md-2"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#rentMemberUpload">upload</button></td>#}
+{#                                    </tr>#}
+{#                                    <div>#}
+{#                                        <div id="rentMemberUpload" class="modal fade" role="dialog">#}
+{#                                            <div class="modal-dialog">#}
+{##}
+{#                                            <!-- Modal content-->#}
+{#                                                <div class="modal-content">#}
+{#                                                    <div class="modal-header">#}
+{#                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>#}
+{#                                                        <h4 class="modal-title">बालश्रम विवरण थप्नुहोस्</h4>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-body">#}
+{#                                                        <form method="post" enctype="multipart/form-data" action="{% url 'rent_member_upload' %}">#}
+{#                                                            {% csrf_token %}#}
+{#                                                            <div class="form-row">#}
+{#                                                                <input type="file" name="rent_member_file"><br>#}
+{#                                                                <button type="submit" class="btn btn-primary">Upload</button>#}
+{#                                                            </div>#}
+{#                                                        </form>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-footer">#}
+{#                                                        <button type="submit" class="btn btn-primary" id="a1">Upload</button>#}
+{#                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </table>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+                        {# Land Details #}
+{#                        <div class="box-body">#}
+{#                            <div class="tab-content" >#}
+{#                                <table >#}
+{#                                    <tr>#}
+{#                                        <td class="col-md-12">Import Land Details</td>#}
+{#                                        <td class="col-md-2"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#landDetailsUpload">upload</button></td>#}
+{#                                    </tr>#}
+{#                                    <div>#}
+{#                                        <div id="landDetailsUpload" class="modal fade" role="dialog">#}
+{#                                            <div class="modal-dialog">#}
+{##}
+{#                                            <!-- Modal content-->#}
+{#                                                <div class="modal-content">#}
+{#                                                    <div class="modal-header">#}
+{#                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>#}
+{#                                                        <h4 class="modal-title">बालश्रम विवरण थप्नुहोस्</h4>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-body">#}
+{#                                                        <form method="post" enctype="multipart/form-data" action="{% url 'land_upload' %}">#}
+{#                                                            {% csrf_token %}#}
+{#                                                            <div class="form-row">#}
+{#                                                                <input type="file" name="land_file"><br>#}
+{#                                                                <button type="submit" class="btn btn-primary">Upload</button>#}
+{#                                                            </div>#}
+{#                                                        </form>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-footer">#}
+{#                                                        <button type="submit" class="btn btn-primary" id="a1">Upload</button>#}
+{#                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </table>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+                        {# household_animal Details #}
+{#                        <div class="box-body">#}
+{#                            <div class="tab-content" >#}
+{#                                <table >#}
+{#                                    <tr>#}
+{#                                        <td class="col-md-12">Import Animal Details</td>#}
+{#                                        <td class="col-md-2"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#animalDetailsUpload">upload</button></td>#}
+{#                                    </tr>#}
+{#                                    <div>#}
+{#                                        <div id="animalDetailsUpload" class="modal fade" role="dialog">#}
+{#                                            <div class="modal-dialog">#}
+{##}
+{#                                            <!-- Modal content-->#}
+{#                                                <div class="modal-content">#}
+{#                                                    <div class="modal-header">#}
+{#                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>#}
+{#                                                        <h4 class="modal-title">बालश्रम विवरण थप्नुहोस्</h4>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-body">#}
+{#                                                        <form method="post" enctype="multipart/form-data" action="{% url 'animal_upload' %}">#}
+{#                                                            {% csrf_token %}#}
+{#                                                            <div class="form-row">#}
+{#                                                                <input type="file" name="animal_file"><br>#}
+{#                                                                <button type="submit" class="btn btn-primary">Upload</button>#}
+{#                                                            </div>#}
+{#                                                        </form>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-footer">#}
+{#                                                        <button type="submit" class="btn btn-primary" id="a1">Upload</button>#}
+{#                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </table>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+                        {# Bussiness Details #}
+{#                        <div class="box-body">#}
+{#                            <div class="tab-content" >#}
+{#                                <table >#}
+{#                                    <tr>#}
+{#                                        <td class="col-md-12">Import Business Details</td>#}
+{#                                        <td class="col-md-2"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#businessDetailsUpload">upload</button></td>#}
+{#                                    </tr>#}
+{#                                    <div>#}
+{#                                        <div id="businessDetailsUpload" class="modal fade" role="dialog">#}
+{#                                            <div class="modal-dialog">#}
+{##}
+{#                                            <!-- Modal content-->#}
+{#                                                <div class="modal-content">#}
+{#                                                    <div class="modal-header">#}
+{#                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>#}
+{#                                                        <h4 class="modal-title">बालश्रम विवरण थप्नुहोस्</h4>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-body">#}
+{#                                                        <form method="post" enctype="multipart/form-data" action="{% url 'business_upload' %}">#}
+{#                                                            {% csrf_token %}#}
+{#                                                            <div class="form-row">#}
+{#                                                                <input type="file" name="business_file"><br>#}
+{#                                                                <button type="submit" class="btn btn-primary">Upload</button>#}
+{#                                                            </div>#}
+{#                                                        </form>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-footer">#}
+{#                                                        <button type="submit" class="btn btn-primary" id="a1">Upload</button>#}
+{#                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </table>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+                        {# Festivals Details #}
+{#                        <div class="box-body">#}
+{#                            <div class="tab-content" >#}
+{#                                <table >#}
+{#                                    <tr>#}
+{#                                        <td class="col-md-12">Import Festival Details</td>#}
+{#                                        <td class="col-md-2"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#festivalDetailsUpload">upload</button></td>#}
+{#                                    </tr>#}
+{#                                    <div>#}
+{#                                        <div id="festivalDetailsUpload" class="modal fade" role="dialog">#}
+{#                                            <div class="modal-dialog">#}
+{##}
+{#                                            <!-- Modal content-->#}
+{#                                                <div class="modal-content">#}
+{#                                                    <div class="modal-header">#}
+{#                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>#}
+{#                                                        <h4 class="modal-title">बालश्रम विवरण थप्नुहोस्</h4>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-body">#}
+{#                                                        <form method="post" enctype="multipart/form-data" action="{% url 'festival_upload' %}">#}
+{#                                                            {% csrf_token %}#}
+{#                                                            <div class="form-row">#}
+{#                                                                <input type="file" name="festival_file"><br>#}
+{#                                                                <button type="submit" class="btn btn-primary">Upload</button>#}
+{#                                                            </div>#}
+{#                                                        </form>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-footer">#}
+{#                                                        <button type="submit" class="btn btn-primary" id="a1">Upload</button>#}
+{#                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </table>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+                        {# Child Labor #}
+{#                        <div class="box-body">#}
+{#                            <div class="tab-content" >#}
+{#                                <table >#}
+{#                                    <tr>#}
+{#                                        <td class="col-md-12">Import Child Labour Details</td>#}
+{#                                        <td class="col-md-2"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#childLabourUpload">upload</button></td>#}
+{#                                    </tr>#}
+{#                                    <div>#}
+{#                                        <div id="childLabourUpload" class="modal fade" role="dialog">#}
+{#                                            <div class="modal-dialog">#}
+{##}
+{#                                            <!-- Modal content-->#}
+{#                                                <div class="modal-content">#}
+{#                                                    <div class="modal-header">#}
+{#                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>#}
+{#                                                        <h4 class="modal-title">बालश्रम विवरण थप्नुहोस्</h4>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-body">#}
+{#                                                        <form method="post" enctype="multipart/form-data" action="{% url 'helper_upload' %}">#}
+{#                                                            {% csrf_token %}#}
+{#                                                            <div class="form-row">#}
+{#                                                                <input type="file" name="helper_file"><br>#}
+{#                                                                <button type="submit" class="btn btn-primary">Upload</button>#}
+{#                                                            </div>#}
+{#                                                        </form>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-footer">#}
+{#                                                        <button type="submit" class="btn btn-primary" id="a1">Upload</button>#}
+{#                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </table>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+                        {# Income #}
+{#                        <div class="box-body">#}
+{#                            <div class="tab-content" >#}
+{#                                <table >#}
+{#                                    <tr>#}
+{#                                        <td class="col-md-12">Import Income Details</td>#}
+{#                                        <td class="col-md-2"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#houseDetailsUpload">upload</button></td>#}
+{#                                    </tr>#}
+{#                                    <div>#}
+{#                                        <div id="houseDetailsUpload" class="modal fade" role="dialog">#}
+{#                                            <div class="modal-dialog">#}
+{##}
+{#                                            <!-- Modal content-->#}
+{#                                                <div class="modal-content">#}
+{#                                                    <div class="modal-header">#}
+{#                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>#}
+{#                                                        <h4 class="modal-title">बालश्रम विवरण थप्नुहोस्</h4>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-body">#}
+{#                                                        <form method="post" enctype="multipart/form-data" action="{% url 'income_upload' %}">#}
+{#                                                            {% csrf_token %}#}
+{#                                                            <div class="form-row">#}
+{#                                                                <input type="file" name="income_file"><br>#}
+{#                                                                <button type="submit" class="btn btn-primary">Upload</button>#}
+{#                                                            </div>#}
+{#                                                        </form>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-footer">#}
+{#                                                        <button type="submit" class="btn btn-primary" id="a1">Upload</button>#}
+{#                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </table>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+                        {# Expenses #}
+{#                        <div class="box-body">#}
+{#                            <div class="tab-content" >#}
+{#                                <table >#}
+{#                                    <tr>#}
+{#                                        <td class="col-md-12">Import Expenses Details</td>#}
+{#                                        <td class="col-md-2"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#houseDetailsUpload">upload</button></td>#}
+{#                                    </tr>#}
+{#                                    <div>#}
+{#                                        <div id="houseDetailsUpload" class="modal fade" role="dialog">#}
+{#                                            <div class="modal-dialog">#}
+{##}
+{#                                            <!-- Modal content-->#}
+{#                                                <div class="modal-content">#}
+{#                                                    <div class="modal-header">#}
+{#                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>#}
+{#                                                        <h4 class="modal-title">बालश्रम विवरण थप्नुहोस्</h4>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-body">#}
+{#                                                        <form method="post" enctype="multipart/form-data" action="{% url 'expenses_upload' %}">#}
+{#                                                            {% csrf_token %}#}
+{#                                                            <div class="form-row">#}
+{#                                                                <input type="file" name="expenses_file"><br>#}
+{#                                                                <button type="submit" class="btn btn-primary">Upload</button>#}
+{#                                                            </div>#}
+{#                                                        </form>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-footer">#}
+{#                                                        <button type="submit" class="btn btn-primary" id="a1">Upload</button>#}
+{#                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </table>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+                        {# Vehicle #}
+{#                        <div class="box-body">#}
+{#                            <div class="tab-content" >#}
+{#                                <table >#}
+{#                                    <tr>#}
+{#                                        <td class="col-md-12">Import Vehicle Details</td>#}
+{#                                        <td class="col-md-2"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#vehicleUpload">upload</button></td>#}
+{#                                    </tr>#}
+{#                                    <div>#}
+{#                                        <div id="vehicleUpload" class="modal fade" role="dialog">#}
+{#                                            <div class="modal-dialog">#}
+{##}
+{#                                            <!-- Modal content-->#}
+{#                                                <div class="modal-content">#}
+{#                                                    <div class="modal-header">#}
+{#                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>#}
+{#                                                        <h4 class="modal-title">बालश्रम विवरण थप्नुहोस्</h4>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-body">#}
+{#                                                        <form method="post" enctype="multipart/form-data" action="{% url 'vehicle_upload' %}">#}
+{#                                                            {% csrf_token %}#}
+{#                                                            <div class="form-row">#}
+{#                                                                <input type="file" name="vehicle_file"><br>#}
+{#                                                                <button type="submit" class="btn btn-primary">Upload</button>#}
+{#                                                            </div>#}
+{#                                                        </form>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-footer">#}
+{#                                                        <button type="submit" class="btn btn-primary" id="a1">Upload</button>#}
+{#                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </table>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+                        {# Other Facilities #}
+{#                        <div class="box-body">#}
+{#                            <div class="tab-content" >#}
+{#                                <table >#}
+{#                                    <tr>#}
+{#                                        <td class="col-md-12">Import Facility Details</td>#}
+{#                                        <td class="col-md-2"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#facilityDetailsUpload">upload</button></td>#}
+{#                                    </tr>#}
+{#                                    <div>#}
+{#                                        <div id="facilityDetailsUpload" class="modal fade" role="dialog">#}
+{#                                            <div class="modal-dialog">#}
+{##}
+{#                                            <!-- Modal content-->#}
+{#                                                <div class="modal-content">#}
+{#                                                    <div class="modal-header">#}
+{#                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>#}
+{#                                                        <h4 class="modal-title">बालश्रम विवरण थप्नुहोस्</h4>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-body">#}
+{#                                                        <form method="post" enctype="multipart/form-data" action="{% url 'facility_upload' %}">#}
+{#                                                            {% csrf_token %}#}
+{#                                                            <div class="form-row">#}
+{#                                                                <input type="file" name="facility_file"><br>#}
+{#                                                                <button type="submit" class="btn btn-primary">Upload</button>#}
+{#                                                            </div>#}
+{#                                                        </form>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-footer">#}
+{#                                                        <button type="submit" class="btn btn-primary" id="a1">Upload</button>#}
+{#                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </table>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+                        {# Infrastructure #}
+{#                        <div class="box-body">#}
+{#                            <div class="tab-content" >#}
+{#                                <table >#}
+{#                                    <tr>#}
+{#                                        <td class="col-md-12">Import Infrastructure Details</td>#}
+{#                                        <td class="col-md-2"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#houseDetailsUpload">upload</button></td>#}
+{#                                    </tr>#}
+{#                                    <div>#}
+{#                                        <div id="houseDetailsUpload" class="modal fade" role="dialog">#}
+{#                                            <div class="modal-dialog">#}
+{##}
+{#                                            <!-- Modal content-->#}
+{#                                                <div class="modal-content">#}
+{#                                                    <div class="modal-header">#}
+{#                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>#}
+{#                                                        <h4 class="modal-title">बालश्रम विवरण थप्नुहोस्</h4>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-body">#}
+{#                                                        <form method="post" enctype="multipart/form-data" action="{% url 'infrastructure_upload' %}">#}
+{#                                                            {% csrf_token %}#}
+{#                                                            <div class="form-row">#}
+{#                                                                <input type="file" name="infrastructure_file"><br>#}
+{#                                                                <button type="submit" class="btn btn-primary">Upload</button>#}
+{#                                                            </div>#}
+{#                                                        </form>#}
+{#                                                    </div>#}
+{#                                                    <div class="modal-footer">#}
+{#                                                        <button type="submit" class="btn btn-primary" id="a1">Upload</button>#}
+{#                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </table>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{##}
+{#                        <!-- /.box-body -->#}
+                        {#                            <div class="box-footer">#}
+                        {#                               #}
+                        {#                            </div>#}
+{#                        <!-- /.box-footer -->#}
+{##}
+{#                    </div>#}
+{#                    <!-- /.box -->#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#        </section>#}
+{#        <!-- /.content -->#}
+{#    </div>#}
+{##}
+{#{% endblock %}#}
+{#{% block scripts %}#}
+{##}
+{#// JS Code Here#}
+{#    <script>#}
+{#        $('form#animalForm').validate({#}
+{#            rules:{#}
+{#                name:{#}
+{#                    required: true#}
+{#                }#}
+{#            },#}
+{#            messages:{#}
+{#                name:{#}
+{#                    required:'Enter the animal Type'#}
+{#                }#}
+{#            }#}
+{#        })#}
+{#    </script>#}
+{##}
+{#{% endblock %}#}

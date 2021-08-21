@@ -1,0 +1,60 @@
+<table class="table table-bordered datatable">
+    <thead>
+    <th>SN</th>
+    <th>Year</th>
+    <th>Code</th>
+    <th>Start Date</th>
+    <th>End Date</th>
+    <th>Status</th>
+{#    <th>Action</th>#}
+    </thead>
+    <tbody>
+    {% for fiscal_year in fiscal_years %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ fiscal_year.year }}</td>
+            <td>{{ fiscal_year.code }}</td>
+            <td>
+                 <span class="date-bs bs-n-t">{{ fiscal_year.start_date_bs }}</span> <br>
+                <span class="date-ad">{{ fiscal_year.start_date_ad|date:"M d, Y" }}</span>
+            </td>
+            <td>
+                <span class="date-bs bs-n-t">{{ fiscal_year.end_date_bs }}</span> <br>
+                <span class="date-ad">{{ fiscal_year.end_date_ad|date:"M d, Y" }}</span>
+            </td>
+            <td>
+                <form method="post" action="{% url 'fy_change_status' %}">
+                {% csrf_token %}
+                {% if fiscal_year.status %}
+                    <input type="checkbox" class="fiscal-year-status" name="fyid" value="{{ fiscal_year.id }}" checked>
+                {% else %}
+                    <input type="checkbox" class="fiscal-year-status" name="fyid" value="{{ fiscal_year.id }}">
+                {% endif %}
+                </form>
+
+            </td>
+
+{#        <td>#}
+{#            <div class="btn-group">#}
+{#                <button type="button" class="btn btn-default dropdown-toggle"#}
+{#                        data-toggle="dropdown" aria-expanded="false">Action#}
+{#                    <span class="caret"></span></button>#}
+{##}
+{#                <ul class="dropdown-menu" role="menu">#}
+{##}
+{#                    <li><a href=""><i class="fa fa-eye"></i> View</a></li>#}
+{##}
+{#                    <li class="divider"></li>#}
+{##}
+{#                    <li><a href="" class="edit-data"><i class="fa fa-edit"></i> Edit</a></li>#}
+{##}
+{#                    <li class="divider"></li>#}
+{##}
+{#                    <li><a href="" class="delete-data"><i class="fa fa-trash-o"></i> Delete</a></li>#}
+{#                </ul>#}
+{#            </div>#}
+{#        </td>#}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

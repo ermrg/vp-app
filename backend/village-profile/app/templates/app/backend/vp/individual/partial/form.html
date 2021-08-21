@@ -1,0 +1,78 @@
+<form class="" method="post"
+      action="{% url 'create_household' %}" autocomplete="off" id="advertisementForm" style="background-color: #bbb6">
+    {% csrf_token %}
+    {% if form.errors %}
+        {% for field in form %}
+            {% for error in field.errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+    {% endif %}
+
+    <div class="box-body">
+
+
+        <table class="table" width="100%">
+
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <label for="name"> Name <span class="required-field">*</span></label>
+                        <input type="text" name="name" class="form-control" placeholder="Office name" id="name">
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <label for="code"> Code <span class="required-field">*</span></label>
+                        <input type="text" name="code" class="form-control" placeholder="Office code" id="code">
+                    </div>
+
+                </td>
+                <td>
+                    <div class="form-group">
+                        <label for="province">Province <span class="required-field">*</span></label>
+                        <select class="form-control" name="province" id="province">
+                            {% for province in provinces %}
+                                <option value="{{ province.id }}">{{ province }}</option>
+                           {% endfor %}
+                        </select>
+
+                    </div>
+                </td>
+
+                <td>
+                    <div class="form-group">
+                        <label for="district">District <span class="required-field">*</span></label>
+                        <select class="form-control" name="district" id="district">
+                            {% for district in districts %}
+                                <option value="{{ district.id }}">{{ district }}</option>
+                           {% endfor %}
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <label for="local_level">Local Level <span class="required-field">*</span></label>
+                        <select class="form-control" name="local_level" id="local_level">
+                            {% for local_level in local_levels %}
+                                <option value="{{ local_level.id }}">{{ local_level }}</option>
+                           {% endfor %}
+                        </select>
+                    </div>
+                </td>
+
+            </tr>
+
+        </table>
+
+
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Create</button>
+    </div>
+    <!-- /.box-footer -->
+</form>

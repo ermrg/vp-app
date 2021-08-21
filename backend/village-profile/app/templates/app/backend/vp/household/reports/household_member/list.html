@@ -1,0 +1,569 @@
+{% extends "app/backend/layouts/app.html" %}
+{% block title %}Member Report{% endblock %}
+{% load static %}
+{% load role_check %}
+{% block content %}
+    <style>
+        .form-group {
+            margin-bottom: 10px !important;
+        }
+    </style>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+
+
+            {% include 'app/backend/layouts/_notification.html' %}
+
+            <div class="row">
+
+                <div class="col-md-10">
+                    <!-- general form elements -->
+                    <h5>
+                        <button class="btn btn-primary float-left -filter" id="memberReportFilter"> Search Filters
+                        </button>
+                    </h5>
+                    <div class="filterbox">
+                        <div class="searchCriteria" style="display: none">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <select class="form-control" id="selectOption">
+                                            <option value="">--- फिल्टर छान्नुहोस् ---</option>
+                                            <option value="ward_no">वडा नं</option>
+                                            <option value="owner_name">घरमुलीको नाम</option>
+                                            <option value="mem_name">सदस्यको नाम</option>
+                                            <option value="mem_gender">सदस्यको लिङ्ग</option>
+                                            <option value="mem_age">सदस्यको उमेर</option>
+                                            <option value="marital_status">बैबाहिक अवस्था</option>
+                                            <option value="edu_level">शैक्षिकस्तर</option>
+                                            <option value="edu_status">पढाइको अवस्था</option>
+                                            <option value="tech_skill">प्राविधिक दक्षता</option>
+                                            <option value="disability_type">अपांगताको प्रकार</option>
+                                            <option value="disability_card">परिचय पत्रको प्रकार</option>
+                                            <option value="foreign_reason">विदेश जानुको उद्देश्य</option>
+                                            <option value="country"> परदेश</option>
+                                            <option value="main_occupation">पेशा</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-success" type="button" onclick="memberFilter()"
+                                            id="search">
+                                        Search
+                                    </button>
+                                    <button class="btn btn-danger" type="button" onclick="resetFields()">Reset</button>
+                                </div>
+
+                            </div>
+
+                            <div class="row" id="memberRow">
+
+                                <div id="ward_div" class="form-control-sm col-md-2" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="ward_no">वडा नं</label>
+                                        <select class="form-control form-control-sm" name="ward_no" id="filterWard">
+                                            <option value="">--- वडा छान्नुहोस् ---</option>
+                                            {% for wards in wards %}
+                                                <option value="{{ wards.id }}">{{ wards }}</option>
+                                            {% endfor %}
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div id="owner_div" class="form-control-sm col-md-3" style="display: none;">
+                                    <div class="form-group">
+                                        <label> घरमुलीको नाम</label>
+                                        <input class="form-control form-control-sm" name="owner_name" id="owner_name"
+                                               type="text" placeholder="घरमुलीको नाम">
+                                    </div>
+                                </div>
+                                <div id="mem_name_div" class="form-control-sm col-md-3" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="mem_name"> सदस्यको नाम</label>
+                                        <input class="form-control form-control-sm" name="mem_name"
+                                               id="mem_name"
+                                               type="text" placeholder="सदस्यको नाम">
+                                    </div>
+                                </div>
+                                <div id="gender_div" class="form-control-sm col-md-2" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="gender">लिङ्ग</label>
+                                        <select class="form-control form-control-sm" name="gender" id="filterGender">
+                                            <option value="">--- लिङ्ग छान्नुहोस् ---</option>
+                                            {% for genders in genders %}
+                                                <option value="{{ genders.id }}">{{ genders }}</option>
+                                            {% endfor %}
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div id="mem_age_div" class="form-control-sm col-md-3" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="mem_age"> सदस्यको उमेर</label>
+                                        <input class="form-control form-control-sm" name="mem_age"
+                                               id="mem_age"
+                                               type="text" placeholder="सदस्यको उमेर">
+                                    </div>
+                                </div>
+                                <div id="marital_status_div" class="form-control-sm col-md-2" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="marital_status">बैबाहिक अवस्था</label>
+                                        <select class="form-control form-control-sm" name="marital_status"
+                                                id="filterMaritalStatus">
+                                            <option value="">--- बैबाहिक अवस्था छान्नुहोस् ---</option>
+                                            {% for marital_statuses in marital_statuses %}
+                                                <option value="{{ marital_statuses.id }}">{{ marital_statuses }}</option>
+                                            {% endfor %}
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="education_level_div" class="form-control-sm col-md-2" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="education_level">शैक्षिकस्तर</label>
+                                        <select class="form-control form-control-sm" name="education_level"
+                                                id="filterEducationLevel">
+                                            <option value="">--- शैक्षिकस्तर छान्नुहोस् ---</option>
+                                            {% for education_levels in education_levels %}
+                                                <option value="{{ education_levels.id }}">{{ education_levels }}</option>
+                                            {% endfor %}
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div id="education_status_div" class=" form-control-sm col-md-4 offset-md-3"
+                                     style="display: none;">
+                                    <div class="form-group">
+                                        <label for="education_status"> पढाइको अवस्था </label>
+                                        <select class="form-control form-control-sm" name="education_status"
+                                                id="filterEducationStatus">
+                                            <option value="">--- पढाइको अवस्था छान्नुहोस् ---</option>
+                                            {% for education_statuses in education_statuses %}
+                                                <option value="{{ education_statuses.id }}">{{ education_statuses.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="technical_skill_div" class=" form-control-sm col-md-4 offset-md-3"
+                                     style="display: none;">
+                                    <div class="form-group">
+                                        <label for="technical_skill"> प्राविधिक दक्षता </label>
+                                        <select class="form-control form-control-sm" name="technical_skill"
+                                                id="filterTechnicalSkill">
+                                            <option value="">--- प्राविधिक दक्षता छान्नुहोस् ---</option>
+                                            {% for technical_skills in technical_skills %}
+                                                <option value="{{ technical_skills.id }}">{{ technical_skills.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="disability_type_div" class=" form-control-sm col-md-4 offset-md-3"
+                                     style="display: none;">
+                                    <div class="form-group">
+                                        <label for="disability_type"> अपांगताको प्रकार </label>
+                                        <select class="form-control form-control-sm" name="disability_type"
+                                                id="filterDisabilityType">
+                                            <option value="">--- अपांगताको प्रकार छान्नुहोस् ---</option>
+                                            {% for disability_types in disability_types %}
+                                                <option value="{{ disability_types.id }}">{{ disability_types.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="disability_card_div" class=" form-control-sm col-md-4 offset-md-3"
+                                     style="display: none;">
+                                    <div class="form-group">
+                                        <label for="disability_card"> परिचय पत्रको प्रकार </label>
+                                        <select class="form-control form-control-sm" name="disability_card"
+                                                id="filterDisabilityCard">
+                                            <option value="">--- परिचय पत्रको प्रकार छान्नुहोस् ---</option>
+                                            {% for disability_cards in disability_cards %}
+                                                <option value="{{ disability_cards.id }}">{{ disability_cards.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="foreign_reason_div" class=" form-control-sm col-md-4 offset-md-3"
+                                     style="display: none;">
+                                    <div class="form-group">
+                                        <label for="foreign_reason"> विदेश जानुको उद्देश्य </label>
+                                        <select class="form-control form-control-sm" name="foreign_reason"
+                                                id="filterForeignReason">
+                                            <option value="">--- उद्देश्य छान्नुहोस् ---</option>
+                                            {% for foreign_reasons in foreign_reasons %}
+                                                <option value="{{ foreign_reasons.id }}">{{ foreign_reasons.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="country_div" class=" form-control-sm col-md-4 offset-md-3"
+                                     style="display: none;">
+                                    <div class="form-group">
+                                        <label for="country"> देश </label>
+                                        <select class="form-control form-control-sm" name="country"
+                                                id="filterForeignReason">
+                                            <option value="">--- देश छान्नुहोस् ---</option>
+                                            {% for country in countries %}
+                                                <option value="{{ country.id }}">{{ country.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="main_occupation_div" class=" form-control-sm col-md-4 offset-md-3"
+                                     style="display: none;">
+                                    <div class="form-group">
+                                        <label for="main_occupation"> पेशा </label>
+                                        <select class="form-control form-control-sm" name="main_occupation"
+                                                id="filterForeignReason">
+                                            <option value="">--- पेशा छान्नुहोस् ---</option>
+                                            {% for main_occupations in main_occupations %}
+                                                <option value="{{ main_occupations.id }}">{{ main_occupations.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box -->
+                </div>
+            </div>
+
+            <h2 style="text-align: center">
+                परीवार रिपोर्ट
+            </h2>
+
+            <ol class="breadcrumb">
+
+                <li><a type="button" class="btn btn-default" href="#" onClick="javascript:history.go(-1);"><i
+                        class="fa fa-arrow-left"></i> Back</a>
+                    <a type="button" class="btn btn-success" href="{% url 'create_household' %}"><i
+                            class="fa fa-plus"></i>Create New</a>
+
+                </li>
+            </ol>
+
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row" id="listmember">
+
+                <div class="col-md-12 col-sm-12" id="memberlist">
+                    <!-- general form elements -->
+                    <div class="box box-primary">
+                        <div class="box-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                <th>SN</th>
+                                <th title="Head Of House"> सदस्य नाम</th>
+                                <th title="ward"> वडा नं.</th>
+                                <th title="ward"> बस्ती</th>
+                                <th title="ward"> जाती</th>
+                                <th title="ward"> धर्म</th>
+                                <th title="resident type"> घरमुलीको नाम</th>
+                                <th title="gender"> लिंग</th>
+                                <th title="basti"> उमेर</th>
+                                <th title="Citizenship no"> नागरिकता नं.</th>
+                                <th title="phone no"> सम्पर्क नं.</th>
+                                <th title="Relation with househead"> घरमुलीसंगको नाता</th>
+                                <th title="education level"> शैक्षिकस्तर</th>
+                                <th title="education status"> पढाइको अवस्था</th>
+                                <th title="marital status"> वैवाहिक अवस्था</th>
+                                <th title="disability type"> अपाङ्गताको प्रकार</th>
+                                <th title="disability card type"> अपाङ्गताको परिचयपत्र प्रकार</th>
+                                <th title="skiill type"> प्राविधिक तालिम प्रकार</th>
+                                <th title="country visited"> गएको देश</th>
+                                <th title="reason for abroad stay"> विदेश जानुको कारण</th>
+                                <th title="disease name"> लागेको रोगको नाम</th>
+                                <th>Action</th>
+                                </thead>
+                                <tbody>
+                                {% for household_member in household_members %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ household_member.name_nep }}</td>
+                                        <td>{{ household_member.hh.ward }}</td>
+                                        <td>{{ household_member.hh.basti }}</td>
+                                        <td>{{ household_member.hh.jaati }}</td>
+                                        <td>{{ household_member.hh.religion }}</td>
+                                        <td>{{ household_member.hh }}</td>
+                                        <td>{{ household_member.gender.name }}</td>
+                                        <td>{{ household_member.age }}</td>
+                                        <td>{{ household_member.citizenship_num }}</td>
+                                        <td>{{ household_member.mobile_num }}</td>
+                                        <td>{{ household_member.relation_with_hoh }}</td>
+                                        <td>{{ household_member.education_level }}</td>
+                                        <td>{{ household_member.education_status }}</td>
+                                        <td>{{ household_member.marital_status }}</td>
+                                        <td>{{ household_member.disability_type }}</td>
+                                        <td>{{ household_member.disability_card }}</td>
+                                        <td>{{ household_member.technical_skill }}</td>
+                                        <td>{{ household_member.country_visited }}</td>
+                                        <td>{{ household_member.foreign_reason }}</td>
+                                        <td>{{ household_member.disease_name }}</td>
+                                        {#                                        <td>{{ household.mobile_num }}</td>#}
+                                        {#                                        <td>{{ household.basti }}</td>#}
+                                        {#                                        <td>{{ household.ward }}</td>#}
+                                        {#                                        <td>{{ household.local_level }}</td>#}
+                                        {#            <td>#}
+                                        {#                {% if household.step < 10 %}#}
+                                        {#                <span class="label label-warning">Incomplete {{ household.step }}</span>#}
+                                        {#                {% else %}#}
+                                        {#                <span class="label label-primary">Complete</span>#}
+                                        {#                {% endif %}#}
+                                        {#            </td>#}
+
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle"
+                                                        data-toggle="dropdown" aria-expanded="false">Action
+                                                    <span class="caret"></span></button>
+
+                                                <ul class="dropdown-menu" role="menu">
+
+                                                    <li><a href=""><i class="fa fa-eye"></i> View</a></li>
+
+                                                    {#                    <li class="divider"></li>#}
+
+                                                    <li><a href="{% url 'household_member.edit' household_member.id %}"
+                                                           class="edit-data"><i class="fa fa-edit"></i> Edit</a></li>
+
+                                                    <li class="divider"></li>
+
+                                                    <li>
+                                                        <a href="{% url 'delete_household_member' household_member.id %}"
+                                                           class="delete-data"><i class="fa fa-trash-o"></i> Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.box -->
+                </div>
+            </div>
+
+        </section>
+        <!-- /.content -->
+    </div>
+
+{% endblock %}
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            makeFullPage();
+        });
+    </script>
+    {#    Dates #}
+
+    <script>
+
+        $('#invoiceDate').nepaliDatePicker({
+            dateFormat: "%M %d, %y",
+            closeOnDateSelect: true,
+        });
+
+    </script>
+
+    {#    Data Tables #}
+    <script>
+        $(function () {
+            $('#example1').DataTable({
+                'paging': true,
+                'lengthChange': true,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': true
+            });
+            $('#type').select2({});
+            $('#parent').select2({});
+        })
+    </script>
+
+    {# filter #}
+    <script>
+        $('button#memberReportFilter').click(function () {
+            $('.searchCriteria').toggle("slow");
+        });
+    </script>
+
+    {# Ward Filter #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'ward_no') {
+                $("#ward_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# house head #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'owner_name') {
+                $("#owner_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# Member name #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'mem_name') {
+                $("#mem_name_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# Member Gender #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'mem_gender') {
+                $("#gender_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# Member Age #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'mem_age') {
+                $("#mem_age_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# Marital Status #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'marital_status') {
+                $("#marital_status_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# Education Level #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'edu_level') {
+                $("#education_level_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# Education Status #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'edu_status') {
+                $("#education_status_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# Technical Skill #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'tech_skill') {
+                $("#technical_skill_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# Disability Types #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'disability_type') {
+                $("#disability_type_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# Disability Card #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'disability_card') {
+                $("#disability_type_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# Foreign Reason #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'foreign_reason') {
+                $("#foreign_reason_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# Country #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'country') {
+                $("#country_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+    {# main Occupation #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'main_occupation') {
+                $("#main_occupation_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+
+{% endblock %}

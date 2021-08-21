@@ -1,0 +1,69 @@
+version: "3"
+services:
+  db:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: vp
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysql-vol:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - vp-network
+  nginx:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    ports:
+      - 80:80
+    volumes:
+      - static_volume:/app/backend/village-profile/django_static
+      - ./docker/nginx/development:/etc/nginx/conf.d
+    depends_on:
+      - backend
+    networks:
+      - vp-network
+  backend:
+    build:
+      context: .
+      dockerfile: ./docker/backend/Dockerfile
+    entrypoint: /app/docker/backend/wsgi-entrypoint.sh
+    expose:
+      - 8000
+    volumes:
+      - .:/app
+      - static_volume:/app/backend/village-profile/django_static
+    depends_on:
+      - db
+    networks:
+      - vp-network
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: vp
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "8080:80"
+    volumes:
+      - mysql-vol:/var/lib/mysql
+    networks:
+      - vp-network
+volumes:
+  mysql-vol:
+    driver: local
+  static_volume: {}
+networks:
+  vp-network:

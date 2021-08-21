@@ -1,0 +1,91 @@
+<form class="" method="post" action="{% if household %}{% url 'store_household' household.id 'earthquake' %}{% endif %}"
+      autocomplete="off">
+    {% csrf_token %}
+    <table class="table" style="background-color: #bbb6">
+
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label for="damage"> Damage </label>
+                    <input type="text" name="damage" class="form-control" placeholder="Damage %"
+                           id="damage"
+                           value="{{ household.earthquake.damage }}">
+                </div>
+
+            </td>
+            <td>
+                <div class="form-group">
+                    <label for="rebuild"> Rebuild </label>
+                    <input type="text" name="rebuild" class="form-control" placeholder="Rebuild %"
+                           id="rebuild"
+                           value="{{ household.earthquake.rebuild }}">
+                </div>
+
+            </td>
+            <td>
+                <div class="form-group">
+                    <label for="donation"> Donation </label>
+                    <input type="text" name="donation" class="form-control" placeholder="Donation Source"
+                           id="donation"
+                           value="{{ household.earthquake.donation }}">
+                </div>
+
+            </td>
+
+            </tr>
+        <tr>
+            <td colspan="4">
+                <div class="form-group">
+                    <label for="remarks"> Remarks </label>
+                    <textarea name="remarks" class="form-control" rows="2"
+                              id="remarks">{{ household.infrastructure.remarks }}</textarea>
+                </div>
+
+            </td>
+        </tr>
+    </table>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+
+<table class="table table-bordered">
+    <thead>
+    <th>SN</th>
+    <th>Damage</th>
+    <th>Rebuild</th>
+    <th>Donation</th>
+    <th>Remarks</th>
+    <th>Action</th>
+    </thead>
+    <tbody>
+    {% for earthquake in household.get_earthquakes %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+
+            <td>{{ earthquake.damage }}</td>
+            <td>{{ earthquake.rebuild }}</td>
+            <td>{{ earthquake.donation }}</td>
+            <td>{{ earthquake.remarks }}</td>
+
+            <td>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle"
+                            data-toggle="dropdown" aria-expanded="false">Action
+                        <span class="caret"></span></button>
+
+                    <ul class="dropdown-menu" role="menu">
+
+                        <li><a href="#" class="edit-data"><i
+                                class="fa fa-edit"></i> Edit</a></li>
+
+                        <li class="divider"></li>
+
+                        <li><a href="" class="delete-data"><i class="fa fa-trash-o"></i> Delete</a></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

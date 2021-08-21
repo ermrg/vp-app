@@ -1,0 +1,80 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                    <label for="facility_name">सुबिधाको नाम</label>
+                </div>
+                <div class="col-sm-8">
+                    <select type="text" class="form-control" name="facility_name" id="facility_name">
+                        <option value="">सुबिधाको प्रकार छान्नुहोस</option>
+                        {% for facility in facility %}
+                            <option value="{{ facility.id }}">{{ facility.name }}</option>
+                        {% endfor %}
+
+                        <option value="add">अन्य प्रकार थप्नुहोस्</option>
+                    </select>
+                    <!-- Modal -->
+                    <div id="otherFacilities" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close closeFacilities" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">नयाँ सुबिधाको प्रकार थप्नुहोस्</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <input class="form-control" name="other_facility_type" id="other_facility_type"
+                                           placeholder="सुबिधाको अन्य प्रकार" type="text"></div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary" id="addFacilitiesButton">थप्नुहोस्
+                                    </button>
+                                    <button type="button" class="btn btn-default closeFacilities">Close</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                    <label for="facility_availability">उपलब्धता</label>
+                </div>
+                <div class="col-sm-8">
+                    <select class="form-control" name="facility_availability" id="facility_availability">
+                        <option value="True">छ</option>
+                        <option value="False">छैन</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                    <label for="facility_count">संख्या</label>
+                </div>
+                <div class="col-sm-8">
+                    <input class="form-control" name="facility_count" id="facility_count" placeholder="संख्या"
+                           type="number">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                    <label for="facility_remarks">कैफियत</label>
+                </div>
+                <div class="col-sm-8">
+                    <textarea class="form-control" name="facility_remarks" id="facility_remarks"
+                              placeholder="कैफियत"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

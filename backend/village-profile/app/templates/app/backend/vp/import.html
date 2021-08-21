@@ -1,0 +1,67 @@
+{% extends "app/backend/layouts/app.html" %}
+{% block title %}Import/Export{% endblock %}
+{% load static %}
+{% load role_check %}
+{% block content %}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+               Import Excel File
+            </h1>
+
+            {% include 'app/backend/layouts/_notification.html' %}
+
+            {#            create back list#}
+            <ol class="breadcrumb">
+                <li><a type="button" class="btn btn-default" href="#" onClick="javascript:history.go(-1);"><i
+                        class="fa fa-arrow-left"></i> Back</a>
+                    {#                    <a type="button" class="btn btn-default" href="{% url 'household' %}"><i#}
+                    {#                            class="fa fa-list"></i>List</a>#}
+                    {#                    <a type="button" class="btn btn-success" href="{% url 'create_household' %}"><i#}
+                    {#                            class="fa fa-plus"></i>Create New</a>#}
+                </li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+
+                <div class="col-md-12 col-sm-12">
+
+                    <form action="{% url 'upload_excel' %}" method="post" enctype="multipart/form-data" id="importForm">
+                        {% csrf_token %}
+                        <input type="file" class="form-control" name="excel_file" required>
+                        <br>
+                        <button type="submit" class="btn btn-primary btn-md " id="load1"
+                                data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Uploading">Upload</button>
+{#                        <div id="error_message" class="ajax_response" style="float:right"></div>#}
+{#	                    <div id="success_message" class="ajax_response" style="float:right"></div>#}
+{#                        <button type="submit" class="btn btn-primary" id="excelButton">Upload</button>#}
+                    </form>
+
+                </div>
+            </div>
+
+        </section>
+        <!-- /.content -->
+        <input type="hidden" id="householdID">
+        <input type="hidden" id="househeadID">
+        <input type="hidden" id="houseDetailsID">
+
+    </div>
+
+{% endblock %}
+{% block scripts %}
+    <script>
+        $('.btn').on('click', function() {
+            var $this = $(this);
+             $this.button('loading');
+                setTimeout(function() {
+                    $this.button('reset');
+                }, 80000);
+        });
+    </script>
+{% endblock %}

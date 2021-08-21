@@ -1,0 +1,67 @@
+{% extends "app/backend/layouts/app.html" %}
+{% load static %}
+{% block title %} Infrastructure Analytics {% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'app/bootstrap/dist/css/bootstrap.min.css' %}">
+<script src="{% static 'js/excanvas.js' %}"></script>
+{% endblock %}
+{% block content %}
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>Infrastructure Analytics</h1>
+        {% include 'app/backend/layouts/_notification.html' %}
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <h1>Sample Line Chart</h1>
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <h1>Sample Bar Chart</h1>
+                <canvas id="mybar"></canvas>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <h1>Sample Pie Chart</h1>
+                <canvas id="mypie"></canvas>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+{% block scripts %}
+        <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+        <script src="{% static 'app/jquery/dist/jquery.min.js' %}"></script>
+        <!-- Bootstrap 3.3.7 -->
+        <script src="{% static 'app/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+        <script type="text/javascript">
+            $.get('{% url "infrastructure_line_chart" %}', function(data) {
+                var ctx = $("#myChart").get(0).getContext("2d");
+                new Chart(ctx, {
+                    type: 'line', data: data
+                });
+            });
+        </script>
+        <script type="text/javascript">
+            $.get('{% url "infrastructure_line_chart" %}', function(data) {
+                var ctx = $("#mybar").get(0).getContext("2d");
+                new Chart(ctx, {
+                    type: 'bar', data: data
+                });
+            });
+        </script>
+        <script type="text/javascript">
+            $.get('{% url "infrastructure_line_chart" %}', function(data) {
+                var ctx = $("#mypie").get(0).getContext("2d");
+                new Chart(ctx, {
+                    type: 'pie', data: data
+                });
+            });
+        </script>
+{% endblock %}
+<!--    </body>-->
+<!--</html>-->

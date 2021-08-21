@@ -1,0 +1,281 @@
+{% extends "app/backend/layouts/app.html" %}
+
+{% block title %} Finance {% endblock %}
+{% load static %}
+{% load role_check %}
+{% block content %}
+    <style>
+        .form-group {
+            margin-bottom: 10px !important;
+        }
+    </style>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container col-md-12">
+                <div class="row analysis">
+                    <div class="topics" style="text-align: center; margin:0 30px">
+                        <a href="{% url 'analysis' %}">
+                           <i class="fa fa-pie-chart"></i>
+                            <h6 class="topics-title">Demography</h6>
+                        </a>
+                    </div>
+                    <!--  topic -->
+                    <div class="topics" style="text-align: center; margin:0 30px">
+                        <a href="{% url 'education.analysis' %}">
+                             <i class="fa fa-graduation-cap"></i>
+                            <h6 class="topics-title">Education</h6>
+                        </a>
+                    </div>
+                    <!--  topic -->
+                    <div class="topics" style="text-align: center; margin: 0 30px">
+                        <a href="{% url 'household.analysis' %}">
+                             <i class="fa fa-home"></i>
+                            <h6 class="topics-title">Household and Amenities</h6>
+                        </a>
+                    </div>
+                    <!--  topic -->
+                    <div class="topics" style="text-align: center; margin: 0 30px">
+                        <a href="#">
+                           <i class="fa fa-money"></i>
+                            <h6 class="topics-title">Finance</h6>
+                        </a>
+                    </div>
+                    <!--  topic -->
+                    <div class="topics" style="text-align: center; margin: 0 50px">
+                        <a href="{% url 'health.analysis' %}">
+                            <i class="fa fa-medkit"></i>
+                            <h6 class="topics-title">Health</h6>
+                        </a>
+                    </div>
+                    <!--  topic -->
+                    <div class="topics" style="text-align: center; margin: 0 30px">
+                        <a href="{% url 'agriculture.analysis' %}">
+                              <i class="fa fa-tree"></i>
+                            <h6 class="topics-title">Agriculture</h6>
+                        </a>
+                    </div>
+                    <!--  topic -->
+                </div>
+            </div>
+        </section>
+
+         <!--  Body section -->
+        <section>
+            <article class="container-fluid" id="marginTop">
+            <div class="row hidden-xs">
+                <ul class="col-sm-5 col-md-4 col-lg-3 nav nav-pills nav-stacked" role="tablist">
+                    <li class="active"><a href="#tabs-1" role="tab" data-toggle="pill">Bank Account</a>
+                    </li>
+                    <li><a href="#tabs-2" role="tab" data-toggle="pill">Source of Earnings</a>
+                    </li>
+                    <li><a href="#tabs-3" role="tab" data-toggle="pill">Countries of Foreign Employment</a>
+                    </li>
+                </ul>
+                <div class="col-sm-7 col-md-8 col-lg-9 well-sm tab-content side-tab">
+                    <!------main 1 tab start--------->
+                    <div class="tab-pane active" id="tabs-1">
+
+                        <!-- Overall household by Bank A/C -->
+                        <div id="containerBankAc" class="highchartContainer"></div>
+                        <div class="divider"></div>
+
+                        <!-- Overall household by Earning Sources -->
+                        <div id="containerEarningSource" class="highchartContainer"></div>
+                        <div class="divider"></div>
+
+                        <!-- Overall household by Employed Countries -->
+                        <div id="containerEmployedCountries" class="highchartContainer"></div>
+{#                        <div class="divider"></div>#}
+
+                        <!--    pie chart-->
+{#                        <div id="container1" class="highchartContainer"></div>#}
+{#                        <div class="divider"></div>#}
+
+{#                        <!-- Overall bar chart2-->#}
+{#                        <div id="container2" class="highchartContainer"></div>#}
+                    </div>
+                    <!------main 1 tab end--------->
+
+                    <!------tab 2 start--------->
+                    <div class="tab-pane" id="tabs-2">
+                        <h2>Population By Age</h2>
+                        <p>Make your everyday purchases a little less painful. With your X checking account, you'll rack up rewards just by using your Visa&reg; Debit card.
+                            <br>Personalized, cash back rewards. Nice.</p> <a href="/account-features#Get%20Cash%20Back">Learn More   »</a>
+                    </div>
+                       <!------main tab 2 end--------->
+                      <!------tab start--------->
+                    <div class="tab-pane" id="tabs-3">
+                        <h2>Number of Household By Religion</h2>
+                        <p>Take banking off of your chore list. Now you can do your banking from anywhere, anytime, for free. That's an easy way to keep your money and your time where it belongs - with you.</p> <a href="/account-features#Online Banking">Learn More   »</a>
+                    </div>
+                </div>
+            </div>
+
+        </article>
+        </section>
+
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+
+    <script>
+        makeFullScreen()
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            Highcharts.chart('containerBankAc', {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: 'बैँक खाता अनुसार जनसख्यां'
+                },
+                subtitle: {
+                    text: 'बैँक खाता अनुसार जनसख्यां'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                legend: {
+                    enabled: true,
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            connectorColor: 'blue'
+                        },
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    name: 'Population',
+                    data: [
+                        {
+                            name: 'बैँक खाता भएको',
+                            y: {{with_bank_ac}}
+                        },
+                        {
+                            name: 'बैँक खाता नभएको',
+                            y: {{without_bank_ac}}
+                        },
+                    ]
+                }]
+            });
+        })
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            Highcharts.chart('containerEarningSource', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Overall : Household by Facilities'
+                },
+                subtitle: {
+                    text: 'Source: Individual Data Collection'
+                },
+                xAxis: {
+                    categories: [
+                        'तरकारी खेति',
+                        'पशुपालन',
+                        'कुखुरा पालन',
+                        'माछापालन',
+                        'स्वदेशमा मजदुरी',
+                        'ब्यापार ब्यबसाय',
+                        'बैदेशिक रोजगारी',
+                        'सरकारी जागिर',
+                        'गैरसरकारी जागिर',
+                        'घरभाडा',
+                        'जग्गा जमिन भाडा',
+                    ],
+                    crosshair: true
+                },
+                yAxis: {
+                    title: {
+                        text: 'Population'
+                    }
+                },
+                legend: {
+                    enabled: false,
+                },
+                tooltip: {
+                    valueSuffix: '(In Thousand)'
+                },
+                series: [{
+                    name: 'Population',
+                    data: [{{vegetable_agriculture}}, {{animal_husbandry}}, {{chicken_farm}}, {{fish_farm}}, {{indigence_labour}},
+                        {{business}}, {{foreign_employment}}, {{goverment_job}}, {{non_gov_jobs}}, {{house_rent}}, {{land_rent}}]
+                }]
+            });
+        })
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            Highcharts.chart('containerEmployedCountries', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Overall : Household by Employed Countries'
+                },
+                subtitle: {
+                    text: 'Source: Individual Data Collection'
+                },
+                xAxis: {
+                    categories: [
+                        'Australia',
+                        'Bahrain',
+                        'Korea',
+                        'Dubai',
+                        'Germany',
+                        'India',
+                        'Iraq',
+                        'Israel',
+                        'Japan',
+                        'Kuwait',
+                        'Malaysia',
+                        'Qatar',
+                        'Saudi',
+                        'America/USA',
+                        'Uk/London',
+                    ],
+                    crosshair: true
+                },
+                yAxis: {
+                    title: {
+                        text: 'Population'
+                    }
+                },
+                legend: {
+                    enabled: false,
+                },
+                tooltip: {
+                    valueSuffix: '(In Thousand)'
+                },
+                series: [{
+                    name: 'Population',
+                    data: [{{employed_in_australia}}, {{employed_in_bahrain}}, {{employed_in_korea}}, {{employed_in_dubai}}, {{employed_in_germany}},
+                        {{employed_in_india}}, {{employed_in_iraq}}, {{employed_in_israel}}, {{employed_in_japan}},
+                        {{employed_in_kuwait}}, {{employed_in_malaysia}}, {{employed_in_qatar}}, {{employed_in_saudi}},
+                        {{employed_in_america}}, {{employed_in_england}}]
+                }]
+            });
+        })
+    </script>
+
+{% endblock %}

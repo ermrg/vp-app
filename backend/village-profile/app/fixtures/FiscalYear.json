@@ -1,0 +1,104 @@
+[{
+  "model": "app.fiscalyear",
+  "pk": 1,
+  "fields": {
+    "year": "2074/75",
+    "code": "74/75",
+    "start_date_ad": "2017-07-16",
+    "end_date_ad": "2018-07-16",
+    "start_date_bs": "2074-4-1",
+    "end_date_bs": "2075-3-31",
+    "status": 0
+  }
+},
+{
+  "model": "app.fiscalyear",
+  "pk": 2,
+  "fields": {
+    "year": "2075/76",
+    "code": "75/76",
+    "start_date_ad": "2018-07-17",
+    "end_date_ad": "2019-07-16",
+    "start_date_bs": "2075-4-1",
+    "end_date_bs": "2076-3-31",
+    "status": 0
+  }
+},
+{
+  "model": "app.fiscalyear",
+  "pk": 3,
+  "fields": {
+    "year": "2076/77",
+    "code": "76/77",
+    "start_date_ad": "2019-07-17",
+    "end_date_ad": "2020-07-15",
+    "start_date_bs": "2076-4-1",
+    "end_date_bs": "2077-3-31",
+    "status": 1
+  }
+},
+{
+  "model": "app.fiscalyear",
+  "pk": 4,
+  "fields": {
+    "year": "2077/78",
+    "code": "77/78",
+    "start_date_ad": "2020-07-16",
+    "end_date_ad": "2021-07-15",
+    "start_date_bs": "2077-4-1",
+    "end_date_bs": "2078-3-31",
+    "status": 0
+  }
+},
+{
+  "model": "app.fiscalyear",
+  "pk": 5,
+  "fields": {
+    "year": "2078/79",
+    "code": "78/79",
+    "start_date_ad": "2021-07-16",
+    "end_date_ad": "2022-07-16",
+    "start_date_bs": "2078-4-1",
+    "end_date_bs": "2079-3-32",
+    "status": 0
+  }
+},
+{
+  "model": "app.fiscalyear",
+  "pk": 6,
+  "fields": {
+    "year": "2079/80",
+    "code": "79/80",
+    "start_date_ad": "2022-07-17",
+    "end_date_ad": "2023-07-16",
+    "start_date_bs": "2079-4-1",
+    "end_date_bs": "2080-3-31",
+    "status": 0
+  }
+},
+{
+  "model": "app.fiscalyear",
+  "pk": 7,
+  "fields": {
+    "year": "2080/81",
+    "code": "80/81",
+    "start_date_ad": "2023-07-17",
+    "end_date_ad": "2024-07-15",
+    "start_date_bs": "2080-4-1",
+    "end_date_bs": "2081-3-32",
+    "status": 0
+  }
+},
+{
+  "model": "app.fiscalyear",
+  "pk": 8,
+  "fields": {
+    "year": "2081/82",
+    "code": "81/82",
+    "start_date_ad": "2024-07-16",
+    "end_date_ad": "2025-07-15",
+    "start_date_bs": "2081-4-1",
+    "end_date_bs": "2082-3-31",
+    "status": 0
+  }
+}]

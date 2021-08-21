@@ -1,0 +1,291 @@
+{% extends "app/backend/layouts/app.html" %}
+{% block title %}Helper Report{% endblock %}
+{% load static %}
+{% load role_check %}
+{% block content %}
+    <style>
+        .form-group {
+            margin-bottom: 10px !important;
+        }
+    </style>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+
+            {% include 'app/backend/layouts/_notification.html' %}
+            <div class="row">
+                <div class="col-md-10">
+                    <!-- general form elements -->
+                    <h5>
+                        <button class="btn btn-primary float-left -filter" id="helperReportFilter"> Search Filters
+                        </button>
+                    </h5>
+                    <div class="filterbox">
+                        <div class="searchCriteria" style="display: none">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <select class="form-control" id="selectOption">
+                                            <option value="">--- फिल्टर छान्नुहोस् ---</option>
+                                            <option value="ward_no">वडा नं</option>
+                                            <option value="owner_name">घरमुलीको नाम</option>
+                                            <option value="helper_name">सहयोगीको नाम</option>
+                                            <option value="helper_gender">सहयोगीको लिङ्ग</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-success" type="button" onclick="helperFilter()"
+                                            id="search">
+                                        Search
+                                    </button>
+                                    <button class="btn btn-danger" type="button" onclick="resetFields()">Reset</button>
+                                </div>
+
+
+                            </div>
+
+                            <div class="row" id="helperRow">
+
+                                <div id="ward_div" class="form-control-sm col-md-2" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="ward_no">वडा नं</label>
+                                        <select class="form-control form-control-sm" name="ward_no" id="filterWard">
+                                            <option value="">--- वडा छान्नुहोस् ---</option>
+                                            {% for wards in wards %}
+                                                <option value="{{ wards.id }}">{{ wards }}</option>
+                                            {% endfor %}
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div id="owner_div" class="form-control-sm col-md-3" style="display: none;">
+                                    <div class="form-group">
+                                        <label> घरमुलीको नाम</label>
+                                        <input class="form-control form-control-sm" name="owner_name" id="owner_name"
+                                               type="text" placeholder="घरमुलीको नाम">
+                                    </div>
+                                </div>
+
+                                <div id="helper_div" class="form-control-sm col-md-3" style="display: none;">
+                                    <div class="form-group">
+                                        <label> सहयोगीको नाम</label>
+                                        <input class="form-control form-control-sm" name="helper_name" id="helper_name"
+                                               type="text" placeholder="सहयोगीको नाम">
+                                    </div>
+                                </div>
+
+                                <div id="gender_div" class="form-control-sm col-md-2" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="helper_gender">सहयोगीको लिङ्ग</label>
+                                        <select class="form-control form-control-sm" name="helper_gender"
+                                                id="helper_gender">
+                                            <option value="">--- लिङ्ग छान्नुहोस् ---</option>
+                                            {% for genders in genders %}
+                                                <option value="{{ genders.id }}">{{ genders.name }}</option>
+                                            {% endfor %}
+
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box -->
+                </div>
+            </div>
+
+            <h2 style="text-align: center">
+                घरसहयोगीको रिपोर्ट
+            </h2>
+
+            <ol class="breadcrumb">
+
+                <li><a type="button" class="btn btn-default" href="#" onClick="javascript:history.go(-1);"><i
+                        class="fa fa-arrow-left"></i> Back</a>
+                    <a type="button" class="btn btn-success" href="{% url 'create_household' %}"><i
+                            class="fa fa-plus"></i>Create New</a>
+
+                </li>
+            </ol>
+        </section>
+
+        <section style="margin-left: 20px;">
+        </section>
+
+
+        <!-- Main content -->
+        <section>
+
+
+            <div class="row">
+
+                <div class="col-md-12 col-sm-12">
+                    <!-- general form elements -->
+                    <div class="box box-primary">
+                        <div class="box-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                <th>SN</th>
+                                <th title="Head Of House"> घरमुलीको नाम</th>
+                                <th title="ward"> वडा नं.</th>
+                                <th title="helper name"> नाम</th>
+                                <th title="gender"> लिंग</th>
+                                <th title="age"> उमेर</th>
+                                <th title="status"> अवस्था</th>
+                                <th title="started date"> कहिले देखि</th>
+
+                                <th>Action</th>
+                                </thead>
+                                <tbody>
+                                {% for household_helper in household_helpers %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ household_helper.household }}</td>
+                                        <td>{{ household_helper.household.ward }}</td>
+                                        <td>{{ household_helper.child_name }}</td>
+                                        <td>{{ household_helper.gender.name }}</td>
+                                        <td>{{ household_helper.age }}</td>
+                                        <td>{{ household_helper.child_labor_status }}</td>
+                                        <td>{{ household_helper.start_date_bs }}</td>
+
+
+                                        {#                {% if household.step < 10 %}#}
+                                        {#                <span class="label label-warning">Incomplete {{ household.step }}</span>#}
+                                        {#                {% else %}#}
+                                        {#                <span class="label label-primary">Complete</span>#}
+                                        {#                {% endif %}#}
+                                        {#            </td>#}
+
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle"
+                                                        data-toggle="dropdown" aria-expanded="false">Action
+                                                    <span class="caret"></span></button>
+
+                                                <ul class="dropdown-menu" role="menu">
+
+                                                    <li><a href=""><i class="fa fa-eye"></i> View</a></li>
+
+                                                    {#                    <li class="divider"></li>#}
+
+                                                    <li><a href="{% url 'household_helper.edit' household_helper.id %}"
+                                                           class="edit-data"><i class="fa fa-edit"></i> Edit</a></li>
+
+                                                    <li class="divider"></li>
+
+                                                    <li>
+                                                        <a href="{% url 'delete_household_helper' household_helper.id %}"
+                                                           class="delete-data"><i class="fa fa-trash-o"></i> Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.box -->
+                </div>
+            </div>
+
+        </section>
+        <!-- /.content -->
+    </div>
+
+{% endblock %}
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            makeFullPage();
+        });
+    </script>
+    {#    Dates #}
+
+    <script>
+
+        $('#invoiceDate').nepaliDatePicker({
+            dateFormat: "%M %d, %y",
+            closeOnDateSelect: true,
+        });
+
+    </script>
+
+    {#    Data Tables #}
+    <script>
+        $(function () {
+            $('#example1').DataTable({
+                'paging': true,
+                'lengthChange': true,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': true
+            });
+            $('#type').select2({});
+            $('#parent').select2({});
+        })
+    </script>
+    {# filter #}
+    <script>
+        $('button#helperReportFilter').click(function () {
+            $('.searchCriteria').toggle("slow");
+        });
+    </script>
+
+    {# Ward Filter #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'ward_no') {
+                $("#ward_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# house head #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'owner_name') {
+                $("#owner_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# Helper Name #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'helper_name') {
+                $("#helper_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# Helper Gender #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'helper_gender') {
+                $("#gender_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+
+{% endblock %}

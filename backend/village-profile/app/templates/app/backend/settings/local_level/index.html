@@ -1,0 +1,129 @@
+{% extends "app/backend/layouts/app.html" %}
+{% block title %}Local Level{% endblock %}
+{% load static %}
+{% load role_check %}
+{% block content %}
+    <style>
+        .form-group {
+            margin-bottom: 10px !important;
+        }
+    </style>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Local Level
+            </h1>
+
+            {% include 'app/backend/layouts/_notification.html' %}
+            <ol class="breadcrumb">
+                <li><a type="button" class="btn btn-default" href="#" onClick="javascript:history.go(-1);"><i
+                        class="fa fa-arrow-left"></i> Back</a>
+                <a type="button" class="btn btn-success" href="{% url 'create_local_level' %}"><i
+                        class="fa fa-plus"></i>Create New</a>
+                </li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+
+                <div class="col-md-12 col-sm-12">
+                    <!-- general form elements -->
+                    <div class="box box-primary">
+
+                        <!-- /.box-header -->
+                        <!-- form start -->
+
+                        <div class="box-body">
+                            {% include 'app/backend/settings/local_level/partial/table.html' %}
+                        </div>
+                        <!-- /.box-body -->
+                        {#                            <div class="box-footer">#}
+                        {#                               #}
+                        {#                            </div>#}
+                        <!-- /.box-footer -->
+
+                    </div>
+                    <!-- /.box -->
+                </div>
+            </div>
+
+        </section>
+        <!-- /.content -->
+    </div>
+
+{% endblock %}
+{% block scripts %}
+    {#    Dates #}
+
+    <script>
+        {#$('#invoiceDate').datepicker({#}
+        {#    autoclose: true,#}
+        {#    orientation: 'bottom'#}
+        {# });#}
+        {#$('#referenceDate').datepicker({#}
+        {#    autoclose: true,#}
+        {#    orientation: 'bottom'#}
+        {# });#}
+        {#$('#insertionDate').datepicker({#}
+        {#    autoclose: true,#}
+        {#    orientation: 'bottom'#}
+        {# });#}
+
+        $('#invoiceDate').nepaliDatePicker({
+            dateFormat: "%M %d, %y",
+            closeOnDateSelect: true,
+        });
+        $('#referenceDate').nepaliDatePicker({
+            dateFormat: "%M %d, %y",
+            closeOnDateSelect: true,
+        });
+        $('#insertionDate').nepaliDatePicker({
+            dateFormat: "%M %d, %y",
+            closeOnDateSelect: true,
+        });
+
+        $("#startDate").on("dateSelect", function (event) {
+
+        });
+        $(document).ready(function () {
+            '{% if cp %}'
+                let bs = "{{ cp.start_date_bs }}";
+                let bs_obj = bs.split('-');
+
+                bs_obj = $.map(bs_obj, function (item, i) {
+                    return parseInt(item);
+                });
+                let bs_formatted = calendarFunctions.bsDateFormat("%M %d, %y", bs_obj[0], bs_obj[1], bs_obj[2]);
+                $('#startDate').val(bs_formatted);
+                '{% endif %}'
+
+        });
+
+        {#$('#endDate').nepaliDatePicker({#}
+        {#    dateFormat: "%M %d, %y",#}
+        {#    closeOnDateSelect: true,#}
+        {# });#}
+    </script>
+
+    {#    Data Tables #}
+    <script>
+        $(function () {
+            $('#example1').DataTable({
+                'paging': true,
+                'lengthChange': true,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': true
+            });
+            $('#type').select2({});
+            $('#parent').select2({});
+        })
+    </script>
+
+
+{% endblock %}

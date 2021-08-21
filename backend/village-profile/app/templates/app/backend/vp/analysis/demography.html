@@ -1,0 +1,836 @@
+{% extends "app/backend/layouts/app.html" %}
+
+{% block title %} Demographic{% endblock %}
+{% load static %}
+{% load role_check %}
+{% block content %}
+    <style>
+        .form-group {
+            margin-bottom: 10px !important;
+        }
+    </style>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container col-md-12">
+                <div class="row analysis">
+                    <div class="topics" style="text-align: center; margin:0 30px">
+                        <a href="#">
+                            <i class="fa fa-pie-chart"></i>
+                            <h6 class="topics-title">Demography</h6>
+                        </a>
+                    </div>
+                    <!--  topic -->
+                    <div class="topics" style="text-align: center; margin:0 30px">
+                        <a href="{% url 'education.analysis' %}">
+                            <i class="fa fa-graduation-cap"></i>
+                            <h6 class="topics-title">Education</h6>
+                        </a>
+                    </div>
+                    <!--  topic -->
+                    <div class="topics" style="text-align: center; margin: 0 30px">
+                        <a href="{% url 'household.analysis' %}">
+                            <i class="fa fa-home"></i>
+                            <h6 class="topics-title">Household and Amenities</h6>
+                        </a>
+                    </div>
+                    <!--  topic -->
+                    <div class="topics" style="text-align: center; margin: 0 30px">
+                        <a href="{% url 'finance.analysis' %}">
+                            <i class="fa fa-money"></i>
+                            <h6 class="topics-title">Finance</h6>
+                        </a>
+                    </div>
+                    <!--  topic -->
+                    <div class="topics" style="text-align: center; margin: 0 50px">
+                        <a href="{% url 'health.analysis' %}">
+                            <i class="fa fa-medkit"></i>
+                            <h6 class="topics-title">Health</h6>
+                        </a>
+                    </div>
+                    <!--  topic -->
+                    <div class="topics" style="text-align: center; margin: 0 30px">
+                        <a href="{% url 'agriculture.analysis' %}">
+                            <i class="fa fa-tree"></i>
+                            <h6 class="topics-title">Agriculture</h6>
+                        </a>
+                    </div>
+                    <!--  topic -->
+                </div>
+            </div>
+        </section>
+
+        <!--  Body section -->
+        <section>
+            <article class="container-fluid" id="marginTop">
+                <div class="row hidden-xs">
+                    <div class="selectWard">
+                        <select class="form-control form-control-sm" id="ward_one">
+                            <option value="">सबै वडा</option>
+                            <option value="1">वडा १</option>
+                            <option value="2">वडा २</option>
+                            <option value="3">वडा ३</option>
+                            <option value="4">वडा ४</option>
+                            <option value="5">वडा ५</option>
+                            <option value="6">वडा ६</option>
+                            <option value="7">वडा ७</option>
+                            <option value="8">वडा ८</option>
+                            <option value="9">वडा ९</option>
+                        </select>
+                    </div>
+                    <ul class="col-sm-5 col-md-4 col-lg-3 nav nav-pills nav-stacked" role="tablist">
+                        <li class="active"><a href="#tabs-1" role="tab" data-toggle="pill">Population By Gender</a>
+                        </li>
+                        <li><a href="#tabs-2" role="tab" data-toggle="pill">Population By Age</a>
+                        </li>
+                        <li><a href="#tabs-3" role="tab" data-toggle="pill">Number of Household By Religion</a>
+                        </li>
+                        <li><a href="#tabs-4" role="tab" data-toggle="pill">Number of Household By Ethnicity</a>
+                        </li>
+                        <li><a href="#tabs-5" role="tab" data-toggle="pill">Number of Household By Mother Tongue</a>
+                        </li>
+                        <li><a href="#tabs-6" role="tab" data-toggle="pill">Disability</a>
+                        </li>
+                        <li><a href="#tabs-7" role="tab" data-toggle="pill">Type of Disability</a>
+                        </li>
+                        <li><a href="#tabs-8" role="tab" data-toggle="pill">Number of Household By Occupation</a>
+                        </li>
+                        <li><a href="#tabs-9" role="tab" data-toggle="pill">Number of Household By Secondary
+                            Occupation</a>
+                        </li>
+                        <li><a href="#tabs-10" role="tab" data-toggle="pill">Status of People Living Abroad</a>
+                        </li>
+                        <li><a href="#tabs-11" role="tab" data-toggle="pill">Reason of People Living Abroad</a>
+                        </li>
+                        <li><a href="#tabs-12" role="tab" data-toggle="pill">Household head by gender</a>
+                        </li>
+                        <li><a href="#tabs-13" role="tab" data-toggle="pill">Death Member / with Reasons and Gender</a>
+                        </li>
+                        <li><a href="#tabs-14" role="tab" data-toggle="pill">Festival</a>
+                        </li>
+
+                    </ul>
+                    <div class="col-sm-7 col-md-8 col-lg-9 well-sm tab-content side-tab">
+                        <!------main 1 tab start--------->
+                        <div class="tab-pane active" id="tabs-1">
+                            <!------ Population by Gender ---->
+                            <div class="row highchartContainer">
+                                <div class="col-md-3">
+                                    <div class="content-dtl">
+                                        <ul class="dtl-list">
+                                            <li class="lft-tps">
+                                                <p>Male Population<br><span id="male_count">{{ male }}</span></p>
+                                            </li>
+                                            <li class="lft-tps">
+                                                <p>Female Population<br><span id="female_count">{{ female }}</span></p>
+                                            </li>
+                                            <li class="lft-tps">
+                                                <p>Others<br><span id="other_count">{{ other_genders }}</span></p>
+                                            </li>
+                                            <li class="lft-tps">
+                                                <p>Missing Population<br><span id="missing_popn_count">0</span></p>
+                                            </li>
+                                            <li class="lft-tps">
+                                                <p>Total Population<br><span
+                                                        id="total_count">{{ total_population }}</span></p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-9">
+                                    <div id="containerGender">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="divider"></div>
+
+
+                            <!----------------- Population by Age Group ------------------>
+                            <div id="containerAge" class="row highchartContainer"></div>
+                            <div class="divider"></div>
+
+
+                            <!--------------------- Household by Religions -------------------------->
+                            <div class="row highchartContainer">
+                                <div class="col-md-3">
+                                    <div class="content-dtl">
+                                        <ul class="dtl-list">
+                                            <li class="lft-tps">
+                                                <p>Hindu Population<br><span id="hindu_count">{{ hindus }}</span></p>
+                                            </li>
+                                            <li class="lft-tps">
+                                                <p>Buddhist Population<br><span
+                                                        id="buddhist_count">{{ buddhists }}</span></p>
+                                            </li>
+                                            <li class="lft-tps">
+                                                <p>Christian Population<br><span
+                                                        id="christianity_count">{{ christians }}</span>
+                                                </p></li>
+                                            <li class="lft-tps">
+                                                <p>Muslim Population<br><span id="muslim_count">{{ muslims }}</span></p>
+                                            </li>
+                                            <li class="lft-tps lst-cs">
+                                                <p>Others<br><span id="others_religion_count">{{ kirats }}</span></p>
+                                            </li>
+                                            <li class="lft-tps">
+                                                <p>Total Population<br><span
+                                                        id="total_religion_count">{{ total_population }}</span></p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-9">
+                                    <div id="containerReligion"></div>
+                                </div>
+                            </div>
+                            <div class="divider"></div>
+
+
+                            <!---------------------------- Household by Ethnics ---------------------->
+                            <div id="containerEthnics" class="highchartContainer"></div>
+                            <div class="divider"></div>
+
+                            <!---------------------------- Household by Mother Tongue ---------------------->
+                            <div id="containerMotherTongue" class="highchartContainer"></div>
+                            <div class="divider"></div>
+
+                            <!---------------------------- Member by Disability ---------------------->
+                            <div id="containerDisability" class="highchartContainer"></div>
+                            <div class="divider"></div>
+
+                            <!---------------------------- Member by Disability Card ---------------------->
+                            <div id="containerDisabilityCard" class="highchartContainer"></div>
+                            <div class="divider"></div>
+
+                            <!---------------------------- Household by Main Occupation ---------------------->
+                            <div id="containerMainOccupation" class="highchartContainer"></div>
+                            <div class="divider"></div>
+
+                            <!----------------------------  Member Abroad Reasons ---------------------->
+                            <div id="containerAbroadReason" class="highchartContainer"></div>
+                            <div class="divider"></div>
+
+                            <!---------------------------- Househead by Gender ---------------------->
+                            <div id="containerHouseheadGender" class="highchartContainer"></div>
+                            <div class="divider"></div>
+
+                            <!---------------------------- Deceased Member Death Reasons ---------------------->
+                            <div id="containerDeathReason" class="highchartContainer"></div>
+                            <div class="divider"></div>
+
+                            <!-- Overall household by water resources -->
+                            <div id="container" class="highchartContainer"></div>
+                            <div class="divider"></div>
+
+                            <!--    pie chart-->
+                            <div id="container1" class="highchartContainer"></div>
+
+                            <!-- Overall bar chart2-->
+
+
+                            <!--  pie chart for population-->
+
+                        </div>
+                        <!------main 1 tab end--------->
+
+                        <!------tab 2 start--------->
+                        <div class="tab-pane" id="tabs-2">
+                            <h2>Population By Age</h2>
+                            <p>Make your everyday purchases a little less painful. With your X checking account, you'll
+                                rack up rewards just by using your Visa&reg; Debit card.
+                                <br>Personalized, cash back {{ househead_male }} Nice.</p> <a
+                                href="/account-features#Get%20Cash%20Back">Learn More »</a>
+                        </div>
+                        <!------main tab 2 end--------->
+                        <!------tab start--------->
+                        <div class="tab-pane" id="tabs-3">
+                            <h2>Number of Household By Religion</h2>
+                            {#                        <div id="containerReligion" class="highchartContainer" ></div>#}
+
+                        </div>
+                        <div class="tab-pane" id="tabs-4">
+                            <h2>Number of Household By Ethnicity</h2>
+                            <p>Consider your phone to be your personal banker -its' got your banking needs covered.
+                                Deposit checks, transfer money, view your balance, track your spending habits, and pay
+                                your bills from your smartphone. Now you're <em>really</em> going to feel naked without
+                                it.</p> <a href="/account-features#Mobile Banking">Learn More »</a>
+                        </div>
+                        <div class="tab-pane" id="tabs-5">
+                            <h2>Number of Household By Mother Tongue</h2>
+                            <p>No hoops to jump through. No envelopes to seal. Just grab your phone, take a quick
+                                picture of your check, and boom... You're good to go.</p> <a
+                                href="/account-features#Make a Deposit">Learn More »</a>
+                        </div>
+                        <div class="tab-pane" id="tabs-6">
+                            <h2>Disability</h2>
+                            <p>Never go into a bank again? Challenge accepted. No mailing, no envelopes, no trips to the
+                                ATM. Just use your computer and scanner to deposit checks straight into your account -
+                                for free.</p> <a href="/account-features#Make a Deposit">Learn More »</a>
+                        </div>
+                    </div>
+                </div>
+
+            </article>
+        </section>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        makeFullScreen()
+    </script>
+
+    <script>
+        // For Gender
+        $(document).ready(function () {
+            Highcharts.chart('containerGender', {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: 'लिङ्ग अनुसार जनसख्यां'
+                },
+                subtitle: {
+                    text: 'लिङ्ग अनुसार जनसख्यां'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                legend: {
+                    enabled: true,
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            connectorColor: 'blue'
+                        },
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    name: 'Population',
+                    data: [
+                        {
+                            name: 'पुरुष',
+                            y: {{male}}
+                        },
+                        {
+                            name: 'महिला',
+                            y: {{female}}
+                        },
+                        {
+                            name: 'अन्य',
+                            y: {{ other_genders }}
+                        },
+                    ]
+                }]
+            });
+        })
+        // left on age group
+    </script>
+
+    <script>
+        // Religion
+        $(document).ready(function () {
+            Highcharts.chart('containerReligion', {
+                chart: {
+                    type: 'pie'
+                },
+                title: {
+                    text: 'Overall : Household by Religion'
+                },
+                subtitle: {
+                    text: 'Source: Individual Data Collection'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                legend: {
+                    enabled: true,
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            connectorColor: 'blue'
+                        },
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    name: 'Population',
+                    data: [
+                        {
+                            name: 'हिन्दु',
+                            y: {{hindus}}
+                        },
+                        {
+                            name: 'बौद्ध',
+                            y: {{buddhists}}
+                        },
+                        {
+                            name: 'मुस्लिम',
+                            y: {{ muslims }}
+                        },
+                        {
+                            name: 'क्रिश्चियन / ईसाई',
+                            y: {{ christians }}
+                        },
+                        {
+                            name: 'किराँत',
+                            y: {{ kirats }}
+                        },
+                    ]
+                }]
+            });
+        })
+    </script>
+
+    <script>
+        // Ethnics
+        Highcharts.chart('containerEthnics', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Overall : Household by Ethnics'
+            },
+            subtitle: {
+                text: 'Source: Individual Data Collection'
+            },
+            xAxis: {
+                categories: [
+                    'क्षेत्री',
+                    'बाहुन',
+                    'मगर',
+                    'थारु',
+                    'तामाङ',
+                    'नेवार',
+                    'कामी',
+                    'नेपाली मुसालमान',
+                    'यादव',
+                    'रा‌‌ई',
+                    'गुरुङ',
+                    'दमाई',
+                    'ठकुरी',
+                    'लिम्बु',
+                    'सार्कि',
+                    'तेली',
+                    'मुसहर',
+                    'राऊटे',
+                    'पासी',
+                ],
+                crosshair: true
+            },
+            yAxis: {
+                title: {
+                    text: 'Population'
+                }
+            },
+            legend: {
+                enabled: false,
+            },
+            tooltip: {
+                valueSuffix: '(In Thousand)'
+            },
+            series: [{
+                name: 'Population',
+                data: [{{chhetris}}, {{ brahmins }}, {{ magars }}, {{tharus}}, {{tamangs}}, {{ newars }},
+                    {{ kamis }}, {{ musalmans }}, {{ yadavs }}, {{ rais }}, {{ gurungs }}, {{ damais }},
+                    {{ thakuris }}, {{ limbus }}, {{ sarkis }}, {{ telis }}, {{ musahars }}, {{ rautes }}, {{ pasies }}]
+            }]
+        });
+    </script>
+
+    <script>
+        // Mother Tongue
+        Highcharts.chart('containerMotherTongue', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Overall : Household by Mother Tongue'
+            },
+            subtitle: {
+                text: 'Source: Individual Data Collection'
+            },
+            xAxis: {
+                categories: [
+                    'नेपाली',
+                    'मैथिली',
+                    'थारु',
+                    'तामाङ',
+                    'नेपालभाषा',
+                    'बज्जीका',
+                    'मगर',
+                    'डोटली',
+                    'उर्दु',
+                    'अवधी',
+                    'लिम्बु',
+                    'गुरुङ',
+                    'बैतडेली',
+                    'राई',
+                    'अछामी',
+                    'बान्तवा',
+                    'राजबंशी',
+                    'शेर्पा',
+                    'भोजपुरी',
+                ],
+                crosshair: true
+            },
+            yAxis: {
+                title: {
+                    text: 'Population'
+                }
+            },
+            legend: {
+                enabled: false,
+            },
+            tooltip: {
+                valueSuffix: '(In Thousand)'
+            },
+            series: [{
+                name: 'Population',
+                data: [{{nepali}}, {{ maithali }}, {{ tharu }}, {{tamang}}, {{nepal_bhasa}}, {{ bajjika }},
+                    {{ magar }}, {{ doteli }}, {{ urdu }}, {{ awadhi }}, {{ limbu }}, {{ gurung }},
+                    {{ baitadeli }}, {{ rai }}, {{ achhami }}, {{ bantawa }}, {{ rajbansi }}, {{ sherpa }}, {{ bhojpuri }}]
+            }]
+        });
+    </script>
+
+    <script>
+        // For Disability Type
+        $(document).ready(function () {
+            Highcharts.chart('containerDisability', {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: 'अपाङ्गता अनुसार जनसख्यां'
+                },
+                subtitle: {
+                    text: 'अपाङ्गता अनुसार जनसख्यां'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                legend: {
+                    enabled: true,
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            connectorColor: 'blue'
+                        },
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    name: 'Population',
+                    data: [
+                        {
+                            name: 'दृष्टिबिहिन',
+                            y: {{blind}}
+                        },
+                        {
+                            name: 'न्यून दृष्टिबिहिन',
+                            y: {{semi_blind}}
+                        },
+                        {
+                            name: 'बहिरा',
+                            y: {{ deaf }}
+                        },
+                        {
+                            name: 'बोल्न नसक्ने',
+                            y: {{ dumb }}
+                        },
+                        {
+                            name: 'सुस्त मनस्थिति',
+                            y: {{ slow_minded }}
+                        },
+                        {
+                            name: 'सुस्त श्रवन',
+                            y: {{ semi_deaf }}
+                        },
+                        {
+                            name: 'हातखुट्टा नचल्ने',
+                            y: {{ paralyzed }}
+                        },
+                        {
+                            name: 'सपाङ्ग',
+                            y: {{ is_not_disable }}
+                        },
+                    ]
+                }]
+            });
+        })
+        // left on age group
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            Highcharts.chart('containerDisabilityCard', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Overall : Household by Disability Card'
+                },
+                subtitle: {
+                    text: 'Source: Individual Data Collection'
+                },
+                xAxis: {
+                    categories: [
+                        'रातो',
+                        'निलो',
+                        'सेतो',
+                        'नभएको',
+                    ],
+                    crosshair: true
+                },
+                yAxis: {
+                    title: {
+                        text: 'Population'
+                    }
+                },
+                legend: {
+                    enabled: false,
+                },
+                tooltip: {
+                    valueSuffix: '(In Hundred)'
+                },
+                series: [{
+                    name: 'Member',
+                    data: [{{red_card}}, {{blue_card}}, {{white_card}}, {{no_card}}]
+                }]
+            });
+
+        })
+    </script>
+
+    <script>
+        // For Disability Type
+        $(document).ready(function () {
+            Highcharts.chart('containerMainOccupation', {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: 'मुख्य पेशा अनुसार जनसख्यां'
+                },
+                subtitle: {
+                    text: 'पेशा अनुसार जनसख्यां'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                legend: {
+                    enabled: true,
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            connectorColor: 'blue'
+                        },
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    name: 'Population',
+                    data: [
+                        {
+                            name: 'कृषि',
+                            y: {{occ_agriculture}}
+                        },
+                        {
+                            name: 'ब्यापार',
+                            y: {{occ_business}}
+                        },
+                        {
+                            name: 'सरकारी नोकरी',
+                            y: {{ occ_gov_job }}
+                        },
+                        {
+                            name: 'उद्यमी',
+                            y: {{ occ_entrepreneur }}
+                        },
+                        {
+                            name: 'स्वरोजगार',
+                            y: {{ occ_self_employed }}
+                        },
+                        {
+                            name: 'अन्य',
+                            y: {{ occ_others }}
+                        },
+                    ]
+                }]
+            });
+        })
+        // left on age group
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            Highcharts.chart('containerDeathReason', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Overall : सदस्यको मृत्युको कारण'
+                },
+                subtitle: {
+                    text: 'Source: Individual Data Collection'
+                },
+                xAxis: {
+                    categories: [
+                        'कालगति',
+                        'दुर्घटना',
+                        'आत्महत्या',
+                        'हत्या',
+                        'दिर्घरोगी',
+                        'थाहा नभएको',
+                    ],
+                    crosshair: true
+                },
+                yAxis: {
+                    title: {
+                        text: 'Population'
+                    }
+                },
+                legend: {
+                    enabled: false,
+                },
+                tooltip: {
+                    valueSuffix: '(In Hundred)'
+                },
+                series: [{
+                    name: 'Population',
+                    data: [{{death_age}}, {{accident}}, {{suicide}}, {{murdered}}, {{disease}}, {{not_known}}]
+                }]
+            });
+
+        })
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            Highcharts.chart('containerAbroadReason', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Overall : Household by Foreign Reasons'
+                },
+                subtitle: {
+                    text: 'Source: Individual Data Collection'
+                },
+                xAxis: {
+                    categories: [
+                        'रोजगारी',
+                        'ब्यापार',
+                        'अध्ययन',
+                        'आप्रबास',
+                    ],
+                    crosshair: true
+                },
+                yAxis: {
+                    title: {
+                        text: 'Population'
+                    }
+                },
+                legend: {
+                    enabled: false,
+                },
+                tooltip: {
+                    valueSuffix: '(In Hundred)'
+                },
+                series: [{
+                    name: 'Population',
+                    data: [{{employement}}, {{business}}, {{study}}, {{migration}}]
+                }]
+            });
+
+        })
+    </script>
+
+    <script>
+        // For Househead Gender
+        $(document).ready(function () {
+            Highcharts.chart('containerHouseheadGender', {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: 'लिङ्ग अनुसार घरमुली'
+                },
+                subtitle: {
+                    text: 'लिङ्ग अनुसार घरमुली'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                legend: {
+                    enabled: true,
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            connectorColor: 'blue'
+                        },
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    name: 'Population',
+                    data: [
+                        {
+                            name: 'पुरुष',
+                            y: {{househead_male}}
+                        },
+                        {
+                            name: 'महिला',
+                            y: {{househead_female}}
+                        },
+                        {
+                            name: 'अन्य',
+                            y: {{ househead_other }}
+                        },
+                    ]
+                }]
+            });
+        })
+    </script>
+
+{% endblock %}

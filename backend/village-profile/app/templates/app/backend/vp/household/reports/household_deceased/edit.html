@@ -1,0 +1,222 @@
+{% extends "app/backend/layouts/app.html" %}
+{% block title %}Deceased Member Report{% endblock %}
+{% load static %}
+{% load role_check %}
+{% block content %}
+    <style>
+        .form-group {
+            margin-bottom: 10px !important;
+        }
+    </style>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Edit Deceased Member
+            </h1>
+
+            {% include 'app/backend/layouts/_notification.html' %}
+            <ol class="breadcrumb">
+
+                <li><a type="button" class="btn btn-default" href="#" onClick="javascript:history.go(-1);"><i
+                        class="fa fa-arrow-left"></i> Back</a>
+                <a type="button" class="btn btn-success" href="{% url 'create_household' %}"><i
+                        class="fa fa-plus"></i>Create New</a>
+
+                </li>
+            </ol>
+        </section>
+        <section class="content">
+            <div class="row">
+
+                <div class="col-md-12 col-sm-12">
+                    <!-- general form elements -->
+                    <div class="box box-primary">
+
+
+                        <!-- /.box-header -->
+                        <!-- form start -->
+
+                        <div class="box-body">
+                            <form class="" method="post"
+                                  action="{% url 'household_deceased.update' household_deceased.id %}" autocomplete="off" id="animalForm">
+                                {% csrf_token %}
+                                {% if form.errors %}
+                                    {% for field in form %}
+                                        {% for error in field.errors %}
+                                            <div class="alert alert-danger">
+                                                <strong>{{ error|escape }}</strong>
+                                            </div>
+                                        {% endfor %}
+                                    {% endfor %}
+
+                                {% endif %}
+
+                                   <div class="container">
+                                        <div class="row edit_reports">
+                                            <div class="col-md-offset-1 col-md-10 col-md-offset-1"  >
+
+                                               <div class="col-md-6">
+                                                   <div class="form-group row">
+                                                       <label for="expire_mm_name" class="col-sm-4 col-form-label">मृत्यु हुनेको नाम</label>
+                                                       <div class="col-sm-8">
+                                                           <input class="form-control" name="expire_mm_name" id="expire_mm_name" value="{{ household_deceased.name }}" type="text">
+                                                       </div>
+                                                   </div>
+
+                                                   <div class="form-group row">
+                                                       <label for="expire_mm_gender" class="col-sm-4 col-form-label">लिंग</label>
+                                                       <div class="col-sm-8">
+                                                           <select type="text" class="form-control" name="expire_mm_gender" id="expire_mm_gender">
+                                                                <option value="">--- लिंग छान्नुहोस् ---</option>
+                                                                {% for gender in genders  %}
+                                                                    <option value="{{ gender.id }}"{% if household_deceased.gender == gender %} selected
+                                                                    {% endif %} >{{ gender.name }}</option>
+                                                                {% endfor %}
+                                                           </select>
+                                                       </div>
+                                                   </div>
+
+                                                   <div class="form-group row">
+                                                        <label for="expire_mm_age" class="col-sm-4 col-form-label">उमेर</label>
+                                                        <div class="col-sm-8">
+                                                            <input class="form-control" name="expire_mm_age" id="expire_mm_age" value="{{ household_deceased.age_on_death }}" type="number">
+                                                        </div>
+                                                   </div>
+                                               </div>
+
+                                               <div class="col-md-6">
+                                                   <div class="form-group row">
+                                                       <label for="expire_mm_month" class="col-sm-4 col-form-label">महिना</label>
+                                                       <div class="col-sm-8">
+                                                           <select type="text" class="form-control" name="expire_mm_month" id="expire_mm_month">
+                                                               <option value="">महिना छान्नुहोस्</option>
+                                                               <option value="1">बैसाख</option>
+                                                               <option value="2">जेठ</option>
+                                                               <option value="3">असार</option>
+                                                               <option value="4">साउन</option>
+                                                               <option value="5">भदौ</option>
+                                                               <option value="6">असोज</option>
+                                                               <option value="7">कार्तिक</option>
+                                                               <option value="8">मंसिर</option>
+                                                               <option value="9">पुष</option>
+                                                               <option value="10">माघ</option>
+                                                               <option value="11">फागुन</option>
+                                                               <option value="12">चैत</option>
+                                                           </select>
+                                                       </div>
+                                                   </div>
+
+                                                   <div class="form-group row">
+                                                       <label for="expire_reason" class="col-sm-4 col-form-label">मृत्युको कारण</label>
+                                                       <div class="col-sm-8">
+                                                           <select type="text" class="form-control" name="expire_reason" id="expire_reason" >
+                                                               <option value="">मृत्युको कारण छान्नुहोस्</option>
+                                                               {% for death_reason in death_reasons %}
+                                                                   <option value="{{death_reason.id}}"{% if household_deceased.reason_of_death == death_reason %} selected
+                                                                   {% endif %} >{{ death_reason }}</option>
+    {#                                                                 <option value="{{animal_type.id}}" {% if household_animals.animal_type == animal_type %} selected#}
+    {#                                                            {% endif %}> {{ animal_type }}</option>#}
+                                                               {% endfor %}
+                                                               <option value="add">अन्य कारण थप्नुहोस्</option>
+                                                           </select>
+
+                                                              <!-- Modal -->
+                                                                <div id="otherDeathReason" class="modal fade" role="dialog">
+                                                                    <div class="modal-dialog">
+
+                                                                    <!-- Modal content-->
+                                                                         <div class="modal-content">
+                                                                             <div class="modal-header">
+                                                                                 <button type="button" class="close closeDeathReason" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                                    <h4 class="modal-title">नयाँ मृत्युको कारण थप्नुहोस्</h4>
+                                                                             </div>
+                                                                             <div class="modal-body">
+                                                                                 <input class="form-control" name="other_expire_reason" id="other_expire_reason" placeholder="मृत्युको अन्य कारण" type="text">
+                                                                             </div>
+                                                                             <div class="modal-footer">
+                                                                                 <button type="submit" class="btn btn-primary" id="addDeathReasonButton">थप्नुहोस्</button>
+                                                                                 <button type="button" class="btn btn-default closeDeathReason" >Close</button>
+                                                                             </div>
+                                                                         </div>
+
+                                                                    </div>
+                                                                </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                   <div class="form-group row">
+                                                       <label for="expire_remarks" class="col-sm-4 col-form-label">कैफियत</label>
+                                                       <div class="col-sm-8">
+                                                           <textarea class="form-control" name="expire_remarks" id="expire_remarks" placeholder="कैफियत ..."></textarea>
+                                                       </div>
+                                                   </div><br>
+                                               </div>
+                                            </div>
+                                        </div>
+                                        <div class="box-footer">
+                                            <button type="submit" class="btn btn-primary">Update</button>
+                                        </div>
+                                   </div>
+
+
+                                <!-- /.box-body -->
+
+                                <!-- /.box-footer -->
+                            </form>
+                        </div>
+                        <!-- /.box-body -->
+                        {#                            <div class="box-footer">#}
+                        {#                               #}
+                        {#                            </div>#}
+                        <!-- /.box-footer -->
+
+                    </div>
+                    <!-- /.box -->
+                </div>
+
+            </div>
+
+        </section>
+        <!-- /.content -->
+    </div>
+
+
+{% endblock %}
+{% block scripts %}
+    <script>
+    $(document).ready(function () {
+        makeFullPage();
+    });
+    </script>
+    {#    Dates #}
+
+    <script>
+
+        $('#invoiceDate').nepaliDatePicker({
+            dateFormat: "%M %d, %y",
+            closeOnDateSelect: true,
+        });
+
+    </script>
+
+    {#    Data Tables #}
+    <script>
+        $(function () {
+            $('#example1').DataTable({
+                'paging': true,
+                'lengthChange': true,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': true
+            });
+            $('#type').select2({});
+            $('#parent').select2({});
+        })
+    </script>
+
+
+{% endblock %}

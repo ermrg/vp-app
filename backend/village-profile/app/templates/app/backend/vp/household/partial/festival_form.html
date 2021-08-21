@@ -1,0 +1,44 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Title</title>#}
+{#</head>#}
+{#<body>#}
+{##}
+{#</body>#}
+{#</html>#}
+<form>
+    {% csrf_token %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <div class="col-sm-4 col-form-label">
+                        <label for="festivals_name">चाडपर्वको नाम</label>
+                    </div>
+                    <div class="col-sm-4">
+                        <select type="text" class="form-control" name="festivals_name" id="festivals_name"
+                                onchange="listFestivals(this.value)">
+                            <option value="">--- चाडपर्वको नाम छान्नुहोस् ---</option>
+                            {% for festival in festivals %}
+                                <option value="{{ festival.id }}">{{ festival.name }}</option>
+                            {% endfor %}
+                            <option value="others">अन्य</option>
+                        </select>
+                        <input type="text" class="form-control" name="other_festivals" id="other_festivals"
+                               placeholder="अन्य चाडपर्वको नाम" style="display: none">
+                    </div>
+                    <label class="col-sm-4 col-form-label">
+                        <small class="form-text text-muted">
+                            प्राथमिकता अनुसार स्तरीकरण गर्नुहोस्
+                        </small>
+                    </label>
+                </div>
+            </div>
+            {##}
+            {#            <div class="col-md-6">#}
+
+        </div>
+    </div>
+</form>

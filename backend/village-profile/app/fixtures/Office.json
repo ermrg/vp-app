@@ -1,0 +1,10 @@
+[
+  {
+    "model": "app.Office",
+    "fields": {
+      "name": "Main Office",
+      "status": 1,
+      "user_id": 1
+    }
+  }
+]

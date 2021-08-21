@@ -1,0 +1,32 @@
+[
+{
+  "model": "app.gender",
+  "pk": 1,
+  "fields": {
+    "name": "\u092a\u0941\u0930\u0941\u0937",
+    "remarks": null,
+    "created_at": "2020-02-11T13:08:53Z",
+    "updated_at": "2020-02-11T13:08:53Z"
+  }
+},
+{
+  "model": "app.gender",
+  "pk": 2,
+  "fields": {
+    "name": "\u092e\u0939\u093f\u0932\u093e",
+    "remarks": null,
+    "created_at": "2020-02-11T13:09:07Z",
+    "updated_at": "2020-02-11T13:09:07Z"
+  }
+},
+{
+  "model": "app.gender",
+  "pk": 3,
+  "fields": {
+    "name": "\u0905\u0928\u094d\u092f",
+    "remarks": null,
+    "created_at": "2020-02-11T13:09:17Z",
+    "updated_at": "2020-02-11T13:09:17Z"
+  }
+}
+]

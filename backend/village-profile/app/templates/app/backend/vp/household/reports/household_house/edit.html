@@ -1,0 +1,257 @@
+{% extends "app/backend/layouts/app.html" %}
+{% block title %}House Report{% endblock %}
+{% load static %}
+{% load role_check %}
+{% block content %}
+    <style>
+        .form-group {
+            margin-bottom: 10px !important;
+        }
+    </style>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Edit House Details
+            </h1>
+
+            {% include 'app/backend/layouts/_notification.html' %}
+            <ol class="breadcrumb">
+
+                <li><a type="button" class="btn btn-default" href="#" onClick="javascript:history.go(-1);"><i
+                        class="fa fa-arrow-left"></i> Back</a>
+                <a type="button" class="btn btn-success" href="{% url 'create_household' %}"><i
+                        class="fa fa-plus"></i>Create New</a>
+
+                </li>
+            </ol>
+        </section>
+        <section class="content">
+            <div class="row">
+
+                <div class="col-md-12 col-sm-12">
+                    <!-- general form elements -->
+                    <div class="box box-primary">
+
+
+                        <!-- /.box-header -->
+                        <!-- form start -->
+
+                        <div class="box-body">
+                            <form class="" method="post"
+                                  action="{% url 'household_house.update' household_houses.id %}" autocomplete="off" id="animalForm">
+                                {% csrf_token %}
+                                {% if form.errors %}
+                                    {% for field in form %}
+                                        {% for error in field.errors %}
+                                            <div class="alert alert-danger">
+                                                <strong>{{ error|escape }}</strong>
+                                            </div>
+                                        {% endfor %}
+                                    {% endfor %}
+
+                                {% endif %}
+
+                                    <div class="container">
+                                        <div class="row edit_reports">
+                                            <div class="col-md-offset-1 col-md-10 col-md-offset-1">
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="house_no" class="col-sm-4 col-form-label">घरको संख्या / घर नम्वर</label>
+                                                        <div class="col-sm-8">
+                                                            <input class="form-control" name="house_no" id="house_no" placeholder="घरको संख्या / घर नम्वर" type="number">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label for="home_type" class="col-sm-4 col-form-label">घरको प्रकार</label>
+                                                        <div class="col-sm-8">
+                                                            <select type="text" class="form-control" name="home_type" id="home_type" >
+                                                                <option value="">घरको प्रकार छान्नुहोस्</option>
+                                                                {% for house_type in house_type %}
+                                                                    <option value="{{ house_type.id }}" {% if household_houses.house_type == house_type %} selected
+                                                                    {% endif %} >{{ house_type.name }}</option>
+                                                                {% endfor %}
+                                                                <option value="add">अन्य प्रकार थप्नुहोस्</option>
+                                                            </select>
+                                                                <!-- Modal -->
+                                                                <div id="otherHouseType" class="modal fade" role="dialog">
+                                                                    <div class="modal-dialog">
+
+                                                                    <!-- Modal content-->
+                                                                         <div class="modal-content">
+                                                                             <div class="modal-header">
+                                                                                    <button type="button" class="close closeHouseType" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                                    <h4 class="modal-title">नयाँ घरको प्रकार थप्नुहोस्</h4>
+                                                                             </div>
+                                                                             <div class="modal-body">
+                                                                                 <input class="form-control" name="other_home_type" id="other_home_type" placeholder="घरको अन्य प्रकार" type="text">
+                                                                             </div>
+                                                                             <div class="modal-footer">
+                                                                                 <button type="submit" class="btn btn-primary" id="addHouseTypeButton">थप्नुहोस्</button>
+                                                                                 <button type="button" class="btn btn-default closeHouseType" >Close</button>
+                                                                             </div>
+                                                                         </div>
+
+                                                                    </div>
+                                                                </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label for="roof_type" class="col-sm-4 col-form-label">छानोको प्रकार</label>
+                                                        <div class="col-sm-8">
+                                                            <select type="text" class="form-control" name="roof_type" id="roof_type" >
+                                                                <option value="">छानोको प्रकार छान्नुहोस्</option>
+                                                                {% for roof_type in roof_type %}
+                                                                    <option value="{{ roof_type.id }}"{% if household_houses.roof_type == roof_type %} selected
+                                                                    {% endif %}>{{ roof_type.name }}</option>
+                                                                {% endfor %}
+                                                                <option value="add">अन्य प्रकार थप्नुहोस्</option>
+                                                            </select>
+                                                              <!-- Modal -->
+                                                                <div id="otherRoofType" class="modal fade" role="dialog">
+                                                                    <div class="modal-dialog">
+
+                                                                    <!-- Modal content-->
+                                                                         <div class="modal-content">
+                                                                             <div class="modal-header">
+                                                                                    <button type="button" class="close closeRoofType" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                                    <h4 class="modal-title">नयाँ छानोको प्रकार थप्नुहोस्</h4>
+                                                                             </div>
+                                                                             <div class="modal-body">
+                                                                                 <input class="form-control" name="other_roof_type" id="other_roof_type" placeholder="छानोको अन्य प्रकार" type="text">
+                                                                             </div>
+                                                                             <div class="modal-footer">
+                                                                                 <button type="submit" class="btn btn-primary" id="addRoofTypeButton">थप्नुहोस्</button>
+                                                                                 <button type="button" class="btn btn-default closeRoofType" >Close</button>
+                                                                             </div>
+                                                                         </div>
+
+                                                                    </div>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+    {#                                                    {{ household_houses.build_year_bs }}#}
+                                                        <label for="construct_year" class="col-sm-4 col-form-label">निर्माण बर्ष</label>
+                                                        <div class="col-sm-8">
+                                                            <input class="form-control" name="construct_year" id="construct_year" placeholder="{{ household_houses.build_year_bs }}" type="date">
+                                                            <small class="form-text text-muted">
+                                                                (बर्ष वा निर्माणाधीन)
+                                                            </small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="home_design" class="col-sm-4 col-form-label">नक्सा पास</label>
+                                                        <div class="col-sm-8">
+                                                            <select type="text" class="form-control" name="home_design" id="home_design">
+                                                                <option value="">नक्सा पास छान्नुहोस्</option>
+                                                                <option value="0">गरेको</option>
+                                                                <option value="1">नगरेको</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label for="home_design_date" class="col-sm-4 col-form-label">नक्सा पास मिति</label>
+                                                        <div class="col-sm-8">
+                                                            <input class="form-control" name="home_design_date" id="home_design_date"value="{{household_houses.map_pass_year_ad  }}" type="date">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label for="home_owner" class="col-sm-4 col-form-label">घरको स्वामित्व</label>
+                                                        <div class="col-sm-8">
+                                                            <select type="text" class="form-control" name="home_owner" id="home_owner">
+                                                                <option value="">घरको स्वामित्व छान्नुहोस्</option>
+                                                                <option value="1">1</option>
+                                                            </select>
+                                                            <small class="form-text text-muted">
+                                                                (सदस्यहरुको सुची)
+                                                            </small>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label for="home_image" class="col-sm-4 col-form-label">घरको फोटो</label>
+                                                        <div class="col-sm-8">
+                                                            <input class="form-control" name="home_image" id="home_image" value="{{ household_houses.image }}" type="file">
+                                                        </div>
+                                                    </div><br>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="box-footer">
+                                             <button type="submit" class="btn btn-primary">Update</button>
+                                        </div>
+                                    </div>
+
+
+                                <!-- /.box-body -->
+
+                                <!-- /.box-footer -->
+                            </form>
+                        </div>
+                        <!-- /.box-body -->
+                        {#                            <div class="box-footer">#}
+                        {#                               #}
+                        {#                            </div>#}
+                        <!-- /.box-footer -->
+
+                    </div>
+                    <!-- /.box -->
+                </div>
+
+            </div>
+
+        </section>
+        <!-- /.content -->
+    </div>
+
+
+{% endblock %}
+{% block scripts %}
+    <script>
+    $(document).ready(function () {
+        makeFullPage();
+    });
+    </script>
+    {#    Dates #}
+
+    <script>
+
+        $('#invoiceDate').nepaliDatePicker({
+            dateFormat: "%M %d, %y",
+            closeOnDateSelect: true,
+        });
+
+    </script>
+
+    {#    Data Tables #}
+    <script>
+        $(function () {
+            $('#example1').DataTable({
+                'paging': true,
+                'lengthChange': true,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': true
+            });
+            $('#type').select2({});
+            $('#parent').select2({});
+        })
+    </script>
+
+
+{% endblock %}

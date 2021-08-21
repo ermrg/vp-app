@@ -1,0 +1,6 @@
+.idea
+config.json
+vp/__init__.py
+*.pyc
+db/*
+django_static

@@ -1,0 +1,464 @@
+<div class="scrollspy-example" data-spy="scroll">
+
+    {# Drinking Water #}
+    <div id="scroll1">
+        <h5>खानेपानीको श्रोत</h5>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="water_source">मुख्य श्रोत</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <select type="text" class="form-control" name="water_source" id="water_source">
+                                <option value="">मुख्य खानेपानीको श्रोतको प्रकार छान्नुहोस्</option>
+                                {% for water_source in water_source %}
+                                    <option value="{{ water_source.id }}">{{ water_source.name }}</option>
+                                {% endfor %}
+                                <option value="add">अन्य श्रोत थप्नुहोस्</option>
+                            </select>
+                            <!-- Modal -->
+                            <div id="otherWaterSource" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close closeWaterSource" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title">नयाँ खानेपानीको श्रोत थप्नुहोस्</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input class="form-control" name="other_water_source"
+                                                   id="other_water_source" placeholder="मुख्य श्रोतक अन्य प्रकार"
+                                                   type="text">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary" id="addWaterSourceButton">
+                                                थप्नुहोस्
+                                            </button>
+                                            <button type="button" class="btn btn-default closeWaterSource">Close
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="tap_type">धारा भए</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <select type="text" class="form-control" name="tap_type" id="tap_type">
+                                <option value="True">घरमा</option>
+                                <option value="False">साझा</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="water_distance">दुरी</label>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <input type="number" class="form-control" name="water_distance" id="water_distance"
+                                   placeholder="दुरी">
+                        </div>
+
+                        <div class="col-sm-4">
+                            <select type="text" class="form-control" name="water_distance_unit"
+                                    id="water_distance_unit">
+                                <option value="0">कि.मी</option>
+                                <option value="1">मीटर</option>
+                                <option value="2">माईल</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="water_time">लाग्ने समय</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="number" name="water_time" id="water_time"
+                                   placeholder="लाग्ने समय (मिनेटमा)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Fuel Source #}
+    <div id="scroll2">
+        <h5>इन्धनको श्रोत</h5>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="fuel_light">बत्ति बाल्न</label>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <select type="text" class="form-control" name="fuel_light" id="fuel_light">
+                                <option value="">बत्तिको प्रकार छान्नुहोस्</option>
+                                {% for light_fuel in light_fuel %}
+                                    <option value="{{ light_fuel.id }}">{{ light_fuel.name }} </option>
+                                {% endfor %}
+                                <option value="add">अन्य प्रकार थप्नुहोस्</option>
+                            </select>
+                            <!-- Modal -->
+                            <div id="otherLightFuel" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close closeLightFuel" aria-label="Close"><span
+                                                    aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title">नयाँ बत्तिको प्रकार थप्नुहोस्</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input class="form-control" name="other_light_type" id="other_light_type"
+                                                   placeholder="मुख्य श्रोतक अन्य प्रकार" type="text">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary" id="addLightFuelButton">
+                                                थप्नुहोस्
+                                            </button>
+                                            <button type="button" class="btn btn-default closeLightFuel">Close</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="fuel_cooking">खाना पकाउन</label>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <select type="text" class="form-control" name="fuel_cooking" id="fuel_cooking">
+                                <option value="">खाना पकाउनको प्रकार छान्नुहोस्</option>
+                                {% for cooking_fuel in cooking_fuel %}
+                                    <option value="{{ cooking_fuel.id }}">{{ cooking_fuel.name }}</option>
+                                {% endfor %}
+                                <option value="add">अन्य प्रकार थप्नुहोस्</option>
+                            </select>
+                            <!-- Modal -->
+                            <div id="otherCookingFuel" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close closeCookingFuel" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title">नयाँ खाना पकाउनको प्रकार थप्नुहोस्</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input class="form-control" name="other_fuel_type" id="other_fuel_type"
+                                                   placeholder="मखाना पकाउनको अन्य प्रकार" type="text">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary" id="addCookingFuelButton">
+                                                थप्नुहोस्
+                                            </button>
+                                            <button type="button" class="btn btn-default closeCookingFuel">Close
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="fuel_garbage">फोहर फाल्ने बिधी</label>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <select type="text" class="form-control" name="fuel_garbage" id="fuel_garbage">
+                                <option value="">फोहर फाल्ने बिधीको प्रकार छान्नुहोस्</option>
+                                {% for garbage_management in garbage_management %}
+                                    <option value="{{ garbage_management.id }}">{{ garbage_management.name }}</option>
+                                {% endfor %}
+                                <option value="add">अन्य बिधी थप्नुहोस्</option>
+                            </select>
+                            <!-- Modal -->
+                            <div id="otherGarbageType" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close closeGarbageType" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title">नयाँ फोहर फाल्ने बिधी थप्नुहोस्</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input class="form-control" name="other_garbage_type"
+                                                   id="other_garbage_type" placeholder="फोहर फाल्ने अन्य बिधी"
+                                                   type="text">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary" id="addGarbageTypeButton">
+                                                थप्नुहोस्
+                                            </button>
+                                            <button type="button" class="btn btn-default closeGarbageType">Close
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Public Vehicle #}
+    <div id="scroll3">
+        <h5>सार्वजनिक यातायात</h5>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="trans_distance">यातायात चल्ने सम्मको दुरी</label>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" name="trans_distance" id="trans_distance"
+                                   placeholder="यातायात चल्ने सम्मको दुरी (मिटरमा)">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="trans_possi_distance">गाडी चल्न सक्ने दुरी</label>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" name="trans_possi_distance"
+                                   id="trans_possi_distance" placeholder="गाडी चल्न सक्ने दुरी (मिटरमा)">
+                            <small class="form-text text-muted">
+                                गाडी चल्न सक्ने दुरी
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="road_width">सडकको चौडाई</label>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" name="road_width" id="road_width"
+                                   placeholder="सडकको चौडाई (मिटरमा)">
+                            <small class="form-text text-muted">फिटमा उल्लेख गर्नुहोस</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Educational Institute #}
+    <div id="scroll4">
+        <h5>शैक्षिक संस्था पहुँच</h5>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-sm-5 col-form-label">
+                            <label for="edu_prim_distance">प्राथमिक बिद्यालय सम्म लाग्ने दुरी</label>
+                        </div>
+
+                        <div class="col-sm-7">
+                            <input class="form-control" name="edu_prim_distance" id="edu_prim_distance"
+                                   placeholder="उल्लेख गर्नुहोस (मिटरमा)" type="number">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="edu_higsec_distance">उच्च मा. बि. वा कलेज सम्म लाग्ने दुरी</label>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <input class="form-control" name="edu_higsec_distance" id="edu_higsec_distance"
+                                   placeholder="उल्लेख गर्नुहोस (मिटरमा)" type="number">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+
+                    <div class="form-group row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="edu_sec_distance">माध्यामिक बिद्यालय सम्म लाग्ने दुरी</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input class="form-control" name="edu_sec_distance" id="edu_sec_distance"
+                                   placeholder="उल्लेख गर्नुहोस (मिटरमा)" type="number">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Health Post #}
+    <div id="scroll5">
+        <h5>स्वास्थ्य चौकी</h5>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="health_distance">स्वास्थ्य चौकी वा अस्पताल सम्म
+                                लाग्ने दुरी उल्लेख गर्नुहोस</label>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <input class="form-control" name="health_distance" id="health_distance"
+                                   placeholder="उल्लेख गर्नुहोस (मिटरमा)" type="number">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="health_time">स्वास्थ्य चौकी वा अस्पताल सम्म पुग्न
+                                लाग्ने समय</label>
+
+                        </div>
+                        <div class="col-sm-8">
+                            <input class="form-control" name="health_time" id="health_time"
+                                   placeholder="उल्लेख गर्नुहोस (मिनेटमा)" type="number">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Toilet and Sewage #}
+    <div id="scroll6">
+        <h5>शौचालय र ढल ब्यबस्थापन</h5>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="toilet_type">सौचालयको प्रकार</label>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <select type="text" class="form-control" name="toilet_type" id="toilet_type">
+                                <option value="">सौचालयको प्रकार</option>
+                                {% for toilet_type in toilet_type %}
+                                    <option value="{{ toilet_type.id }}">{{ toilet_type.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="sewage_type">ढल निकासको प्रकार</label>
+
+                        </div>
+
+                        <div class="col-sm-8">
+                            <select type="text" class="form-control" name="sewage_type" id="sewage_type">
+                                <option value="">ढल निकासको प्रकार</option>
+                                {% for sewage_type in sewage_type %}
+                                    <option value="{{ sewage_type.id }}">{{ sewage_type.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {#Natural Disaster#}
+    <div id="scroll7">
+        <h5> प्राकृतिक प्रकोप</h5>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="disaster">प्रकोप</label>
+
+                        </div>
+
+                        <div class="col-sm-8">
+                            <select type="text" class="form-control" name="disaster" id="disaster">
+                                <option value=""> -- प्राकृतिक प्रकोप छान्नुहोस्--</option>
+                                {% for disaster in  disasters %}
+                                    <option value="{{ disaster.id }}">{{ disaster.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-sm-4 col-form-label">
+                            <label for="current_state">हालको अवस्था </label>
+
+                        </div>
+
+                        <div class="col-sm-8">
+                            <select type="text" class="form-control" name="current_state" id="current_state">
+                                <option value="">हालको अवस्था</option>
+                                {% for status in house_statuses %}
+                                    <option value="{{ status.id }}">{{ status.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

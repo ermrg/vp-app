@@ -1,0 +1,41 @@
+{% load static %}
+{% load role_check %}
+<!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Create the tabs -->
+    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+{#      <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>#}
+{#      <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>#}
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <!-- Home tab content -->
+        <div id="calculator">
+            <h4>Calculator</h4>
+            <div class="form-group">
+                <input type="number" id="input1" class="form-control" step="any" placeholder="0.00">
+            </div>
+            <div class="form-group">
+                <input type="number" id="input2" class="form-control" step="any" placeholder="0.00">
+            </div>
+            <hr>
+            <div class="form-group">
+                <input type="number" id="result" class="form-control" step="any" placeholder="0.00">
+            </div>
+
+
+            <button class="btn btn-xs btn-primary" data-op="add"><i class="fa fa-plus"></i></button>
+            <button class="btn btn-xs btn-warning" data-op="sub"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-xs btn-default" data-op="mul"><i class="fa fa-times"></i></button>
+            <button class="btn btn-xs btn-success" data-op="div"><i class="fa fa-code"></i></button>
+            <button class="btn btn-xs btn-info" data-op="per"><i class="fa fa-percent"></i></button>
+            <button class="btn btn-xs btn-danger" data-op="reset"><i class="fa fa-circle-o-notch"></i></button>
+        </div>
+{#      <div class="tab-pane" id="control-sidebar-home-tab">#}
+{##}
+{##}
+{#      </div>#}
+      <!-- /.tab-pane -->
+    </div>
+  </aside>
+  <div class="control-sidebar-bg"></div>

@@ -1,0 +1,164 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                    <label for="house_no">घरको संख्या / घर नम्वर</label>
+                </div>
+                <div class="col-sm-8">
+                    <input class="form-control" name="house_no" id="house_no" placeholder="घरको संख्या / घर नम्वर"
+                           type="number">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                    <label for="home_type">घरको प्रकार</label>
+                </div>
+                <div class="col-sm-8">
+                    <select type="text" class="form-control" name="home_type" id="home_type">
+                        <option value="">घरको प्रकार छान्नुहोस्</option>
+                        {% for house_type in house_type %}
+                            <option value="{{ house_type.id }}">{{ house_type.name }}</option>
+                        {% endfor %}
+                        <option value="add">अन्य प्रकार थप्नुहोस्</option>
+                    </select>
+                    <!-- Modal -->
+                    <div id="otherHouseType" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close closeHouseType" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">नयाँ घरको प्रकार थप्नुहोस्</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <input class="form-control" name="other_home_type" id="other_home_type"
+                                           placeholder="घरको अन्य प्रकार" type="text">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary" id="addHouseTypeButton">थप्नुहोस्
+                                    </button>
+                                    <button type="button" class="btn btn-default closeHouseType">Close</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                    <label for="roof_type">छानोको प्रकार</label>
+                </div>
+                <div class="col-sm-8">
+                    <select type="text" class="form-control" name="roof_type" id="roof_type">
+                        <option value="">छानोको प्रकार छान्नुहोस्</option>
+                        {% for roof_type in roof_type %}
+                            <option value="{{ roof_type.id }}">{{ roof_type.name }}</option>
+                        {% endfor %}
+                        <option value="add">अन्य प्रकार थप्नुहोस्</option>
+                    </select>
+                    <!-- Modal -->
+                    <div id="otherRoofType" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close closeRoofType" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">नयाँ छानोको प्रकार थप्नुहोस्</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <input class="form-control" name="other_roof_type" id="other_roof_type"
+                                           placeholder="छानोको अन्य प्रकार" type="text">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary" id="addRoofTypeButton">थप्नुहोस्
+                                    </button>
+                                    <button type="button" class="btn btn-default closeRoofType">Close</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                    <label for="construct_year">निर्माण बर्ष</label>
+                </div>
+                <div class="col-sm-8">
+                    <input class="form-control" name="construct_year" id="construct_year" placeholder="" type="date">
+                    <small class="form-text text-muted">
+                        (बर्ष वा निर्माणाधीन)
+                    </small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                    <label for="home_design">नक्सा पास</label>
+                </div>
+                <div class="col-sm-8">
+                    <select type="text" class="form-control" name="home_design" id="home_design">
+                        <option value="">नक्सा पास छान्नुहोस्</option>
+                        <option value="0">गरेको</option>
+                        <option value="1">नगरेको</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                    <label for="home_design_date">नक्सा पास मिति</label>
+                </div>
+                <div class="col-sm-8">
+                    <input class="form-control" name="home_design_date" id="home_design_date" placeholder=""
+                           type="date">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                    <label for="home_owner">घरको स्वामित्व</label>
+                </div>
+                <div class="col-sm-8">
+                    <select type="text" class="form-control" name="home_owner" id="home_owner">
+                        <option value="">घरको स्वामित्व छान्नुहोस्</option>
+                        <option value="1">1</option>
+                    </select>
+                    <small class="form-text text-muted">
+                        (सदस्यहरुको सुची)
+                    </small>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                    <label for="home_image">घरको फोटो</label>
+                </div>
+                <div class="col-sm-8">
+                    <input class="form-control" name="home_image" id="home_image" type="file">
+                </div>
+            </div>
+            <br>
+        </div>
+
+        <div class="col-md-12">
+        </div>
+
+    </div>
+</div>

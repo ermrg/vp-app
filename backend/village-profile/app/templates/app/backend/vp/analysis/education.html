@@ -1,0 +1,372 @@
+{% extends "app/backend/layouts/app.html" %}
+{% block title %} Education {% endblock %}
+{% load static %}
+{% load role_check %}
+{% block content %}
+
+    <style>
+        .form-group {
+            margin-bottom: 10px !important;
+        }
+    </style>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container col-md-12">
+                <div class="row analysis">
+                    <div class="topics" style="text-align: center; margin:0 30px">
+                        <a href="{% url 'analysis' %}">
+                            <i class="fa fa-pie-chart"></i>
+                            <h6 class="topics-title">Demography</h6>
+                        </a>
+                    </div>
+                    <!--  topic -->
+                    <div class="topics" style="text-align: center; margin:0 30px">
+                        <a href="#">
+                            <i class="fa fa-graduation-cap"></i>
+                            <h6 class="topics-title">Education</h6>
+                        </a>
+                    </div>
+                    <!--  topic -->
+                    <div class="topics" style="text-align: center; margin: 0 30px">
+                        <a href="{% url 'household.analysis' %}">
+                            <i class="fa fa-home"></i>
+                            <h6 class="topics-title">Household and Amenities</h6>
+                        </a>
+                    </div>
+                    <!--  topic -->
+                    <div class="topics" style="text-align: center; margin: 0 30px">
+                        <a href="{% url 'finance.analysis' %}">
+                            <i class="fa fa-money"></i>
+                            <h6 class="topics-title">Finance</h6>
+                        </a>
+                    </div>
+                    <!--  topic -->
+                    <div class="topics" style="text-align: center; margin: 0 50px">
+                        <a href="{% url 'health.analysis' %}">
+                            <i class="fa fa-medkit"></i>
+                            <h6 class="topics-title">Health</h6>
+                        </a>
+                    </div>
+                    <!--  topic -->
+                    <div class="topics" style="text-align: center; margin: 0 30px">
+                        <a href="{% url 'agriculture.analysis' %}">
+                            <i class="fa fa-tree"></i>
+                            <h6 class="topics-title">Agriculture</h6>
+                        </a>
+                    </div>
+                    <!--  topic -->
+                </div>
+            </div>
+        </section>
+
+        <!--  Body section -->
+        <section>
+            <article class="container-fluid" id="marginTop">
+                <div class="row hidden-xs">
+                    <ul class="col-sm-5 col-md-4 col-lg-3 nav nav-pills nav-stacked" role="tablist">
+                        <li class="active"><a href="#tabs-1" role="tab" data-toggle="pill">Literacy Rate</a>
+                        </li>
+                        <li><a href="#tabs-2" role="tab" data-toggle="pill">Literacy rate by Gender</a>
+                        </li>
+                        <li><a href="#tabs-3" role="tab" data-toggle="pill">Education Qualification</a>
+                        </li>
+                        <li><a href="#tabs-4" role="tab" data-toggle="pill">Education Level ( education, mgmt,
+                            science)</a>
+                        </li>
+                        <li><a href="#tabs-5" role="tab" data-toggle="pill">Technological efficiency (प्राविधिक
+                            दक्षता)</a>
+                        </li>
+                    </ul>
+                    <div class="col-sm-7 col-md-8 col-lg-9 well-sm tab-content side-tab">
+                        <!------main 1 tab start--------->
+                        <div class="tab-pane active" id="tabs-1">
+
+                            <!-- Member By Education Status -->
+                            <div id="containerEducationStatus" class="highchartContainer"></div>
+                            <div class="divider"></div>
+
+                            <!-- Education Status by Gender-->
+                            <div id="containerEducationStatusGender" class="highchartContainer"></div>
+                            <div class="divider"></div>
+
+                            <!-- Education Level-->
+                            <div id="containerEducationLevel" class="highchartContainer"></div>
+                            <div class="divider"></div>
+
+                            <!-- Technical Skill-->
+                            <div id="containerTechnicalSkill" class="highchartContainer"></div>
+                            <div class="divider"></div>
+                        </div>
+                        <!------main 1 tab end--------->
+
+                        <!------tab 2 start--------->
+                        <div class="tab-pane" id="tabs-2">
+                            <h2>Population By Age</h2>
+                            <p>Make your everyday purchases a little less painful. With your X checking account, you'll
+                                rack up rewards just by using your Visa&reg; Debit card.
+                                <br>Personalized, cash back rewards. Nice.</p> <a
+                                href="/account-features#Get%20Cash%20Back">Learn More »</a>
+                        </div>
+                        <!------main tab 2 end--------->
+                        <!------tab start--------->
+                        <div class="tab-pane" id="tabs-3">
+                            <h2>Number of Household By Religion</h2>
+                            <p>Take banking off of your chore list. Now you can do your banking from anywhere, anytime,
+                                for free. That's an easy way to keep your money and your time where it belongs - with
+                                you.</p> <a href="/account-features#Online Banking">Learn More »</a>
+                        </div>
+                        <div class="tab-pane" id="tabs-4">
+                            <h2>Number of Household By Ethnicity</h2>
+                            <p>Consider your phone to be your personal banker -its' got your banking needs covered.
+                                Deposit checks, transfer money, view your balance, track your spending habits, and pay
+                                your bills from your smartphone. Now you're <em>really</em> going to feel naked without
+                                it.</p> <a href="/account-features#Mobile Banking">Learn More »</a>
+                        </div>
+                        <div class="tab-pane" id="tabs-5">
+                            <h2>Number of Household By Mother Tongue</h2>
+                            <p>No hoops to jump through. No envelopes to seal. Just grab your phone, take a quick
+                                picture of your check, and boom... You're good to go.</p> <a
+                                href="/account-features#Make a Deposit">Learn More »</a>
+                        </div>
+                    </div>
+                </div>
+
+            </article>
+        </section>
+
+    </div>
+
+{% endblock %}
+{% block scripts %}
+
+    <script>
+        makeFullScreen()
+    </script>
+
+    <script>
+        // Education Status
+        $(document).ready(function () {
+            Highcharts.chart('containerEducationStatus', {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: 'लिङ्ग अनुसार जनसख्यां'
+                },
+                subtitle: {
+                    text: 'लिङ्ग अनुसार जनसख्यां'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                legend: {
+                    enabled: true,
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            connectorColor: 'blue'
+                        },
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    name: 'Population',
+                    data: [
+                        {
+                            name: 'अध्ययनरत',
+                            y: {{studying}}
+                        },
+                        {
+                            name: 'पढाइ छाडेको',
+                            y: {{left_study}}
+                        },
+                        {
+                            name: 'अध्ययन पुरा',
+                            y: {{ study_completed }}
+                        },
+                        {
+                            name: 'निरक्षर',
+                            y: {{ no_study }}
+                        },
+                    ]
+                }]
+            });
+        })
+        // left on age group
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            Highcharts.chart('containerEducationStatusGender', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Overall: Population By Age Group'
+                },
+                subtitle: {
+                    text: 'Source: Individual Data Collection'
+                },
+                xAxis: {
+                    categories: [
+                        'अध्ययनरत',
+                        'पढाइ छाडेको',
+                        'अध्ययन पुरा',
+                        'निरक्षर',
+                    ],
+                    crosshair: true
+                },
+                yAxis: {
+                    title: {
+                        text: 'Population'
+                    }
+                },
+                legend: {
+                    enabled: true,
+                },
+                series: [{
+                    name: 'Male',
+                    data: [{{male_studying}}, {{male_left_study}}, {{male_study_completed}}, {{male_no_study}}]
+                },
+                    {
+                        name: 'Female',
+                        data: [{{female_studying}}, {{female_left_study}}, {{female_study_completed}}, {{female_no_study}}]
+                    }
+                ]
+            });
+        })
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            Highcharts.chart('containerEducationLevel', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Overall : सदस्यको मृत्युको कारण'
+                },
+                subtitle: {
+                    text: 'Source: Individual Data Collection'
+                },
+                xAxis: {
+                    categories: [
+                        'पुर्व प्राथमिक',
+                        'आधारभुत तह',
+                        'माध्यामिक तह',
+                        'स्नातक',
+                        'स्नातकोत्तर',
+                        'एमफिल र बिद्यावारिधी',
+                        'प्राविधिक एस.एल.सी (एस.ई.ई)',
+                        'साधारण लेखपद (साक्षर)',
+                        'लेखपद गर्न नसक्ने (निरक्षर)',
+                    ],
+                    crosshair: true
+                },
+                yAxis: {
+                    title: {
+                        text: 'Population'
+                    }
+                },
+                legend: {
+                    enabled: false,
+                },
+                tooltip: {
+                    valueSuffix: '(In Hundred)'
+                },
+                series: [{
+                    name: 'Population',
+                    data: [{{primary_level}}, {{pre_primary_level}}, {{secondary_level}}, {{bachelor_level}},
+                        {{master_phd_level}}, {{degree_level}}, {{high_school_level}}, {{normal_read_write}}, {{illiterate}}]
+                }]
+            });
+
+        })
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            Highcharts.chart('containerTechnicalSkill', {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: 'लिङ्ग अनुसार जनसख्यां'
+                },
+                subtitle: {
+                    text: 'लिङ्ग अनुसार जनसख्यां'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                legend: {
+                    enabled: true,
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            connectorColor: 'blue'
+                        },
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    name: 'Population',
+                    data: [
+                        {
+                            name: 'इलेक्ट्रीसियन',
+                            y: {{electrician}}
+                        },
+                        {
+                            name: 'डकर्मी',
+                            y: {{mason}}
+                        },
+                        {
+                            name: 'पेन्टर',
+                            y: {{ painter }}
+                        },
+                        {
+                            name: 'प्लम्बर',
+                            y: {{ plumber }}
+                        },
+                        {
+                            name: 'सिकर्मी',
+                            y: {{ carpenter }}
+                        },
+                        {
+                            name: 'सुचना प्रविधि',
+                            y: {{ tech_and_information }}
+                        },
+                        {
+                            name: 'सिलाई बुनाई',
+                            y: {{ knitting_stitch }}
+                        },
+                        {
+                            name: 'अन्य',
+                            y: {{ other_skills }}
+                        }
+                    ]
+                }]
+            });
+        })
+    </script>
+
+
+{% endblock %}

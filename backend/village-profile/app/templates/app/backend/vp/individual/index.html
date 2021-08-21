@@ -1,0 +1,93 @@
+{% extends "app/backend/layouts/app.html" %}
+{% block title %}Individual{% endblock %}
+{% load static %}
+{% load role_check %}
+{% block content %}
+    <style>
+        .form-group {
+            margin-bottom: 10px !important;
+        }
+    </style>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Individual
+            </h1>
+
+            {% include 'app/backend/layouts/_notification.html' %}
+            <ol class="breadcrumb">
+                <li><a type="button" class="btn btn-default" href="#" onClick="javascript:history.go(-1);"><i
+                        class="fa fa-arrow-left"></i> Back</a>
+                <a type="button" class="btn btn-success" href="{% url 'create_individual' %}"><i
+                        class="fa fa-plus"></i>Create New</a>
+                </li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+
+                <div class="col-md-12 col-sm-12">
+                    <!-- general form elements -->
+                    <div class="box box-primary">
+
+                        <!-- /.box-header -->
+                        <!-- form start -->
+
+                        <div class="box-body">
+                            {% include 'app/backend/vp/individual/partial/table.html' %}
+                        </div>
+                        <!-- /.box-body -->
+                        {#                            <div class="box-footer">#}
+                        {#                               #}
+                        {#                            </div>#}
+                        <!-- /.box-footer -->
+
+                    </div>
+                    <!-- /.box -->
+                </div>
+            </div>
+
+        </section>
+        <!-- /.content -->
+    </div>
+
+{% endblock %}
+{% block scripts %}
+    <script>
+    $(document).ready(function () {
+        makeFullPage();
+    });
+    </script>
+    {#    Dates #}
+
+    <script>
+
+        $('#invoiceDate').nepaliDatePicker({
+            dateFormat: "%M %d, %y",
+            closeOnDateSelect: true,
+        });
+
+    </script>
+
+    {#    Data Tables #}
+    <script>
+        $(function () {
+            $('#example1').DataTable({
+                'paging': true,
+                'lengthChange': true,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': true
+            });
+            $('#type').select2({});
+            $('#parent').select2({});
+        })
+    </script>
+
+
+{% endblock %}

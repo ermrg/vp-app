@@ -1,0 +1,47 @@
+version: '3'
+services:
+  db:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: vp
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysql-vol:/var/lib/mysql
+    ports:
+      - "3306:3306"
+  web:
+    image: registry.heroku.com/secure-citadel-21714/web
+    build:
+      context: .
+      dockerfile: .Dockerfile
+    command: sh -c "/wait && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - /tmp/app/mysqld:/run/mysqld
+    depends_on:
+      - db
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: root
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "8080:80"
+    volumes:
+      - mysql-vol:/var/lib/mysql
+volumes:
+  mysql-vol:
+    driver: local

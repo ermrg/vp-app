@@ -1,0 +1,287 @@
+{% load static %}
+{% load role_check %}
+<!-- Left side column. contains the logo and sidebar -->
+<aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <!-- Sidebar user panel -->
+        <div class="user-panel">
+            <div class="pull-left image">
+                <img src="{% static 'app/dist/img/user.png' %}" class="img-circle" alt="User Image">
+            </div>
+            <div class="pull-left info">
+                <p>{{ request.user.first_name }} {{ request.user.last_name }}</p>
+                <a href="#"><i class="fa fa-circle text-success"></i> Admin </a>
+            </div>
+        </div>
+        <!-- search form -->
+        <form action="" method="get" class="sidebar-form">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search Order..."
+                       value="{{ request.GET.q }}" title="Bill, Customer, Clothe, Date, Remarks, Station">
+                <span class="input-group-btn">
+                <button type="submit" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+            </div>
+        </form>
+        <!-- /.search form -->
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu" data-widget="tree">
+
+            <li class="{% if request.path == '/' %} active {% endif %}"><a href="{% url 'dashboard' %}"><i
+                    class="fa fa-dashboard"></i> <span> Dashboard</span></a></li>
+            <li class="{% if 'household' in request.path %} active {% endif %}"><a href="{% url 'household' %}"><i
+                    class="fa fa-home"></i> <span> Household</span></a></li>
+            <li class="{% if 'individual' in request.path %} active {% endif %}"><a href="{% url 'individual' %}"><i
+                    class="fa fa-industry"></i> <span> Institutional</span></a></li>
+            <li class="{% if 'individual' in request.path %} active {% endif %}"><a href="{% url 'analysis' %}"><i
+                    class="fa fa-line-chart"></i> <span> Analysis</span></a></li>
+            <li class="{% if 'individual' in request.path %} active {% endif %}"><a href="{% url 'individual' %}"><i
+                    class="fa fa-random"></i> <span> Compare</span></a></li>
+            <li class="{% if 'individual' in request.path %} active {% endif %}"><a href="{% url 'individual' %}"><i
+                    class="fa fa-map-marker"></i> <span> Map View</span></a></li>
+            <li class="treeview {% if 'individual' in request.path %} active {% endif %}"><a href="{% url 'individual' %}"><i
+                    class="fa fa-bar-chart"></i> <span> Analytics</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i></span>
+            </a>
+                <ul class="treeview-menu">
+                    <li class="{% if '/animal-analytics' in request.path %} active {% endif %}"><a href="{% url 'animal_analytics' %}"><i
+                                class="fa fa-paw"></i>Animal Analytics</a></li>
+                    <li class="{% if '/business-analytics' in request.path %} active {% endif %}"><a href="{% url 'business_analytics' %}"><i
+                                class="fa fa-briefcase"></i>Business Analytics</a></li>
+                    <li class="{% if '/deceased-analytics' in request.path %} active {% endif %}"><a href="{% url 'deceased_analytics' %}"><i
+                                class="fa fa-user"></i>Deceased Member Analytics</a></li>
+                    <li class="{% if '/income-analytics' in request.path %} active {% endif %}"><a href="{% url 'income_analytics' %}"><i
+                                class="fa fa-dollar"></i>Family-Income Analytics</a></li>
+                    <li class="{% if '/househead-analytics' in request.path %} active {% endif %}"><a href="{% url 'househead_analytics' %}"><i
+                                class="fa fa-user-circle-o"></i>Househead Analytics</a></li>
+{#                    <li class="{% if '/helper' in request.path %} active {% endif %}"><a href="{% url 'helper_report' %}"><i#}
+{#                                class="fa fa-user"></i>Helper Analytics</a></li>#}
+                    <li class="{% if '/infrastructure-analytics' in request.path %} active {% endif %}"><a href="{% url 'infrastructure_analytics' %}"><i
+                                    class="fa fa-industry"></i>Infrastructure Analytics</a></li>
+                    <li class="{% if '/member-analytics' in request.path %} active {% endif %}"><a href="{% url 'member_analytics' %}"><i
+                                    class="fa fa-user"></i>Member Analytics</a></li>
+                    <li class="{% if '/house-analytics' in request.path %} active {% endif %}"><a href="{% url 'house_analytics' %}"><i
+                                class="fa fa-home"></i>House Analytics</a></li>
+                    <li class="{% if '/land-analytics' in request.path %} active {% endif %}"><a href="{% url 'land_analytics' %}"><i
+                                class="fa fa-area-chart"></i>Land Analytics</a></li>
+                    <li class="{% if '/rent-analytics' in request.path %} active {% endif %}"><a href="{% url 'rent_analytics' %}"><i
+                                class="fa fa-street-view"></i>Rent Member Analytics</a></li>
+                </ul>
+            </li>
+
+            <li class="treeview {% if 'report' in request.path %} active {% endif %}">
+                <a href="#">
+                        <i class="fa fa-file-code-o"></i> <span>Reports</span>
+                        <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i></span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="{% if '/animal' in request.path %} active {% endif %}"><a href="{% url 'animal_report' %}"><i
+                                class="fa fa-paw"></i>Animal Report</a></li>
+                    <li class="{% if '/business' in request.path %} active {% endif %}"><a href="{% url 'business_report' %}"><i
+                                class="fa fa-briefcase"></i>Business Report</a></li>
+                    <li class="{% if '/deceased-member' in request.path %} active {% endif %}"><a href="{% url 'deceased_report' %}"><i
+                                class="fa fa-user"></i>Deceased Member Report</a></li>
+                    <li class="{% if '/family-income' in request.path %} active {% endif %}"><a href="{% url 'income_report' %}"><i
+                                class="fa fa-rupee"></i>Family-Income Report</a></li>
+                    <li class="{% if '/family-expense' in request.path %} active {% endif %}"><a href="{% url 'expenses_report' %}"><i
+                                class="fa fa-credit-card"></i>Family-Expenses Report</a></li>
+                    <li class="{% if '/househead' in request.path %} active {% endif %}"><a href="{% url 'househead_report' %}"><i
+                                class="fa fa-user-circle-o"></i>Househead Report</a></li>
+                    <li class="{% if '/helper' in request.path %} active {% endif %}"><a href="{% url 'helper_report' %}"><i
+                                class="fa fa-user"></i>Helper Report</a></li>
+                    <li class="{% if '/infrastructure' in request.path %} active {% endif %}"><a href="{% url 'infrastructure_report' %}"><i
+                                    class="fa fa-industry"></i>Infrastructure Report</a></li>
+                    <li class="{% if '/member' in request.path %} active {% endif %}"><a href="{% url 'member_report' %}"><i
+                                    class="fa fa-user"></i>Member Report</a></li>
+                    <li class="{% if '/house-details' in request.path %} active {% endif %}"><a href="{% url 'house_report' %}"><i
+                                class="fa fa-home"></i>House Report</a></li>
+                    <li class="{% if '/land-details' in request.path %} active {% endif %}"><a href="{% url 'land_report' %}"><i
+                                class="fa fa-area-chart"></i>Land Report</a></li>
+                    <li class="{% if '/rent-member' in request.path %} active {% endif %}"><a href="{% url 'rent_member_report' %}"><i
+                                class="fa fa-street-view"></i>Rent Member Report</a></li>
+                </ul>
+            </li>
+
+            <li class="{% if 'import' in request.path %} active {% endif %}"><a href="{% url 'import' %}"><i
+                    class="fa fa-upload"></i> <span> Import</span></a></li>
+
+            {% if request.user|is_super_admin %}
+                <li class="treeview {% if '/setting' in request.path %} active {% endif %}">
+                    <a href="#">
+                        <i class="fa fa-cogs"></i> <span>Setting</span>
+                        <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="{% if '/user' in request.path %} active {% endif %}"><a href="{% url 'list_user' %}"><i
+                                class="fa fa-user"></i>User</a></li>
+                        <li class="{% if '/fiscal-year' in request.path %} active {% endif %}"><a
+                                href="{% url 'fiscal_year' %}"><i
+                                class="fa fa-terminal"></i>Fiscal Year </a></li>
+
+                        <li class="{% if '/province' in request.path %} active {% endif %}"><a
+                                href="{% url 'province' %}"><i
+                                class="fa fa-terminal"></i>Province</a></li>
+                        <li class="{% if '/district' in request.path %} active {% endif %}"><a
+                                href="{% url 'district' %}"><i
+                                class="fa fa-terminal"></i> District</a></li>
+                        <li class="{% if '/local_level' in request.path %} active {% endif %}"><a
+                                href="{% url 'local_level' %}"><i
+                                class="fa fa-terminal"></i>Local Level </a></li>
+                        <li class="{% if '/designation' in request.path %} active {% endif %}"><a
+                                href="{% url 'designation' %}"><i
+                                class="fa fa-terminal"></i>Designation </a></li>
+                        <li class="{% if '/office' in request.path %} active {% endif %}"><a
+                                href="{% url 'office' %}"><i
+                                class="fa fa-building"></i>Office </a></li>
+                        <li class="{% if '/feedback' in request.path %} active {% endif %}"><a
+                                href="{% url 'feedback' %}"><i class="fa fa-feed"></i> <span> Feedback</span></a></li>
+
+                        <li class="{% if '/animal-type' in request.path %} active {% endif %}"><a
+                                href="{% url 'setting.animal_type' %}"><i class="fa fa-paw"></i> <span> Animal Type</span></a></li>
+
+                        <li class="{% if '/basti-name' in request.path %} active {% endif %}"><a
+                                href="{% url 'setting.basti_name' %}"><i class="fa fa-home"></i> <span> Basti</span></a></li>
+
+                        <li class="{% if '/business-type' in request.path %} active {% endif %}"><a
+                                href="{% url 'setting.business_type' %}"><i class="fa fa-home"></i> <span> Business Type</span></a></li>
+
+                        <li class="{% if '/cooking-fuel' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.cooking_fuel' %}"><i class="fa fa-fire"></i> <span> Cooking Fuel</span></a>
+                        </li>
+
+                        <li class="{% if '/country' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.country' %}"><i class="fa fa-globe"></i> <span> Country</span></a>
+                        </li>
+
+                        <li class="{% if '/death-reason' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.death_reason' %}"><i class="fa fa-globe"></i> <span> Death Reason</span></a>
+                        </li>
+
+                        <li class="{% if '/disability-type' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.disability_type' %}"><i class="fa fa-blind"></i> <span> Disability</span></a>
+                        </li>
+
+                        <li class="{% if '/disaster-name' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.disaster_name' %}"><i class="fa fa-blind"></i> <span> Disaster</span></a>
+                        </li>
+
+                        <li class="{% if '/education-level' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.education_level' %}"><i class="fa fa-graduation-cap"></i> <span> Education level</span></a>
+                        </li>
+
+                        <li class="{% if '/education-status' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.education_status' %}"><i class="fa fa-book"></i> <span> Education Status</span></a>
+                        </li>
+
+                        <li class="{% if '/facility' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.facility' %}"><i class="fa fa-"></i> <span> Facility </span></a>
+                        </li>
+
+                        <li class="{% if '/festival' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.festival' %}"><i class="fa fa-"></i> <span> Festival </span></a>
+                        </li>
+
+                        <li class="{% if '/foreign-reason' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.foreign_reason' %}"><i class="fa fa-plane"></i> <span> Foreign Reason </span></a>
+                        </li>
+
+                        <li class="{% if '/garbage-management' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.garbage_management' %}"><i class="fa fa-recycle"></i> <span> Garbage Management </span></a>
+                        </li>
+
+                        <li class="{% if '/house-damage-status' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.house_damage_status' %}"><i class="fa fa-house-damage"></i> <span> House Damage Status </span></a>
+                        </li>
+
+                        <li class="{% if '/house-type' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.house_type' %}"><i class="fa fa-"></i> <span> House Type </span></a>
+                        </li>
+
+                        <li class="{% if '/income-source' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.income_source' %}"><i class="fa fa-money"></i> <span> Income Source </span></a>
+                        </li>
+
+                        <li class="{% if '/ethnics' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.jaati' %}"><i class="fa fa-users"></i> <span> Ethnics/Jaati </span></a>
+                        </li>
+
+                        <li class="{% if '/land-type' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.land_type' %}"><i class="fa fa-area-chart"></i> <span> Land Type </span></a>
+                        </li>
+
+                        <li class="{% if '/light-fuel' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.light_fuel' %}"><i class="fa fa-lightbulb-o"></i> <span> Light Fuel </span></a>
+                        </li>
+
+                         <li class="{% if '/main-occupation' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.main_occupation' %}"><i class="fa fa-"></i> <span> Main Occupation </span></a>
+                        </li>
+
+                        <li class="{% if '/marga' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.marga' %}"><i class="fa fa-"></i> <span> Marga </span></a>
+                        </li>
+
+                        <li class="{% if '/marital-status' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.marital_status' %}"><i class="fa fa-"></i> <span> Marital Status </span></a>
+                        </li>
+
+                        <li class="{% if '/mother-tongue' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.mother_tongue' %}"><i class="fa fa-"></i> <span> Mother Tongue </span></a>
+                        </li>
+
+                        <li class="{% if '/relation-with-hoh' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.relation_with_hoh' %}"><i class="fa fa-"></i> <span> Relation With HouseHead </span></a>
+                        </li>
+
+                        <li class="{% if '/religion' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.religion' %}"><i class="fa fa-"></i> <span> Religion </span></a>
+                        </li>
+
+                        <li class="{% if '/roof-type' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.roof_type' %}"><i class="fa fa-"></i> <span> Roof Type </span></a>
+                        </li>
+
+                        <li class="{% if '/sewage-type' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.sewage_type' %}"><i class="fa fa-"></i> <span> Sewage Type </span></a>
+                        </li>
+
+                        <li class="{% if '/technical-skill' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.technical_skill' %}"><i class="fa fa-"></i> <span> Technical Skill </span></a>
+                        </li>
+
+                        <li class="{% if '/toilet-type' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.toilet_type' %}"><i class="fa fa-"></i> <span> Toilet Type </span></a>
+                        </li>
+
+                        <li class="{% if '/vaccine-name' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.vaccine_name' %}"><i class="fa fa-syringe"></i> <span> Vaccine Name </span></a>
+                        </li>
+
+                        <li class="{% if '/vehicle-type' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.vehicle_type' %}"><i class="fa fa-car"></i> <span> Vehicle Type </span></a>
+                        </li>
+
+                        <li class="{% if '/ward' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.ward' %}"><i class="fa fa-"></i> <span> Ward </span></a>
+                        </li>
+                        <li class="{% if '/collector' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.collector' %}"><i class="fa fa-user"></i> <span> Collector </span></a>
+                        </li>
+                        <li class="{% if '/water-source' in request.path %} active {% endif %}">
+                            <a href="{% url 'setting.water_source' %}"><i class="fa fa-tint"></i> <span> Water Source </span></a>
+                        </li>
+
+                    </ul>
+                </li>
+            {% endif %}
+
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>

@@ -1,0 +1,174 @@
+{% extends "app/backend/layouts/app.html" %}
+{% block title %}| User List{% endblock %}
+{% load role_check %}
+{% load static %}
+{% block content %}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                User
+                <small>List</small>
+            </h1>
+            {% include 'app/backend/layouts/_notification.html' %}
+            <ol class="breadcrumb">
+                <li><a type="button" class="btn btn-default" href="#" onClick="javascript:history.go(-1);"><i
+                        class="fa fa-arrow-left"></i> Back</a>
+                <li><a type="button" class="btn btn-default" href="{% url 'create_user' %}"><i class="fa fa-plus"></i> Add User</a></li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Users</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="example1" class="table table-bordered table-striped dataTable"
+                                           role="grid" aria-describedby="example1_info">
+                                        <thead>
+                                        <tr role="row">
+                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                colspan="1"
+                                                aria-label="SN: activate to sort column ascending"
+                                                style="width: 50px;">SN
+                                            </th>
+                                            <th class="sorting_asc" tabindex="0" aria-controls="example1"
+                                                rowspan="1" colspan="1"
+                                                aria-label="Name: activate to sort column descending"
+                                                style="width: 349px;" aria-sort="ascending">Name
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                colspan="1"
+                                                aria-label="Username: activate to sort column ascending"
+                                                style="width: 312px;">Username
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                colspan="1"
+                                                aria-label="Email: activate to sort column ascending"
+                                                style="width: 248px;">Email
+                                            </th>
+
+                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                colspan="1"
+                                                aria-label="Office: activate to sort column ascending"
+                                                style="width: 184px;">Office
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                colspan="1"
+                                                aria-label="Role: activate to sort column ascending"
+                                                style="width: 184px;">Role
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                colspan="1"
+                                                aria-label="Location: activate to sort column ascending"
+                                                style="width: 184px;">Location
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                colspan="1"
+                                                aria-label="Action: activate to sort column ascending"
+                                                style="width: 100px;">Action
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for profile in profiles %}
+
+                                            <tr role="row" class="{% if forloop.counter|divisibleby:'2' %}even{% else %} odd {% endif %}" style="{% if request.user == profile.user %}background-color: #f5dcdc;{% endif %}">
+                                                <td class="">{{ forloop.counter }}</td>
+                                                <td class="sorting_1">{{ profile.user.first_name }} {{ profile.user.last_name }}</td>
+                                                <td>{{ profile.user.username }}</td>
+                                                <td>{{ profile.user.email }}</td>
+                                                <td>{{ profile.office }}</td>
+                                                <td>
+                                                    {% if profile.user|has_group:'Admin' %}
+                                                        <span class="float-right label label-primary user-role">Admin</span>
+                                                    {% elif profile.user|has_group:'Staff' %}
+                                                        <span class="float-right label label-info user-role"> Staff</span>
+                                                    {% else %}
+                                                        <span class="float-right label label-default user-role" data-id="4" title="Click to change"> {{ profile.user|my_group }}</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    <h6>{{ profile.district}}</h6>
+                                                    <h5>{{ profile.local_level}}</h5>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-default dropdown-toggle"
+                                                                data-toggle="dropdown" aria-expanded="false">
+                                                            Action <span class="caret"></span>
+
+                                                        </button>
+                                                        <ul class="dropdown-menu" role="menu">
+                                                        {% if request.user != profile.user %}
+                                                            <li><a href="{% url 'edit_user' profile.user_id %}" class="edit-data"><i class="fa fa-edit"></i> Edit</a></li>
+                                                            <li class="divider"></li>
+                                                            <li>
+                                                                {% if request.user|is_super_admin %}
+                                                                    <li>
+                                                                        <a href="{% url 'delete_user' profile.user.id %}"
+                                                                           class="delete-data"><i
+                                                                                class="fa fa-trash-o"></i> Delete</a>
+                                                                    </li>
+                                                                {% endif %}
+                                                            </li>
+                                                        {% endif %}
+
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+{#                                        <tfoot>#}
+{#                                        <tr>#}
+{#                                            <th rowspan="1" colspan="1">SN</th>#}
+{#                                            <th rowspan="1" colspan="1">Name</th>#}
+{#                                            <th rowspan="1" colspan="1">Username</th>#}
+{#                                            <th rowspan="1" colspan="1">Email</th>#}
+{#                                            <th rowspan="1" colspan="1">Office</th>#}
+{#                                            <th rowspan="1" colspan="1">Role</th>#}
+{#                                            <th rowspan="1" colspan="1">Location</th>#}
+{#                                            <th rowspan="1" colspan="1">Action</th>#}
+{#                                        </tr>#}
+{#                                        </tfoot>#}
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+
+{% endblock %}
+{% block scripts %}
+    <script>
+        $(function () {
+            $('#example1').DataTable({
+                'paging': true,
+                'lengthChange': true,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': false
+            })
+        })
+    </script>
+{% endblock %}
+</body>
+</html>

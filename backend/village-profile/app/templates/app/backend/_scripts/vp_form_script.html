@@ -1,0 +1,151 @@
+{% load static %}
+
+{# Install JQuery if no already #}
+<script>
+    if (!window.jQuery) {
+        let script = document.createElement('script');
+        script.type = "text/javascript";
+        script.src = "{% static 'app/jquery/dist/jquery.min.js' %}";
+        document.getElementsByTagName('head')[0].appendChild(script);
+    }
+    if (!jQuery.fn.select2) {
+        let script = document.createElement('script');
+        script.type = "text/javascript";
+        script.src = "{% static 'app/select2/dist/js/select2.full.js' %}";
+        document.getElementsByTagName('head')[0].appendChild(script);
+    }
+</script>
+{# Declaration #}
+<script>
+    let $householdHouseholdForm = $('#householdHouseholdForm');
+</script>
+
+
+{# Functions #}
+<script>
+    let addMember = function () {
+        let $ul = $householdHouseholdForm.find('#memberFormUl');
+        let $firstLi = $ul.find('li').first().clone();
+        let sn = parseInt($ul.find('li').last().find('.member-counter').text());
+        $firstLi.find('.member-counter').text(sn + 1);
+        $ul.find('li').last().after($firstLi);
+         let $noOfM = $householdHouseholdForm.find('#no_of_m');
+         let existing = $ul.find('li').length;
+         $noOfM.val(existing);
+    };
+
+    let removeMember = function (this_) {
+        let $ul = $householdHouseholdForm.find('#memberFormUl');
+        if ($ul.find('li').length > 1) {
+            $ul.find('li').last().remove();
+        } else {
+            $(this_).shake({
+                interval: 100,
+                distance: 10,
+                times: 3
+            });
+        }
+        let $noOfM = $householdHouseholdForm.find('#no_of_m');
+        let existing = $ul.find('li').length;
+        $noOfM.val(existing);
+    };
+
+    let removeMultiple = function () {
+        let $ul = $householdHouseholdForm.find('#memberFormUl');
+        if ($ul.find('li').length > 1) {
+            $ul.find('li').last().remove();
+        }
+        let $noOfM = $householdHouseholdForm.find('#no_of_m');
+        let existing = $ul.find('li').length;
+        $noOfM.val(existing);
+    };
+
+    $.fn.shake = function (settings) {
+        if (typeof settings.interval == 'undefined') {
+            settings.interval = 100;
+        }
+
+        if (typeof settings.distance == 'undefined') {
+            settings.distance = 10;
+        }
+
+        if (typeof settings.times == 'undefined') {
+            settings.times = 4;
+        }
+
+        if (typeof settings.complete == 'undefined') {
+            settings.complete = function () {
+            };
+        }
+
+        $(this).css('position', 'relative');
+
+        for (let iter = 0; iter < (settings.times + 1); iter++) {
+            $(this).animate({left: ((iter % 2 == 0 ? settings.distance : settings.distance * -1))}, settings.interval);
+        }
+
+        $(this).animate({left: 0}, settings.interval, settings.complete);
+    };
+
+    $.fn.bounce = function (settings) {
+        if (typeof settings.interval == 'undefined') {
+            settings.interval = 100;
+        }
+
+        if (typeof settings.distance == 'undefined') {
+            settings.distance = 10;
+        }
+
+        if (typeof settings.times == 'undefined') {
+            settings.times = 4;
+        }
+
+        if (typeof settings.complete == 'undefined') {
+            settings.complete = function () {
+            };
+        }
+
+        $(this).css('position', 'relative');
+
+        for (let iter = 0; iter < (settings.times + 1); iter++) {
+            $(this).animate({top: ((iter % 2 == 0 ? settings.distance : settings.distance * -1))}, settings.interval);
+        }
+
+        $(this).animate({top: 0}, settings.interval, settings.complete);
+    };
+
+</script>
+
+{# Events #}
+<script>
+    $(function () {
+
+        let $addMember = $householdHouseholdForm.find('#addMember');
+        let $removeMember = $householdHouseholdForm.find('#removeMember');
+        let $noOfM = $householdHouseholdForm.find('#no_of_m');
+        $addMember.on('click', function (e) {
+            e.preventDefault();
+            addMember();
+        });
+        $removeMember.on('click', function (e) {
+            e.preventDefault();
+            removeMember(this);
+        });
+        $noOfM.on('change', function (e) {
+            e.preventDefault();
+            let no = parseInt($(this).val());
+            let $ul = $householdHouseholdForm.find('#memberFormUl');
+            let existing = $ul.find('li').length;
+            if (existing > no) {
+
+                for (let n = 0; n < (existing-no); n++) {
+                    removeMultiple()
+                }
+            } else {
+                for (let n = 0; n < (no - existing); n++) {
+                    addMember()
+                }
+            }
+        })
+    })
+</script>

@@ -1,0 +1,717 @@
+{% load static %}
+
+{# Install JQuery if no already #}
+
+<script>
+    if (!window.jQuery) {
+        let script = document.createElement('script');
+        script.type = "text/javascript";
+        script.src = "{% static 'app/jquery/dist/jquery.min.js' %}";
+        document.getElementsByTagName('head')[0].appendChild(script);
+    }
+</script>
+{# Family Details Form   #}
+     <script>
+        $('form#familyDetailsForm').validate({
+            rules: {
+                ward_no: {
+                    required: true,
+                },
+                place_name: {
+                    required: true,
+                },
+                marg_name: {
+                    required: true,
+                },
+                religion: {
+                    required: true,
+                },
+                caste: {
+                    required: true,
+                },
+                mother_tongue: {
+                    required: true,
+                },
+                main_occupation: {
+                    required: true,
+                },
+                life_insurance: {
+                    required: true
+                },
+                health_insurance: {
+                    required: true
+                },
+                responder_name: {
+                    required: true,
+                },
+                house_no: {
+                    required: true,
+                    number: true,
+                },
+                member_no: {
+                    required: true,
+                    number: true,
+                },
+                migration_status: {
+                    required: true,
+                },
+                mobile_no: {
+                    required: true,
+                    number: true,
+                },
+                geolocation: {
+                    required: true,
+                    number: true,
+                },
+                {# responder_photo: {#}
+                {#    required: true,#}
+                {# },#}
+
+            },
+            messages: {
+                ward_no: {
+                    required: 'Enter Ward name',
+                    {#number: "Must be a number field",#}
+                    {#max: "Maximum number limit is 15"#}
+                },
+                place_name:{
+                    required: "basti is required"
+                },
+                religion:{
+                    required: "religion is required"
+                },
+                caste:{
+                    required: "Caste is required"
+                },
+                mother_tongue:{
+                    required: "Mother Tongue is required"
+                },
+                main_occupation:{
+                    required: "Main Occupation  is required"
+                },
+                life_insurance:{
+                    required: "life_insurance is required",
+                    number: "Must be a number field"
+                },
+                health_insurance:{
+                    required: " health_insurance is required",
+                    number: "Must be a number field"
+                },
+                responder_name:{
+                    required: "Local Level is required"
+                },
+                house_no:{
+                    required: " House Number is required",
+                    number: "Must be a number field"
+                },
+                member_no:{
+                    required: " Member Number is required",
+                    number: "Must be a number field"
+                },
+                migration_status:{
+                    required: "Migration Status is required",
+                },
+                mobile_no:{
+                    required: " Mobile Number is required",
+                    number: "Must be a number field"
+                },
+                geolocation:{
+                    required: " Member Number is required",
+                    number: "Must be a number field"
+                },
+                {#responder_photo:{#}
+                {#    required: " Member Number is required",#}
+                {# }#}
+            }
+        })
+     </script>
+
+    {# HouseHead Form#}
+    <script>
+        $('form#houseHeadForm').validate({
+            rules: {
+                owner_name:{
+                    required: true,
+                },
+                owner_gender:{
+                    required: true,
+                },
+                owner_dob:{
+                    required: true,
+                },
+                owner_citizen:{
+                    required: true,
+                },
+                owner_contact:{
+                    required: true,
+                },
+                owner_edu_status:{
+                    required: true,
+                },
+                owner_edu_level:{
+                    required: true,
+                },
+                {#owner_month_salary:{#}
+                {#    required: true,#}
+                {#,#}
+                owner_profession:{
+                    required: true,
+                },
+                owner_marital_status:{
+                    required: true,
+                },
+            },
+            messages: {
+                owner_name:{
+                    required:"Name is required"
+                },
+                  owner_gender:{
+                    required:"forgot to choose gender"
+                },
+                  owner_dob:{
+                    required:"Please mention Date of Birth"
+                },
+                  owner_citizen:{
+                    required:"Citizenship number is compulsory"
+                },
+                  owner_contact:{
+                    required:"Phone number is required"
+                },
+                  owner_edu_status:{
+                    required:"Please choose the education status"
+                },
+                  owner_edu_level:{
+                    required:"Please choose the education level"
+                },
+                  owner_profession:{
+                    required:"Required Field"
+                },
+                  owner_marital_status:{
+                    required:"Required Field"
+                }
+            }
+        })
+    </script>
+
+    {# Family Member #}
+    <script>
+        $('form#familyMemberForm').validate({
+             rules: {
+                mem_name:{
+                    required: true,
+                },
+                mem_gender:{
+                    required: true,
+                },
+                mem_dob:{
+                    required: true,
+                },
+                mem_citizen:{
+                    required: true,
+                },
+                mem_contact:{
+                    required: true,
+                },
+                mem_edu_status:{
+                    required: true,
+                },
+                mem_edu_level:{
+                    required: true,
+                },
+                mem_profession:{
+                    required: true,
+                },
+                mem_marital_status:{
+                    required: true,
+                },
+                 relation_with_owner:{
+                    required: true,
+                },
+            },
+            messages: {
+                mem_name:{
+                    required:"Name is required"
+                },
+                  mem_gender:{
+                    required:"forgot to choose gender"
+                },
+                  mem_dob:{
+                    required:"Please mention Date of Birth"
+                },
+                  mem_citizen:{
+                    required:"Citizenship number is compulsory"
+                },
+                  mem_contact:{
+                    required:"Phone number is required"
+                },
+                  mem_edu_status:{
+                    required:"Please choose the education status"
+                },
+                  mem_edu_level:{
+                    required:"Please choose the education level"
+                },
+                  mem_profession:{
+                    required:"Required Field"
+                },
+                  mem_marital_status:{
+                    required:"Required Field"
+                },
+                relation_with_owner:{
+                    required:"Required Field"
+                }
+            }
+     })
+    </script>
+
+    {# Deceased Member #}
+    <script>
+        $('form#deceasedMemberForm').validate({
+            rules:{
+                expire_mm_name:{
+                    required: true,
+                },
+                expire_mm_gender:{
+                    required: true,
+                },
+                expire_mm_age:{
+                    required: true,
+                },
+                expire_mm_month:{
+                    required: true,
+                },
+                expire_mm_reason:{
+                    required: true,
+                }
+            },
+            messages:{
+                expire_mm_name:{
+                    required: "Name is required"
+                },
+                expire_mm_gender:{
+                    required: "Gender is required"
+                },
+                expire_mm_age:{
+                    required: "Age is required"
+                },
+                expire_mm_month:{
+                    required: "Month is required"
+                },
+                expire_mm_reason:{
+                    required: "Reason is required"
+                }
+
+            }
+        })
+    </script>
+
+    {# House Detail #}
+    <script>
+        $('form#houseDetailsForm').validate({
+            rules:{
+                house_no:{
+                    required: true
+                },
+                home_type:{
+                    required: true
+                },
+                roof_type:{
+                    required: true
+                },
+                construct_year:{
+                    required: true
+                },
+                home_design:{
+                    required: true
+                },
+                home_design_year:{
+                    required: true
+                },
+                {#home_image:{#}
+                {#    required: true#}
+                {# }#}
+
+            },
+            messages:{
+                house_no:{
+                    required:'House Number is required'
+                },
+                home_type:{
+                    required:'Home Type is required'
+                },
+                roof_type:{
+                    required:'Roof Type is required'
+                },
+                construct_year:{
+                    required:'Construct Year is required'
+                },
+                home_design:{
+                    required:'Home Design is required'
+                },
+                 home_design_year:{
+                    required:'Home Design Year is required'
+                }
+            }
+        })
+    </script>
+
+    {# Paying Guest #}
+    <script>
+        $('form#rentMemberForm').validate({
+            rules:{
+                rent_member_owner_name:{
+                    required: true
+                },
+                rent_member_from_place:{
+                    required: true
+                },
+                rent_member_count:{
+                    required: true
+                },
+                rent_member_reason:{
+                    required: true
+                }
+            },
+            messages:{
+                rent_member_owner_name:{
+                    required: 'Name is required'
+                },
+                rent_member_from_place:{
+                    required: 'Required Field'
+                },
+                rent_member_count:{
+                    required: 'Required Field'
+                },
+                rent_member_reason:{
+                    required: 'Required Field'
+                }
+            }
+        })
+    </script>
+
+    {# Land Type #}
+    <script>
+        $('form#landForm').validate({
+            rules:{
+                land_type:{
+                    required: true
+                },
+                land_area1:{
+                    required: true
+                },
+                land_area2:{
+                    required: true
+                },
+                land_area3:{
+                    required: true
+                },
+                land_area4:{
+                    required: true
+                },
+                irrigation_facility:{
+                    required: true
+                },
+                kitta_no:{
+                    required: true
+                }
+            },
+            messages:{
+                land_type:{
+                    required: 'Name is required'
+                },
+                land_area1:{
+                    required: 'Required Field'
+                },
+                land_area2:{
+                    required: 'Required Field'
+                },
+                land_area3:{
+                    required: 'Required Field'
+                },
+                land_area4:{
+                    required: 'Required Field'
+                },
+                irrigation_facility:{
+                    required: 'Required Field'
+                },
+                kitta_no:{
+                    required: 'Required Field'
+                }
+            }
+        })
+    </script>
+
+    {# household_animal Type #}
+    <script>
+        $('form#animalForm').validate({
+            rules:{
+                animal_count:{
+                    required: true
+                },
+                animal_type:{
+                    required: true
+                }
+            },
+            messages:{
+                animal_count:{
+                    required: 'Enter the number'
+                },
+                animal_type:{
+                    required: 'Required Field'
+                }
+            }
+        })
+    </script>
+
+    {# Business Details  #}
+    <script>
+        $('form#businessDetailsForm').validate({
+            rules:{
+                business_type:{
+                    required: true
+                },
+                reg_status:{
+                    required: true
+                },
+                money_spend:{
+                    required: true
+                },
+                business_location:{
+                    required: true
+                }
+            },
+            messages:{
+                business_type:{
+                    required: 'Enter the Business Type'
+                },
+                reg_status:{
+                    required: 'Required Field'
+                },
+                money_spend:{
+                    required: 'Required Field'
+                },
+                business_location:{
+                    required: 'Required Field'
+                }
+            }
+        })
+    </script>
+
+    {# Child Labour #}
+    <script>
+        $('form#childLaborForm').validate({
+            rules:{
+                childlabour_name:{
+                    required: true
+                },
+                childlabour_status:{
+                    required: true
+                },
+                childlabour_name_fromdate:{
+                    required: true
+                },
+            },
+            messages:{
+                childlabour_name:{
+                    required: 'Enter the Name '
+                },
+                childlabour_status:{
+                    required: 'Enter the Status'
+                },
+                childlabour_name_fromdate:{
+                    required: 'Required Field'
+                }
+            }
+        })
+    </script>
+
+    {# Income Source #}
+     <script>
+        $('form#incomeSourceForm').validate({
+            rules:{
+                earning_source:{
+                    required: true
+                },
+                earning_amount:{
+                    required: true
+                },
+                earning_from:{
+                    required: true
+                },
+            },
+            messages:{
+                earning_source:{
+                    required: 'Enter the income source'
+                },
+                earning_amount:{
+                    required: 'Enter the amount'
+                },
+                earning_from:{
+                    required: 'Required Field'
+                }
+            }
+        })
+    </script>
+
+    {# Vehicle Type #}
+    <script>
+        $('form#vehicleForm').validate({
+            rules: {
+                vehicle_types:{
+                    required: true
+                }
+            },
+            messages:{
+                vehicle_types:{
+                    required:'Mention vehicle types'
+                }
+            }
+        })
+    </script>
+
+    {# Facility Type #}
+    <script>
+        $('form#facilityForm').validate({
+            rules: {
+                facility_name:{
+                    required: true
+                },
+                facility_count:{
+                    required: true
+                }
+            },
+            messages:{
+                facility_name:{
+                    required:'Mention facility types'
+                },
+                facility_count:{
+                    required:'Required Field'
+                }
+            }
+        })
+    </script>
+
+    {# Infrastructure #}
+    <script>
+        $('form#infrastructureForm').validate({
+            rules: {
+                water_source:{
+                    required: true
+                },
+                tap_type:{
+                    required: true
+                },
+                water_distance:{
+                    required: true
+                },
+                water_distance_unit:{
+                    required: true
+                },
+                water_time:{
+                    required: true
+                },
+                fuel_light:{
+                    required: true
+                },
+                fuel_cooking:{
+                    required: true
+                },
+                fuel_garbage:{
+                    required: true
+                },
+                trans_distance:{
+                    required: true
+                },
+                trans_possi_distance:{
+                    required: true
+                },
+                road_width:{
+                    required: true
+                },
+                edu_prim_distance:{
+                    required: true
+                },
+                edu_sec_distance:{
+                    required: true
+                },
+                edu_highsec_distance:{
+                    required: true
+                },
+                health_distance:{
+                    required: true
+                },
+                health_time:{
+                    required: true
+                },
+                toilet_type:{
+                    required: true
+                },
+                sewage_type:{
+                    required: true
+                },
+                facility_count:{
+                    required: true
+                }
+            },
+            messages:{
+                water_source:{
+                    required:'Mention water types'
+                },
+                tap_type:{
+                    required:'Mention tap types'
+                },
+                water_distance:{
+                    required:'Mention Distance '
+                },
+                water_distance_unit:{
+                    required:'Mention Unit '
+                },
+                water_time:{
+                    required:'Mention Time'
+                },
+                fuel_light:{
+                    required:'Mention light fuels'
+                },
+                fuel_cooking:{
+                    required:'Mention cooking fuels'
+                },
+                fuel_garbage:{
+                    required:'Mention garbage management method'
+                },
+                trans_distance:{
+                    required:'Mention Distance'
+                },
+                trans_possi_distance:{
+                    required:'Mention possible distance'
+                },
+                road_width:{
+                    required:'Mention road width'
+                },
+                edu_prim_distance:{
+                    required:'Mention Distance'
+                },
+                edu_sec_distance:{
+                    required:'Mention Distance'
+                },
+                edu_highsec_distance:{
+                    required:'Mention Distance'
+                },
+                health_distance:{
+                    required:'Mention Distance'
+                },
+                health_time:{
+                    required:'Mention Time'
+                },
+                toilet_type:{
+                    required:'Mention Toilet types'
+                },
+                sewage_type:{
+                    required:'Mention sewage types'
+                },
+
+                facility_count:{
+                    required:'Required Field'
+                }
+            }
+        })
+    </script>
+

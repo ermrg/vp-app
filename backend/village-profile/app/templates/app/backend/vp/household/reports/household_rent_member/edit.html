@@ -1,0 +1,169 @@
+{% extends "app/backend/layouts/app.html" %}
+{% block title %}Rent Member Report{% endblock %}
+{% load static %}
+{% load role_check %}
+{% block content %}
+    <style>
+        .form-group {
+            margin-bottom: 10px !important;
+        }
+    </style>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Edit Household RentMember
+            </h1>
+
+            {% include 'app/backend/layouts/_notification.html' %}
+            <ol class="breadcrumb">
+
+                <li><a type="button" class="btn btn-default" href="#" onClick="javascript:history.go(-1);"><i
+                        class="fa fa-arrow-left"></i> Back</a>
+                <a type="button" class="btn btn-success" href="{% url 'create_household' %}"><i
+                        class="fa fa-plus"></i>Create New</a>
+
+                </li>
+            </ol>
+        </section>
+        <section class="content">
+            <div class="row">
+
+                <div class="col-md-12 col-sm-12">
+                    <!-- general form elements -->
+                    <div class="box box-primary">
+
+
+                        <!-- /.box-header -->
+                        <!-- form start -->
+
+                        <div class="box-body">
+                            <form class="" method="post"
+                                  action="{% url 'household_rent.update' household_rents.id %}" autocomplete="off" id="animalForm">
+                                {% csrf_token %}
+                                {% if form.errors %}
+                                    {% for field in form %}
+                                        {% for error in field.errors %}
+                                            <div class="alert alert-danger">
+                                                <strong>{{ error|escape }}</strong>
+                                            </div>
+                                        {% endfor %}
+                                    {% endfor %}
+
+                                {% endif %}
+
+                                    <div class="container">
+                                        <div class="row edit_reports">
+                                            <div class="col-md-offset-1 col-md-10 col-md-offset-1">
+
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label for="rent_member_owner_name" class="col-sm-4 col-form-label">भाँडामा बस्ने मुलीको नाम</label>
+                                                    <div class="col-sm-8">
+                                                        <input class="form-control" name="rent_member_owner_name" id="rent_member_owner_name" value="{{ household_rents.rent_member_head }}" type="text">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label for="rent_member_from_place" class="col-sm-4 col-form-label">कहाँवाट आएको ?</label>
+
+                                                    <div class="col-sm-8">
+                                                        <select type="text" class="form-control" name="rent_member_from_place" id="rent_member_from_place">
+                                                            <option value="">--- कहाँवाट आएको छान्नुहोस् ---</option>
+                                                            <option value="True">नगर भित्रैबाट आएको</option>
+                                                            <option value="False">बाहिरबाट आएको</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label for="rent_member_count" class="col-sm-4 col-form-label">जना (संख्या)</label>
+
+                                                    <div class="col-sm-8">
+                                                        <input class="form-control" name="rent_member_count" id="rent_member_count" value="{{ household_rents.no_of_member }}" type="number">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label for="rent_member_room_count" class="col-sm-4 col-form-label">कोठा (संख्या)</label>
+                                                    <div class="col-sm-8">
+                                                        <input class="form-control" name="rent_member_room_count" id="rent_member_room_count" value="{{ household_rents.room_no }}" type="number">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label for="rent_member_reason" class="col-sm-4 col-form-label">कारण</label>
+                                                    <div class="col-sm-8">
+                                                        <textarea class="form-control" name="rent_member_reason" id="rent_member_reason" placeholder="कारण"></textarea>
+                                                    </div>
+                                                </div><br>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="box-footer">
+                                            <button type="submit" class="btn btn-primary">Update</button>
+                                        </div>
+                                    </div>
+
+
+                                <!-- /.box-body -->
+
+                                <!-- /.box-footer -->
+                            </form>
+                        </div>
+                        <!-- /.box-body -->
+                        {#                            <div class="box-footer">#}
+                        {#                               #}
+                        {#                            </div>#}
+                        <!-- /.box-footer -->
+
+                    </div>
+                    <!-- /.box -->
+                </div>
+
+            </div>
+
+        </section>
+        <!-- /.content -->
+    </div>
+
+
+{% endblock %}
+{% block scripts %}
+    <script>
+    $(document).ready(function () {
+        makeFullPage();
+    });
+    </script>
+    {#    Dates #}
+
+    <script>
+
+        $('#invoiceDate').nepaliDatePicker({
+            dateFormat: "%M %d, %y",
+            closeOnDateSelect: true,
+        });
+
+    </script>
+
+    {#    Data Tables #}
+    <script>
+        $(function () {
+            $('#example1').DataTable({
+                'paging': true,
+                'lengthChange': true,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': true
+            });
+            $('#type').select2({});
+            $('#parent').select2({});
+        })
+    </script>
+
+
+{% endblock %}

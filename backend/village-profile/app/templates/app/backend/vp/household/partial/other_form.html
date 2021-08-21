@@ -1,0 +1,197 @@
+<form class="" method="post" action="{% if household %}{% url 'store_household' household.id 'other' %}{% endif %}" autocomplete="off">
+    {% csrf_token %}
+    <table class="table" style="background-color: #bbb6">
+
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label for="vehicle"> Vehicle </label>
+                    <input type="text" name="vehicle" class="form-control" placeholder="Vehicle"
+                           id="vehicle"
+                           value="">
+                </div>
+
+            </td>
+            <td>
+                <div class="form-group">
+                    <label for="vehicle_count"> Vehicle Count </label>
+                    <input type="number" name="vehicle_count" class="form-control" placeholder="Vehicle Count"
+                           id="vehicle_count"
+                           value="">
+                </div>
+
+            </td>
+            <td>
+                <div class="form-group">
+                    <label for="vehicle_remarks"> Vehicle Remarks </label>
+                    <textarea name="vehicle_remarks" class="form-control" rows="2"
+                              id="vehicle_remarks"></textarea>
+                </div>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label for="facility"> Facility </label>
+                    <input type="text" name="facility" class="form-control" placeholder="Facility"
+                           id="facility"
+                           value="">
+                </div>
+
+            </td>
+            <td>
+                <div class="form-group">
+                    <label for="facility_count"> Facility Count </label>
+                    <input type="number" name="facility_count" class="form-control" placeholder="Facility Count"
+                           id="facility_count"
+                           value="">
+                </div>
+
+            </td>
+            <td>
+                <div class="form-group">
+                    <label for="facility_remarks"> Facility Remarks </label>
+                    <textarea name="facility_remarks" class="form-control" rows="2"
+                              id="facility_remarks"></textarea>
+                </div>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label for="festival"> Festival </label>
+                    <input type="text" name="festival" class="form-control" placeholder="Festival"
+                           id="festival"
+                           value="">
+                </div>
+
+            </td>
+
+            <td>
+                <div class="form-group">
+                    <label for="festival_remarks"> Festival Remarks </label>
+                    <textarea name="festival_remarks" class="form-control" rows="2"
+                              id="festival_remarks"></textarea>
+                </div>
+
+            </td>
+        </tr>
+    </table>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+<h3>Vehicles</h3>
+<table class="table table-bordered">
+    <thead>
+    <th>SN</th>
+    <th>Vehicle</th>
+    <th>Count</th>
+    <th>Remarks</th>
+    <th>Action</th>
+    </thead>
+    <tbody>
+    {% for vehicle in household.get_vehicles %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+
+            <td>{{ vehicle.name }}</td>
+            <td>{{ vehicle.count }}</td>
+            <td>{{ vehicle.remarks }}</td>
+
+        <td>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle"
+                        data-toggle="dropdown" aria-expanded="false">Action
+                    <span class="caret"></span></button>
+
+                <ul class="dropdown-menu" role="menu">
+
+                    <li><a href="#" class="edit-data"><i class="fa fa-edit"></i> Edit</a></li>
+
+                    <li class="divider"></li>
+
+                    <li><a href="" class="delete-data"><i class="fa fa-trash-o"></i> Delete</a></li>
+                </ul>
+            </div>
+        </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<h3>Facilities</h3>
+<table class="table table-bordered">
+    <thead>
+    <th>SN</th>
+    <th>Facilities</th>
+    <th>Count</th>
+    <th>Remarks</th>
+    <th>Action</th>
+    </thead>
+    <tbody>
+    {% for facility in household.get_facilities %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+
+            <td>{{ facility.name }}</td>
+            <td>{{ facility.count }}</td>
+            <td>{{ facility.remarks }}</td>
+
+        <td>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle"
+                        data-toggle="dropdown" aria-expanded="false">Action
+                    <span class="caret"></span></button>
+
+                <ul class="dropdown-menu" role="menu">
+
+                    <li><a href="#" class="edit-data"><i class="fa fa-edit"></i> Edit</a></li>
+
+                    <li class="divider"></li>
+
+                    <li><a href="" class="delete-data"><i class="fa fa-trash-o"></i> Delete</a></li>
+                </ul>
+            </div>
+        </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<h3>Festivals</h3>
+<table class="table table-bordered">
+    <thead>
+    <th>SN</th>
+    <th>Festivals</th>
+    <th>Remarks</th>
+    <th>Action</th>
+    </thead>
+    <tbody>
+    {% for festival in household.get_festivals %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+
+            <td>{{ festival.name }}</td>
+            <td>{{ festival.remarks }}</td>
+
+        <td>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle"
+                        data-toggle="dropdown" aria-expanded="false">Action
+                    <span class="caret"></span></button>
+
+                <ul class="dropdown-menu" role="menu">
+
+                    <li><a href="#" class="edit-data"><i class="fa fa-edit"></i> Edit</a></li>
+
+                    <li class="divider"></li>
+
+                    <li><a href="" class="delete-data"><i class="fa fa-trash-o"></i> Delete</a></li>
+                </ul>
+            </div>
+        </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

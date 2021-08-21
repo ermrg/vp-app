@@ -1,0 +1,250 @@
+{% load static %}
+<script>
+    if (!window.jQuery) {
+        let script = document.createElement('script');
+        script.type = "text/javascript";
+        script.src = "{% static 'app/jquery/dist/jquery.min.js' %}";
+        document.getElementsByTagName('head')[0].appendChild(script);
+    }
+</script>
+
+{# Household #}
+{# Marga#}
+    <script>
+        jQuery(document).on("click", "button.closeMarga", function (e) {
+            e.preventDefault();
+            jQuery('#otherMarga').modal('hide');
+        });
+    </script>
+
+{# Caste #}
+    <script>
+        jQuery(document).on("click", "button.closeCaste", function (e) {
+            e.preventDefault();
+            jQuery('#otherCaste').modal('hide');
+        });
+    </script>
+
+{# Religion #}
+    <script>
+        jQuery(document).on("click", "button.closeReligion", function (e) {
+            e.preventDefault();
+            jQuery('#otherReligion').modal('hide');
+        });
+    </script>
+
+{# Mother Tongue#}
+    <script>
+        jQuery(document).on("click", "button.closeMotherTongue", function (e) {
+            e.preventDefault();
+            jQuery('#otherMotherTongue').modal('hide');
+        });
+    </script>
+
+{# Main Occupation #}
+    <script>
+        jQuery(document).on("click", "button.closeMainOccupation", function (e) {
+            e.preventDefault();
+            jQuery('#otherMainOccupation').modal('hide');
+        });
+    </script>
+
+{# Head of House #}
+{# Main Occupation #}
+    <script>
+        jQuery(document).on("click", "button.closeHohOccupation", function (e) {
+            e.preventDefault();
+            jQuery('#otherHohOccupation').modal('hide');
+        });
+    </script>
+
+{# Disability Type #}
+    <script>
+        jQuery(document).on("click", "button.closeHohDisabilityType", function (e) {
+            e.preventDefault();
+            jQuery('#otherHohDisabilityType').modal('hide');
+        });
+    </script>
+
+{# Technical Skill #}
+    <script>
+        jQuery(document).on("click", "button.closeHohTechnicalSkill", function (e) {
+            e.preventDefault();
+            jQuery('#otherHohTechnicalSkill').modal('hide');
+        });
+    </script>
+
+{# Abroad Stay #}
+    <script>
+        jQuery(document).on("click", "button.closeHohAbroadReason", function (e) {
+            e.preventDefault();
+            jQuery('#otherHohAbroadReason').modal('hide');
+        });
+    </script>
+{# Country #}
+    <script>
+        jQuery(document).on("click", "button.closeHohCountry", function (e) {
+            e.preventDefault();
+            jQuery('#otherHohCountry').modal('hide');
+        });
+    </script>
+
+{# Vaccine#}
+    <script>
+        jQuery(document).on("click", "button.closeHohVaccine", function (e) {
+            e.preventDefault();
+            jQuery('#otherHohVaccine').modal('hide');
+        });
+    </script>
+
+{# Member Occupation#}
+    <script>
+        jQuery(document).on("click", "button.closeMemOccupation", function (e) {
+            e.preventDefault();
+            jQuery('#otherMemOccupation').modal('hide');
+        });
+    </script>
+
+{# Member Relation WIth Hoh#}
+    <script>
+        jQuery(document).on("click", "button.closeMemRelation", function (e) {
+            e.preventDefault();
+            jQuery('#otherMemRelation').modal('hide');
+        });
+    </script>
+
+{# Member Disability Type#}
+    <script>
+        jQuery(document).on("click", "button.closeMemDisabilityType", function (e) {
+            e.preventDefault();
+            jQuery('#otherMemDisabilityType').modal('hide');
+        });
+    </script>
+
+{# Member Technical SKill#}
+    <script>
+        jQuery(document).on("click", "button.closeMemTechnicalSkill", function (e) {
+            e.preventDefault();
+            jQuery('#otherMemTechnicalSkill').modal('hide');
+        });
+    </script>
+
+{# Member Foreign Objective#}
+    <script>
+        jQuery(document).on("click", "button.closeMemAbroadReason", function (e) {
+            e.preventDefault();
+            jQuery('#otherMemAbroadReason').modal('hide');
+        });
+    </script>
+
+{# Member Country#}
+    <script>
+        jQuery(document).on("click", "button.closeMemCountry", function (e) {
+            e.preventDefault();
+            jQuery('#otherMemCountry').modal('hide');
+        });
+    </script>
+
+{# Member Vaccine#}
+    <script>
+        jQuery(document).on("click", "button.closeMemVaccine", function (e) {
+            e.preventDefault();
+            jQuery('#otherMemVaccine').modal('hide');
+        });
+    </script>
+
+{# Death Reason#}
+    <script>
+        jQuery(document).on("click", "button.closeDeathReason", function (e) {
+            e.preventDefault();
+            jQuery('#otherDeathReason').modal('hide');
+        });
+    </script>
+
+{# HouseType#}
+    <script>
+        jQuery(document).on("click", "button.closeHouseType", function (e) {
+            e.preventDefault();
+            jQuery('#otherHouseType').modal('hide');
+        });
+    </script>
+
+{# Roof Type#}
+    <script>
+        jQuery(document).on("click", "button.closeRoofType", function (e) {
+            e.preventDefault();
+            jQuery('#otherRoofType').modal('hide');
+        });
+    </script>
+
+{# household_animal Type#}
+    <script>
+        jQuery(document).on("click", "button.closeAnimalType", function (e) {
+            e.preventDefault();
+            jQuery('#otherAnimal').modal('hide');
+        });
+    </script>
+
+{# Business Details#}
+    <script>
+        jQuery(document).on("click", "button.closeBusinessDetails", function (e) {
+            e.preventDefault();
+            jQuery('#otherBusinessDetails').modal('hide');
+        });
+    </script>
+
+{# Income Source#}
+    <script>
+        jQuery(document).on("click", "button.closeIncomeSource", function (e) {
+            e.preventDefault();
+            jQuery('#otherIncomeSource').modal('hide');
+        });
+    </script>
+
+{# Vehicle Type#}
+    <script>
+        jQuery(document).on("click", "button.closeVehicle", function (e) {
+            e.preventDefault();
+            jQuery('#otherVehicle').modal('hide');
+        });
+    </script>
+
+{# Facilities#}
+    <script>
+        jQuery(document).on("click", "button.closeFacilities", function (e) {
+            e.preventDefault();
+            jQuery('#otherFacilities').modal('hide');
+        });
+    </script>
+
+{# Water Source#}
+    <script>
+        jQuery(document).on("click", "button.closeWaterSource", function (e) {
+            e.preventDefault();
+            jQuery('#otherWaterSource').modal('hide');
+        });
+    </script>
+
+{# Light Fuel#}
+    <script>
+        jQuery(document).on("click", "button.closeLightFuel", function (e) {
+            e.preventDefault();
+            jQuery('#otherLightFuel').modal('hide');
+        });
+    </script>
+
+{# Cooking Fuel#}
+    <script>
+        jQuery(document).on("click", "button.closeCookingFuel", function (e) {
+            e.preventDefault();
+            jQuery('#otherCookingFuel').modal('hide');
+        });
+    </script>
+
+{# Garbage Management#}
+    <script>
+        jQuery(document).on("click", "button.closeGarbageType", function (e) {
+            e.preventDefault();
+            jQuery('#otherGarbageType').modal('hide');
+        });
+    </script>

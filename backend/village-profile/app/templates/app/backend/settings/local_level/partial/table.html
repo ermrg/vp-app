@@ -1,0 +1,45 @@
+<table class="table table-bordered">
+    <thead>
+    <th>SN</th>
+    <th>Name</th>
+    <th>Code</th>
+    <th>District</th>
+    <th>Province</th>
+
+
+    <th>Action</th>
+    </thead>
+    <tbody>
+    {% for local_level in local_levels %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+
+            <td>{{ local_level.name }}</td>
+            <td>{{ local_level.code }}</td>
+            <td>{{ local_level.district }}</td>
+            <td>{{ local_level.province }}</td>
+
+        <td>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle"
+                        data-toggle="dropdown" aria-expanded="false">Action
+                    <span class="caret"></span></button>
+
+                <ul class="dropdown-menu" role="menu">
+
+                    <li><a href=""><i class="fa fa-eye"></i> View</a></li>
+
+{#                    <li class="divider"></li>#}
+
+                    <li><a href="" class="edit-data"><i class="fa fa-edit"></i> Edit</a></li>
+
+                    <li class="divider"></li>
+
+                    <li><a href="" class="delete-data"><i class="fa fa-trash-o"></i> Delete</a></li>
+                </ul>
+            </div>
+        </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

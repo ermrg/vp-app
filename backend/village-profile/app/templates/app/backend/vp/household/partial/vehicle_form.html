@@ -1,0 +1,82 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                    <label for="vehicles_type">सवारी साधनको नाम </label>
+                </div>
+                <div class="col-sm-8">
+                    <select type="text" class="form-control" name="vehicles_type" id="vehicles_type">
+                        <option>--- सवारी साधनको नाम छान्नुहोस् ---</option>
+                        {% for vehicle in vehicle_type %}
+                            <option value="{{ vehicle.id }}">{{ vehicle.name }}</option>
+                        {% endfor %}
+                        <option value="add">अन्य सवारी थप्नुहोस्</option>
+                    </select>
+                    <!-- Modal -->
+                    <div id="otherVehicle" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close closeVehicle" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">नयाँ सवारी साधनको प्रकार थप्नुहोस्</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <input class="form-control" type="text" name="other_vehicles" id="other_vehicles"
+                                           placeholder="अन्य सवारी साधनको नाम"></div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary" id="addVehicleButton">थप्नुहोस्
+                                    </button>
+                                    <button type="button" class="btn btn-default closeVehicle">Close</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                    <label for="vehicles_availability">उपलब्धता</label>
+                </div>
+                <div class="col-sm-8">
+                    <select class="form-control" name="vehicles_availability" id="vehicles_availability">
+                        <option value="">उपलब्धता छान्नुहोस्</option>
+                        <option value="True">छ</option>
+                        <option value="False">छैन</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                    <label for="vehicles_count">संख्या</label>
+                </div>
+                <div class="col-sm-8">
+                    <input class="form-control" name="vehicles_count" id="vehicles_count"
+                           placeholder="सवारी साधनको संख्या" type="number">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                    <label for="vehicles_remarks">कैफियत</label>
+                </div>
+                <div class="col-sm-8">
+                    <textarea class="form-control" name="vehicles_remarks" id="vehicles_remarks"
+                              placeholder="कैफियत"></textarea>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

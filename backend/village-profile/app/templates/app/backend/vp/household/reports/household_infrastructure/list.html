@@ -1,0 +1,441 @@
+{% extends "app/backend/layouts/app.html" %}
+{% block title %}Infrastructure Report{% endblock %}
+{% load static %}
+{% load role_check %}
+{% block content %}
+    <style>
+        .form-group {
+            margin-bottom: 10px !important;
+        }
+    </style>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+
+            {% include 'app/backend/layouts/_notification.html' %}
+            <div class="row">
+                <div class="col-md-10">
+                    <!-- general form elements -->
+                    <h5>
+                        <button class="btn btn-primary float-left -filter" id="infrastructureReportFilter"> Search
+                            Filters
+                        </button>
+                    </h5>
+                    <div class="filterbox">
+                        <div class="searchCriteria" style="display: none">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <select class="form-control" id="selectOption">
+                                            <option value="">--- फिल्टर छान्नुहोस् ---</option>
+                                            <option value="ward_no">वडा नं</option>
+                                            <option value="owner_name">घरमुलीको नाम</option>
+                                            <option value="residence_types">बसोबासको प्रकार</option>
+                                            <option value="water_sources">खानेपानीको स्रोत</option>
+                                            <option value="cooking_fuels">खाना पकाउने स्रोत</option>
+                                            <option value="light_fuels">बत्तिको स्रोत</option>
+                                            <option value="toilet_types">शौचालयको प्रकार</option>
+                                            <option value="garbage_managements">फोहोर व्यबस्थापन बिधी</option>
+                                            <option value="sewage_types">ढल निकासको प्रकार</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-success" type="button" onclick="infrastructureFilter()"
+                                            id="search">
+                                        Search
+                                    </button>
+                                    <button class="btn btn-danger" type="button" onclick="resetFields()">Reset</button>
+                                </div>
+
+
+                            </div>
+
+                            <div class="row" id="infrastructureRow">
+
+                                <div id="ward_div" class="form-control-sm col-md-2" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="ward_no">वडा नं</label>
+                                        <select class="form-control form-control-sm" name="ward_no" id="filterWard">
+                                            <option value="">--- वडा छान्नुहोस् ---</option>
+                                            {% for wards in wards %}
+                                                <option value="{{ wards.id }}">{{ wards }}</option>
+                                            {% endfor %}
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div id="owner_div" class="form-control-sm col-md-3" style="display: none;">
+                                    <div class="form-group">
+                                        <label> घरमुलीको नाम</label>
+                                        <input class="form-control form-control-sm" name="owner_name" id="owner_name"
+                                               type="text" placeholder="घरमुलीको नाम">
+                                    </div>
+                                </div>
+
+                                <div id="residence_type_div" class="form-control-sm col-md-4" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="residence_type"> बसोबास प्रकार </label>
+                                        <select class="form-control form-control-sm" name="residence_type"
+                                                id="filterResidenceType">
+                                            <option value="">--- बसोबास प्रकार छान्नुहोस् ---</option>
+                                            <option value="migrated"> बसाईसराई</option>
+                                            <option value="from_birth"> जन्मसिद्ध</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div id="water_source_div" class="form-control-sm col-md-2" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="water_sources">खानेपानीको स्रोत</label>
+                                        <select class="form-control form-control-sm" name="water_sources"
+                                                id="water_sources">
+                                            <option value="">--- स्रोत छान्नुहोस् ---</option>
+                                            {% for water_sources in water_sources %}
+                                                <option value="{{ water_sources.id }}">{{ water_sources.name }}</option>
+                                            {% endfor %}
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div id="cooking_fuel_div" class="form-control-sm col-md-2" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="cooking_fuels">खाना पकाउने स्रोत</label>
+                                        <select class="form-control form-control-sm" name="cooking_fuels"
+                                                id="cooking_fuels">
+                                            <option value="">--- स्रोत छान्नुहोस् ---</option>
+                                            {% for cooking_fuels in cooking_fuels %}
+                                                <option value="{{ cooking_fuels.id }}">{{ cooking_fuels.name }}</option>
+                                            {% endfor %}
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div id="light_fuel_div" class="form-control-sm col-md-2" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="light_fuels">बत्तिको स्रोत</label>
+                                        <select class="form-control form-control-sm" name="light_fuels"
+                                                id="light_fuels">
+                                            <option value="">--- स्रोत छान्नुहोस् ---</option>
+                                            {% for light_fuels in light_fuels %}
+                                                <option value="{{ light_fuels.id }}">{{ light_fuels.name }}</option>
+                                            {% endfor %}
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div id="toilet_type_div" class="form-control-sm col-md-2" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="toilet_types">शौचालयको प्रकार</label>
+                                        <select class="form-control form-control-sm" name="toilet_types"
+                                                id="toilet_types">
+                                            <option value="">--- प्रकार छान्नुहोस् ---</option>
+                                            {% for toilet_types in toilet_types %}
+                                                <option value="{{ toilet_types.id }}">{{ toilet_types.name }}</option>
+                                            {% endfor %}
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div id="garbage_management_div" class="form-control-sm col-md-2"
+                                     style="display: none;">
+                                    <div class="form-group">
+                                        <label for="garbage_managements">फोहोर व्यबस्थापन बिधी</label>
+                                        <select class="form-control form-control-sm" name="garbage_managements"
+                                                id="garbage_managements">
+                                            <option value="">--- बिधी छान्नुहोस् ---</option>
+                                            {% for garbage_managements in garbage_managements %}
+                                                <option value="{{ garbage_managements.id }}">{{ garbage_managements.name }}</option>
+                                            {% endfor %}
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div id="sewage_type_div" class="form-control-sm col-md-2" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="sewage_types">ढल निकासको प्रकार</label>
+                                        <select class="form-control form-control-sm" name="sewage_types"
+                                                id="sewage_types">
+                                            <option value="">--- प्रकार छान्नुहोस् ---</option>
+                                            {% for sewage_types in sewage_types %}
+                                                <option value="{{ sewage_types.id }}">{{ sewage_types.name }}</option>
+                                            {% endfor %}
+
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box -->
+                </div>
+            </div>
+
+            <h2 style="text-align: center">
+                परिवारको भौतिक सुवीधा रिपोर्ट
+            </h2>
+
+            <ol class="breadcrumb">
+
+                <li><a type="button" class="btn btn-default" href="#" onClick="javascript:history.go(-1);"><i
+                        class="fa fa-arrow-left"></i> Back</a>
+                    <a type="button" class="btn btn-success" href="{% url 'create_household' %}"><i
+                            class="fa fa-plus"></i>Create New</a>
+
+                </li>
+            </ol>
+        </section>
+
+        <section style="margin-left: 20px;">
+
+        </section>
+
+
+        <!-- Main content -->
+        <section>
+
+            <div class="row">
+
+                <div class="col-md-12 col-sm-12">
+                    <!-- general form elements -->
+                    <div class="box box-primary">
+                        <div class="box-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                <th>SN</th>
+                                <th title="Head Of House"> घरमुलीको नाम</th>
+                                <th title="ward"> वडा नं.</th>
+                                <th title="resident type"> बसोबासको प्रकार</th>
+                                <th title="drniking water source"> खानेपानीको श्रोत</th>
+                                <th title="cooking fuel source"> खाना पकाउन</th>
+                                <th title="light source"> बत्ति बाल्न</th>
+                                <th title="light source"> ढल निकासको प्रकार</th>
+                                <th title="latrine type"> सौचालयको प्रकार</th>
+                                <th title="garbage management type"> फोहर फाल्ने बिधी</th>
+                                {#    <th>Creating Step</th>#}
+                                <th>Action</th>
+                                </thead>
+                                <tbody>
+                                {% for household_infrastructures in household_infrastructures %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ household_infrastructures.household }}</td>
+                                        <td>{{ household_infrastructures.household.ward }}</td>
+                                        <td>{{ household_infrastructures.household.resident_type }}</td>
+                                        <td>{{ household_infrastructures.water_source }}</td>
+                                        <td>{{ household_infrastructures.cooking_fuel }}</td>
+                                        <td>{{ household_infrastructures.light_fuel }}</td>
+                                        <td>{{ household_infrastructures.sewage_type }}</td>
+                                        <td>{{ household_infrastructures.toilet_type }}</td>
+                                        <td>{{ household_infrastructures.garbage_management }}</td>
+                                        {#                                        <td>{{ household_infrastructures.remarks }}</td>#}
+                                        {#                                        <td>{{ household.mobile_num }}</td>#}
+                                        {#                                        <td>{{ household.basti }}</td>#}
+                                        {#                                        <td>{{ household.ward }}</td>#}
+                                        {#                                        <td>{{ household.local_level }}</td>#}
+                                        {#            <td>#}
+                                        {#                {% if household.step < 10 %}#}
+                                        {#                <span class="label label-warning">Incomplete {{ household.step }}</span>#}
+                                        {#                {% else %}#}
+                                        {#                <span class="label label-primary">Complete</span>#}
+                                        {#                {% endif %}#}
+                                        {#            </td>#}
+
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle"
+                                                        data-toggle="dropdown" aria-expanded="false">Action
+                                                    <span class="caret"></span></button>
+
+                                                <ul class="dropdown-menu" role="menu">
+
+                                                    <li><a href=""><i class="fa fa-eye"></i> View</a></li>
+
+                                                    {#                    <li class="divider"></li>#}
+
+                                                    <li>
+                                                        <a href="{% url 'household_infrastructure.edit' household_infrastructures.id %}"
+                                                           class="edit-data"><i class="fa fa-edit"></i> Edit</a></li>
+
+                                                    <li class="divider"></li>
+
+                                                    <li>
+                                                        <a href="{% url 'delete_household_infrastructure' household_infrastructures.id %}"
+                                                           class="delete-data"><i class="fa fa-trash-o"></i> Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.box -->
+                </div>
+            </div>
+
+        </section>
+        <!-- /.content -->
+    </div>
+
+{% endblock %}
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            makeFullPage();
+        });
+    </script>
+    {#    Dates #}
+
+    <script>
+
+        $('#invoiceDate').nepaliDatePicker({
+            dateFormat: "%M %d, %y",
+            closeOnDateSelect: true,
+        });
+
+    </script>
+
+    {#    Data Tables #}
+    <script>
+        $(function () {
+            $('#example1').DataTable({
+                'paging': true,
+                'lengthChange': true,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': true
+            });
+            $('#type').select2({});
+            $('#parent').select2({});
+        })
+    </script>
+    {# filter #}
+    <script>
+        $('button#infrastructureReportFilter').click(function () {
+            $('.searchCriteria').toggle("slow");
+        });
+    </script>
+
+    {# Ward Filter #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'ward_no') {
+                $("#ward_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# house head #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'owner_name') {
+                $("#owner_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# Reasidence Filter #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'residence_types') {
+                $("#residence_type_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# Water source Filter #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'water_sources') {
+                $("#water_source_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# Cooking Fuels Filter #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'cooking_fuels') {
+                $("#cooking_fuel_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# Light Fuels Filter #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'light_fuels') {
+                $("#light_fuel_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# Toilet types Filter #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'toilet_types') {
+                $("#toilet_type_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# Garbage Management Filter #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'garbage_managements') {
+                $("#garbage_management_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+    {# Sewage Type Filter #}
+    <script>
+        $(document).on('change', 'select#selectOption', function () {
+            let filterValue = $(this).val();
+            if (filterValue == 'sewage_types') {
+                $("#sewage_type_div").show();
+            } else {
+                return;
+            }
+        });
+    </script>
+
+
+{% endblock %}

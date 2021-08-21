@@ -1,0 +1,2308 @@
+{% extends "app/backend/layouts/app.html" %}
+{% block title %}Household{% endblock %}
+{% load static %}
+{% load role_check %}
+{% block content %}
+    <style>
+        .form-group {
+            margin-bottom: 10px !important;
+        }
+    </style>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                घरपारिवार
+            </h1>
+
+            {% include 'app/backend/layouts/_notification.html' %}
+
+            {#            create back list#}
+            <ol class="breadcrumb">
+                <li><a type="button" class="btn btn-default" href="#" onClick="javascript:history.go(-1);"><i
+                        class="fa fa-arrow-left"></i> Back</a>
+                    <a type="button" class="btn btn-default" href="{% url 'household' %}"><i
+                            class="fa fa-list"></i>सुची</a>
+                    <a type="button" class="btn btn-success" href="{% url 'create_household' %}"><i
+                            class="fa fa-plus"></i>नयाँ पारिवारिक विबरण सृजना गर्नुहोस्</a>
+                </li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+
+                <div class="col-md-12 col-sm-12">
+
+                    {% include 'app/backend/vp/household/partial/form.html' %}
+
+                </div>
+            </div>
+
+        </section>
+        <!-- /.content -->
+        <input type="hidden" id="householdID">
+        <input type="hidden" id="househeadID">
+        <input type="hidden" id="houseDetailsID">
+
+    </div>
+
+{% endblock %}
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            makeFullPage();
+        });
+    </script>
+    {#    Dates #}
+
+    <script>
+        $('#invoiceDate').nepaliDatePicker({
+            dateFormat: "%M %d, %y",
+            closeOnDateSelect: true,
+        });
+    </script>
+    <!-- house head other details from house_head.html Form -->
+    <script>
+        $('input#disabilityClick').change(function () {
+            if ($(this).is(':checked')) {
+                $('#disabilityForm').show();
+            } else {
+                $('#disabilityForm').hide();
+            }
+        })
+    </script>
+    <script>
+        $('input#diseaseClick').change(function () {
+            if ($(this).is(':checked')) {
+                $('#diseaseForm').show();
+            } else {
+                $('#diseaseForm').hide();
+            }
+        })
+    </script>
+    <script>
+        $('input#technicalSkillClick').change(function () {
+            if ($(this).is(':checked')) {
+                $('#technicalSkillForm').show();
+            } else {
+                $('#technicalSkillForm').hide();
+            }
+        })
+    </script>
+    <script>
+        $('input#abroadStayClick').change(function () {
+            if ($(this).is(':checked')) {
+                $('#abroadStayForm').show();
+            } else {
+                $('#abroadStayForm').hide();
+            }
+        })
+    </script>
+    <script>
+        $('input#childMarriageClick').change(function () {
+            if ($(this).is(':checked')) {
+                $('#childMarriageForm').show();
+            } else {
+                $('#childMarriageForm').hide();
+            }
+        })
+    </script>
+    <script>
+        $('input#vaccineClick').change(function () {
+            if ($(this).is(':checked')) {
+                $('#vaccineForm').show();
+            } else {
+                $('#vaccineForm').hide();
+            }
+        })
+    </script>
+
+    {# members other details from family_member_form.html#}
+    <script>
+        $('input#disabilityMemberClick').change(function () {
+            if ($(this).is(':checked')) {
+                $('#disabilityMemberForm').show();
+            } else {
+                $('#disabilityMemberForm').hide();
+            }
+        })
+    </script>
+    <script>
+        $('input#diseaseMemberClick').change(function () {
+            if ($(this).is(':checked')) {
+                $('#diseaseMemberForm').show();
+            } else {
+                $('#diseaseMemberForm').hide();
+            }
+        })
+    </script>
+    <script>
+        $('input#technicalSkillMemberClick').change(function () {
+            if ($(this).is(':checked')) {
+                $('#technicalSkillMemberForm').show();
+            } else {
+                $('#technicalSkillMemberForm').hide();
+            }
+        })
+    </script>
+    <script>
+        $('input#abroadStayMemberClick').change(function () {
+            if ($(this).is(':checked')) {
+                $('#abroadStayMemberForm').show();
+            } else {
+                $('#abroadStayMemberForm').hide();
+            }
+        })
+    </script>
+    <script>
+        $('input#childMarriageMemberClick').change(function () {
+            if ($(this).is(':checked')) {
+                $('#childMarriageMemberForm').show();
+            } else {
+                $('#childMarriageMemberForm').hide();
+            }
+        })
+    </script>
+    <script>
+        $('input#vaccineMemberClick').change(function () {
+            if ($(this).is(':checked')) {
+                $('#vaccineMemberForm').show();
+            } else {
+                $('#vaccineMemberForm').hide();
+            }
+        })
+    </script>
+
+    {#  Religion  #}
+    <script>
+        function checkOtherReligion(religionValue) {
+            if (religionValue == 'others') {
+                $("#other_religion").show();
+            } else {
+                $("#other_religion").hide();
+                // {#$("#other_religion").attr('hidden', true);#}
+            }
+        }
+    </script>
+
+    {#  Caste  #}
+    <script>
+        function checkOtherCaste(casteValue) {
+            if (casteValue == 'others') {
+                $("#other_caste").show();
+            } else {
+                $("#other_caste").hide();
+            }
+        }
+    </script>
+
+    {#  Relation With House hesd  #}
+    <script>
+        function checkOtherRelationship(casteValue) {
+            if (casteValue == 'others') {
+                $("#other_me_relationship").show();
+            } else {
+                $("#other_me_relationship").hide();
+            }
+        }
+    </script>
+
+    {#    Mother Tongue#}
+    <script>
+        function checkOtherMotherTongue(motherTongueValue) {
+            if (motherTongueValue == 'others') {
+                $("#other_mother_tongue").show();
+            } else {
+                $("#other_mother_tongue").hide();
+                // {#$("#other_religion").attr('hidden', true);#}
+            }
+        }
+    </script>
+
+    {#Main Occupation#}
+    <script>
+        function checkOtherMainOccupation(mainOccupationValue) {
+            if (mainOccupationValue == 'others') {
+                $("#other_main_occupation").show();
+            } else {
+                $("#other_main_occupation").hide();
+            }
+        }
+    </script>
+
+    {#Owner Disability Type#}
+    <script>
+        function owner_checkOtherDisType(disabilityValue) {
+            if (disabilityValue == 'others') {
+                $("#owner_other_dis_type").show();
+            } else {
+                $("#owner_other_dis_type").hide();
+            }
+        }
+    </script>
+
+    {#Owner Technical Skill #}
+    <script>
+        function owner_checkOtherTechKnowType(skillValue) {
+            if (skillValue == 'others') {
+                $("#owner_other_owner_tech_name").show();
+            } else {
+                $("#owner_other_owner_tech_name").hide();
+            }
+        }
+    </script>
+
+    {#Owner Foreign Objective #}
+    <script>
+        function owner_checkOtherForeignObjective(foreignObjectiveValue) {
+            if (foreignObjectiveValue == 'others') {
+                $("#owner_other_foreign_objective").show();
+            } else {
+                $("#owner_other_foreign_objective").hide();
+            }
+        }
+    </script>
+
+    {#Owner country #}
+    <script>
+        function owner_checkOtherCountry(countryValue) {
+            if (countryValue == 'others') {
+                $("#owner_other_countries").show();
+            } else {
+                $("#owner_other_countries").hide();
+            }
+        }
+    </script>
+
+    {#member Disability Type#}
+    <script>
+        function member_checkOtherDisType(disabilityValue) {
+            if (disabilityValue == 'others') {
+                $("#member_other_dis_type").show();
+            } else {
+                $("#member_other_dis_type").hide();
+            }
+        }
+    </script>
+
+    {#member Technical Skill #}
+    <script>
+        function member_checkOtherTechKnowType(skillValue) {
+            if (skillValue == 'others') {
+                $("#member_other_owner_tech_name").show();
+            } else {
+                $("#member_other_owner_tech_name").hide();
+            }
+        }
+    </script>
+
+    {#member Foreign Objective #}
+    <script>
+        function member_checkOtherForeignObjective(foreignObjectiveValue) {
+            if (foreignObjectiveValue == 'others') {
+                $("#member_other_foreign_objective").show();
+            } else {
+                $("#member_other_foreign_objective").hide();
+            }
+        }
+    </script>
+
+    {#member country #}
+    <script>
+        function member_checkOtherCountry(countryValue) {
+            if (countryValue == 'others') {
+                $("#member_other_countries").show();
+            } else {
+                $("#member_other_countries").hide();
+            }
+        }
+    </script>
+
+    {#  reason of death  #}
+    <script>
+        function otherExpireReason(reasonValue) {
+            if (reasonValue == 'others') {
+                $("#other_expire_reason").show();
+            } else {
+                $("#other_expire_reason").hide();
+            }
+        }
+    </script>
+
+    {#House Type#}
+    <script>
+        function otherHomeType(houseValue) {
+            if (houseValue == 'others') {
+                $("#other_home_type").show();
+            } else {
+                $("#other_home_type").hide();
+            }
+        }
+    </script>
+
+    {#Roof Type#}
+    <script>
+        function otherRoofType(roofValue) {
+            if (roofValue == 'others') {
+                $("#other_roof_type").show();
+            } else {
+                $("#other_roof_type").hide();
+            }
+        }
+    </script>
+
+    {# household_animal Type #}
+    <script>
+        function otherAnimals(other_animals) {
+            if (other_animals == 'others') {
+                $("#other_animals").show();
+            } else {
+                $("#other_animals").hide();
+            }
+        }
+    </script>
+
+    {# Business Type #}
+    <script>
+        function checkOtherBusiness(other_business) {
+            if (other_business == 'others') {
+                $("#other_business").show();
+            } else {
+                $("#other_business").hide();
+            }
+        }
+    </script>
+
+    {# Festivsl #}
+    <script>
+        function checkOtherFestival(other_festivals) {
+            if (other_festivals == 'others') {
+                $("#other_festivals").show();
+            } else {
+                $("#other_festivals").hide();
+            }
+        }
+    </script>
+
+    {# Income Source#}
+    <script>
+        function checkOtherEarning(other_earning_source) {
+            if (other_earning_source == 'others') {
+                $("#other_earning_source").show();
+            } else {
+                $("#other_earning_source").hide();
+            }
+        }
+    </script>
+
+    {# Vehicle Type #}
+    <script>
+        function otherVehicles(other_vehicles) {
+            if (other_vehicles == 'others') {
+                $("#other_vehicles").show();
+            } else {
+                $("#other_vehicles").hide();
+            }
+        }
+    </script>
+
+    {# Other Facilities #}
+    <script>
+        function otherFacilityType(other_facility_type) {
+            if (other_facility_type == "others") {
+                $("#other_facility_type").show();
+            } else {
+                $("#other_facility_type").hide();
+            }
+        }
+    </script>
+
+    {# Water Source #}
+    <script>
+        function otherWaterType(other_water_source) {
+            if (other_water_source == "others") {
+                $("#other_water_source").show();
+            } else {
+                $("#other_water_source").hide();
+            }
+        }
+    </script>
+
+    {# Light Source #}
+    <script>
+        function otherLightType(other_light_type) {
+            if (other_light_type == "others") {
+                $("#other_light_type").show();
+            } else {
+                $("#other_light_type").hide();
+            }
+        }
+    </script>
+
+    {# Cooking Fuel #}
+    <script>
+        function otherFuelType(other_fuel_type) {
+            if (other_fuel_type == "others") {
+                $("#other_fuel_type").show();
+            } else {
+                $("#other_fuel_type").hide();
+            }
+        }
+    </script>
+
+    {# Garbage Management #}
+    <script>
+        function otherGarbageType(other_garbage_type) {
+            if (other_garbage_type == "others") {
+                $("#other_garbage_type").show();
+            } else {
+                $("#other_garbage_type").hide();
+            }
+        }
+    </script>
+
+    {# Household Details Submit#}
+    <script>
+        $('form#familyDetailsForm').on('submit', function (e) {
+            e.preventDefault();
+            let data = $(this).serialize();
+            let hh_id = $('input#householdID').val()  // If household already created
+            let url_ = '';
+
+            if (hh_id) {
+                url_ = '{% url 'household.detail.update' '123' %}';
+                url_ = url_.replace('123', hh_id);
+            } else
+                url_ = '{% url 'household.detail' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: data,
+                success: function (res) {
+                    if (!hh_id) {  //create new case here
+                        let data = $.parseJSON(res);
+                        let hh = data[0].fields;
+                        let hh_id = data[0].pk;
+                        $('input#householdID').val(hh_id);
+                        $('button#houseHoldDetailButton').text('Update');
+                        console.log($);
+                    } else {  // update case here
+
+                    }
+
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# Househead Member Submit #}
+    <script>
+        $('form#houseHeadForm').submit(function (e) {
+            e.preventDefault();
+            let data = $(this).serialize();
+            let hh_id = $('input#householdID').val();
+            if (hh_id) {
+                let hoh_id = $('input#househeadID').val();  // If head of house already created
+                let url_ = '';
+                if (hoh_id) {
+                    url_ = '{% url 'household.househead.update' '123' %}';
+                    url_ = url_.replace('123', hoh_id);
+                } else {
+                    url_ = '{% url 'household.househead' '123' %}';
+                    url_ = url_.replace('123', hh_id);
+                }
+
+                $.ajax({
+                    method: 'POST',
+                    url: url_,
+                    data: data,
+                    success: function (res) {
+                        let data = $.parseJSON(res);
+                        let member = data[0].fields;
+                        $('input#househeadID').val(hh_id);
+                        $('#houseHead').modal('hide');
+                        let tr = '<tr>';
+                        tr += '<td>' + member.name_eng + '</td>';
+                        tr += '<td>Muli</td>';
+                        tr += '<td>' + member.dob_ad + '</td>';
+                        tr += '<td><button class="btn btn-xs btn-primary">View</button></td>';
+                        tr += '</tr>';
+                        $('div#houseHeadTableWrapper').removeClass('hidden');
+                        $('table#houseHeadTable tbody').append(tr);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                })
+            } else {
+                alert('Create Household Detail first!!')
+            }
+
+        })
+    </script>
+
+    {# House Member Submit #}
+    <script>
+        $('form#familyMemberForm').submit(function (e) {
+            e.preventDefault();
+            let data = $(this).serialize();
+            let hh_id = $('input#householdID').val();
+            {#let hh_id = '5';#}
+            let url_ = '';
+            if (hh_id) {
+                url_ = '{% url 'household.member' '123' %}';
+                url_ = url_.replace('123', hh_id);
+                $.ajax({
+                    method: 'POST',
+                    url: url_,
+                    data: data,
+                    success: function (res) {
+                        if(!hh_id){
+
+                        }else {
+                            let data = $.parseJSON(res);
+                            let member = data[0].fields;
+                            $('input#househeadID').val(hh_id);
+                            $('#familyMember').modal('hide');
+                            let tr = '<tr>';
+                            tr += '<td>' + member.name_nep + '</td>';
+                            tr += '<td>' + member.relation_with_hoh + '</td>';
+                            tr += '<td>' + member.dob_ad + '</td>';
+                            tr += '<td><button class="btn btn-xs btn-primary">View</button></td>';
+                            tr += '</tr>';
+                            $('div#memberTableWrapper').removeClass('hidden');
+                            $('table#memberTable tbody').append(tr);
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                })
+            } else {
+                alert('Create Household Detail first!!')
+            }
+
+        })
+    </script>
+
+    {# Deceased Member Submit #}
+    <script>
+        $('form#deceasedMemberForm').on('submit', function (e) {
+            e.preventDefault();
+            let data = $(this).serialize();
+            let hh_id = $('input#householdID').val();
+            {#let hh_id = '5';#}
+            let url__ = '';
+            if (hh_id) {
+                url__ = '{% url 'household.deceased' '123' %}';
+                url__ = url__.replace('123', hh_id);
+                $.ajax({
+                    method: 'POST',
+                    url: url__,
+                    data: data,
+                    success: function (res) {
+                        if (!hh_id) {  //create new case here
+
+                         } else {  // update case here
+                            let data = $.parseJSON(res);
+                            let deceasd_member = data[0].fields;
+                            let hh_id = data[0].pk;
+                            $('input#houseDetailsID').val(hh_id);
+                            $('#deceasedMember').modal('hide');
+                            let tr = '<tr>';
+                            tr += '<td>' + deceasd_member.name + '</td>';
+                            tr += '<td>' + deceasd_member.gender + '</td>';
+                            tr += '<td>' + deceasd_member.reason_of_death + '</td>';
+                            tr += '<td><button class="btn btn-xs btn-primary">View</button></td>';
+                            tr += '</tr>';
+                            $('div#deadMemberTableWrapper').removeClass('hidden');
+                            $('table#deadMemberTable tbody').append(tr);
+                         }
+
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                })
+            } else
+                alert('Select Household');
+        })
+    </script>
+
+    {# House Details Submit#}
+    <script>
+        $('form#houseDetailsForm').on('submit', function (e) {
+            e.preventDefault();
+            let data = $(this).serialize();
+            {#let hh_id = $('input#householdID').val();#}
+            let hh_id = '24';
+            let url__ = '';
+            if (hh_id) {
+                url__ = '{% url 'household.house_details' '123' %}';
+                url__ = url__.replace('123', hh_id);
+                $.ajax({
+                    method: 'POST',
+                    url: url__,
+                    data: data,
+                    success: function (res) {
+                        if (!hh_id) {  //create new case here
+
+                         } else {  // update case here
+                            let data = $.parseJSON(res);
+                            let house_detail = data[0].fields;
+                            let hh_id = data[0].pk;
+                            $('input#houseDetailsID').val(hh_id);
+                            $('#houseDetail').modal('hide');
+                            let tr = '<tr>';
+                            tr += '<td>' + house_detail.house_num + '</td>';
+                            tr += '<td>' + house_detail.house_type + '</td>';
+                            tr += '<td>' + house_detail.build_year_bs + '</td>';
+                            tr += '<td><button class="btn btn-xs btn-primary">View</button></td>';
+                            tr += '</tr>';
+                            $('div#houseDetailTableWrapper').removeClass('hidden');
+                            $('table#houseDetailTable tbody').append(tr);
+                         }
+
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                })
+            } else
+                alert('Select Household');
+        })
+    </script>
+
+    {# Paying Guest Submit#}
+    <script>
+        $('form#rentMemberForm').on('submit', function (e) {
+            e.preventDefault();
+            let data = $(this).serialize();
+            let hh_id = $('input#householdID').val();
+            {#let hh_id = '5';#}
+            let url__ = '';
+            if (hh_id) {
+                url__ = '{% url 'household.rent_member' '123' %}';
+                url__ = url__.replace('123', hh_id);
+                $.ajax({
+                    method: 'POST',
+                    url: url__,
+                    data: data,
+                    success: function (res) {
+                        if (!hh_id) {  //create new case here
+
+                         } else {  // update case here
+                            let data = $.parseJSON(res);
+                            let rent_member = data[0].fields;
+                            let hh_id = data[0].pk;
+                            $('input#houseDetailsID').val(hh_id);
+                            $('#payingGuest').modal('hide');
+                            let tr = '<tr>';
+                            tr += '<td>' + rent_member.rent_member_head + '</td>';
+                            tr += '<td>' + rent_member.migrated_from + '</td>';
+                            tr += '<td><button class="btn btn-xs btn-primary">View</button></td>';
+                            tr += '</tr>';
+                            $('div#rentMemberTableWrapper').removeClass('hidden');
+                            $('table#rentMemberTable tbody').append(tr);
+                         }
+
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                })
+            } else
+                alert('Select Household');
+        })
+    </script>
+
+    {# land Submit#}
+    <script>
+        $('form#landForm').on('submit', function (e) {
+            e.preventDefault();
+            let data = $(this).serialize();
+            let hh_id = $('input#householdID').val();
+            {#let hh_id = '5';#}
+            let url__ = '';
+            if (hh_id) {
+                url__ = '{% url 'household.land_details' '123' %}';
+                url__ = url__.replace('123', hh_id);
+                $.ajax({
+                    method: 'POST',
+                    url: url__,
+                    data: data,
+                    success: function (res) {
+                        if (!hh_id) {  //create new case here
+
+                         } else {  // update case here
+                            let data = $.parseJSON(res);
+                            let land_details = data[0].fields;
+                            let hh_id = data[0].pk;
+                            $('input#houseDetailsID').val(hh_id);
+                            $('#landDetail').modal('hide');
+                            let tr = '<tr>';
+                            tr += '<td>' + land_details.land_type + '</td>';
+                            tr += '<td>' + land_details.area1 + '</td>';
+                            tr += '<td>' + land_details.area2 + '</td>';
+                            tr += '<td>' + land_details.area3 + '</td>';
+                            tr += '<td>' + land_details.area4 + '</td>';
+                            tr += '<td>' + land_details.kitta_no + '</td>';
+                            tr += '<td><button class="btn btn-xs btn-primary">View</button></td>';
+                            tr += '</tr>';
+                            $('div#landDetailsTableWrapper').removeClass('hidden');
+                            $('table#landDetailsTable tbody').append(tr);
+                         }
+
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                })
+            } else
+                alert('Select Household');
+        })
+    </script>
+
+    {# household_animal Details Submit#}
+    <script>
+        $('form#animalForm').on('submit', function (e) {
+            e.preventDefault();
+            let data = $(this).serialize();
+            let hh_id = $('input#householdID').val();
+            {#let hh_id = '5';#}
+            let url__ = '';
+            if (hh_id) {
+                url__ = '{% url 'household.animals_details' '123' %}';
+                url__ = url__.replace('123', hh_id);
+                $.ajax({
+                    method: 'POST',
+                    url: url__,
+                    data: data,
+                    success: function (res) {
+                        if (!hh_id) {  //create new case here
+
+                         } else {  // update case here
+                            let data = $.parseJSON(res);
+                            let animal_details = data[0].fields;
+                            let hh_id = data[0].pk;
+                            $('input#houseDetailsID').val(hh_id);
+                            $('#animalDetails').modal('hide');
+                            let tr = '<tr>';
+                            tr += '<td>' + animal_details.animal_type + '</td>';
+                            tr += '<td>' + animal_details.count + '</td>';
+                            tr += '<td><button class="btn btn-xs btn-primary">View</button></td>';
+                            tr += '</tr>';
+                            $('div#animalDetailsTableWrapper').removeClass('hidden');
+                            $('table#animalDetailsTable tbody').append(tr);
+                         }
+
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                })
+            } else
+                alert('Select Household');
+        })
+    </script>
+
+    {# Business Details Submit#}
+    <script>
+        $('form#businessDetailsForm').on('submit', function (e) {
+            e.preventDefault();
+            let data = $(this).serialize();
+            let hh_id = $('input#householdID').val();
+            {#let hh_id = '5';#}
+            let url__ = '';
+            if (hh_id) {
+                url__ = '{% url 'household.business_details' '123' %}';
+                url__ = url__.replace('123', hh_id);
+                $.ajax({
+                    method: 'POST',
+                    url: url__,
+                    data: data,
+                    success: function (res) {
+                        if (!hh_id) {  //create new case here
+
+                         } else {  // update case here
+                            let data = $.parseJSON(res);
+                            let business_type = data[0].fields;
+                            let hh_id = data[0].pk;
+                            $('input#houseDetailsID').val(hh_id);
+                            $('#businessDetails').modal('hide');
+                            let tr = '<tr>';
+                            tr += '<td>' + business_type.business_type + '</td>';
+                            tr += '<td>' + business_type.business_place + '</td>';
+                            tr += '<td>' + business_type.money_invested + '</td>';
+                            tr += '<td><button class="btn btn-xs btn-primary">View</button></td>';
+                            tr += '</tr>';
+                            $('div#businessDetailsTableWrapper').removeClass('hidden');
+                            $('table#businessDetailsTable tbody').append(tr);
+                         }
+
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                })
+            } else
+                alert('Select Household');
+        })
+    </script>
+
+    {# Festival Submit #}
+    <script>
+        $('form#festivalForm').on('submit', function (e) {
+            e.preventDefault();
+            if($(this).valid()){
+                let data = $(this).serialize();
+                let hh_id = $('input#householdID').val();
+                {#let hh_id = '5';#}
+                let url__ = '';
+                if (hh_id) {
+                    url__ = '{% url 'household.festivals' '123' %}';
+                    url__ = url__.replace('123', hh_id);
+                    $.ajax({
+                        method: 'POST',
+                        url: url__,
+                        data: data,
+                        success: function (res) {
+                            if (!hh_id) {  //create new case here
+
+                             } else {  // update case here
+                                let data = $.parseJSON(res);
+                                console.log(data[0].fields)
+                                let hh = data[0].fields;
+                                let hh_id = data[0].pk;
+                                $('input#houseDetailsID').val(hh_id);
+                                $('button#festivalButton').text('Update');
+                             }
+
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    })
+                } else
+                    alert('Select Household');
+            }
+        })
+    </script>
+
+    {# Child Labour Details Submit#}
+    <script>
+        $('form#childLaborForm').on('submit', function (e) {
+            e.preventDefault();
+            let data = $(this).serialize();
+            let hh_id = $('input#householdID').val();
+            {#let hh_id = '5';#}
+            let url__ = '';
+            if (hh_id) {
+                url__ = '{% url 'household.helper' '123' %}';
+                url__ = url__.replace('123', hh_id);
+                $.ajax({
+                    method: 'POST',
+                    url: url__,
+                    data: data,
+                    success: function (res) {
+                        if (!hh_id) {  //create new case here
+
+                         } else {  // update case here
+                            let data = $.parseJSON(res);
+                            let child_labor = data[0].fields;
+                            let hh_id = data[0].pk;
+                            $('input#houseDetailsID').val(hh_id);
+                            $('#childLabor').modal('hide');
+                            let tr = '<tr>';
+                            tr += '<td>' + child_labor.child_name + '</td>';
+                            tr += '<td>' + child_labor.start_date_bs + '</td>';
+                            tr += '<td>' + child_labor.child_labor_status + '</td>';
+                            tr += '<td>' + child_labor.gender + '</td>';
+                            tr += '<td>' + child_labor.age + '</td>';
+                            tr += '<td><button class="btn btn-xs btn-primary">View</button></td>';
+                            tr += '</tr>';
+                            $('div#childLabourTableWrapper').removeClass('hidden');
+                            $('table#childLabourTable tbody').append(tr);
+                         }
+
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                })
+            } else
+                alert('Select Household');
+        })
+    </script>
+
+    {# Monthly Income Submit#}
+    <script>
+        $('form#incomeSourceForm').on('submit', function (e) {
+            e.preventDefault();
+            let data = $(this).serialize();
+            let hh_id = $('input#householdID').val();
+            {#let hh_id = '5';#}
+            let url__ = '';
+            if (hh_id) {
+                url__ = '{% url 'household.income' '123' %}';
+                url__ = url__.replace('123', hh_id);
+                $.ajax({
+                    method: 'POST',
+                    url: url__,
+                    data: data,
+                    success: function (res) {
+                        if (!hh_id) {  //create new case here
+
+                         } else {  // update case here
+                            let data = $.parseJSON(res);
+                            let income_source = data[0].fields;
+                            let hh_id = data[0].pk;
+                            $('input#houseDetailsID').val(hh_id);
+                            $('#yearlyIncome').modal('hide');
+                            let tr = '<tr>';
+                            tr += '<td>' + income_source.source + '</td>';
+                            tr += '<td>' + income_source.amount + '</td>';
+                            tr += '<td>' + income_source.start_date_bs + '</td>';
+                            tr += '<td><button class="btn btn-xs btn-primary">View</button></td>';
+                            tr += '</tr>';
+                            $('div#incomeDetailsTableWrapper').removeClass('hidden');
+                            $('table#incomeDetailsTable tbody').append(tr);
+                         }
+
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                })
+            } else
+                alert('Select Household');
+        })
+    </script>
+
+    {# Expenses Submit#}
+    <script>
+        $('form#expensesForm').on('submit', function (e) {
+            e.preventDefault();
+            if($(this).valid()){
+                let data = $(this).serialize();
+                let hh_id = $('input#householdID').val();
+                {#let hh_id = '24';#}
+                let url__ = '';
+                if (hh_id) {
+                    url__ = '{% url 'household.expenses' '123' %}';
+                    url__ = url__.replace('123', hh_id);
+                    $.ajax({
+                        method: 'POST',
+                        url: url__,
+                        data: data,
+                        success: function (res) {
+                            if (!hh_id) {  //create new case here
+
+                             } else {  // update case here
+                                let data = $.parseJSON(res);
+                                console.log(data[0].fields)
+                                let hh = data[0].fields;
+                                let hh_id = data[0].pk;
+                                $('input#houseDetailsID').val(hh_id);
+                                $('button#expensesButton').text('Update');
+                             }
+
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    })
+                } else
+                    alert('Select Household');
+            }
+        })
+    </script>
+
+    {# Vehicle Details Submit#}
+    <script>
+        $('form#vehicleForm').on('submit', function (e) {
+            e.preventDefault();
+            let data = $(this).serialize();
+            let hh_id = $('input#householdID').val();
+            {#let hh_id = '5';#}
+            let url__ = '';
+            if (hh_id) {
+                url__ = '{% url 'household.vehicle_details' '123' %}';
+                url__ = url__.replace('123', hh_id);
+                $.ajax({
+                    method: 'POST',
+                    url: url__,
+                    data: data,
+                    success: function (res) {
+                        if (!hh_id) {  //create new case here
+
+                         } else {  // update case here
+                            let data = $.parseJSON(res);
+                            let vehicle_details = data[0].fields;
+                            let hh_id = data[0].pk;
+                            $('input#houseDetailsID').val(hh_id);
+                            $('#vehicleDetails').modal('hide');
+                            let tr = '<tr>';
+                            tr += '<td>' + vehicle_details.vehicle_type + '</td>';
+                            tr += '<td>' + vehicle_details.count + '</td>';
+                            tr += '<td>' + vehicle_details.is_available + '</td>';
+                            tr += '<td><button class="btn btn-xs btn-primary">View</button></td>';
+                            tr += '</tr>';
+                            $('div#vehicleDetailsTableWrapper').removeClass('hidden');
+                            $('table#vehicleDetailsTable tbody').append(tr);
+                         }
+
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                })
+            } else
+                alert('Select Household');
+        })
+    </script>
+
+    {# Other facility Details Submit#}
+    <script>
+        $('form#facilityForm').on('submit', function (e) {
+            e.preventDefault();
+            let data = $(this).serialize();
+            let hh_id = $('input#householdID').val();
+            {#let hh_id = '5';#}
+            let url__ = '';
+            if (hh_id) {
+                url__ = '{% url 'household.other_facility' '123' %}';
+                url__ = url__.replace('123', hh_id);
+                $.ajax({
+                    method: 'POST',
+                    url: url__,
+                    data: data,
+                    success: function (res) {
+                        if (!hh_id) {  //create new case here
+
+                         } else {  // update case here
+                            let data = $.parseJSON(res);
+                            let facility = data[0].fields;
+                            let hh_id = data[0].pk;
+                            $('input#houseDetailsID').val(hh_id);
+                            $('#availableServices').modal('hide');
+                            let tr = '<tr>';
+                            tr += '<td>' + facility.name + '</td>';
+                            tr += '<td>' + facility.count + '</td>';
+                            tr += '<td>' + facility.is_available + '</td>';
+                            tr += '<td><button class="btn btn-xs btn-primary">View</button></td>';
+                            tr += '</tr>';
+                            $('div#otherFacilitiesTableWrapper').removeClass('hidden');
+                            $('table#otherFacilitiesTable tbody').append(tr);
+                         }
+
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                })
+            } else
+                alert('Select Household');
+        })
+    </script>
+
+    {# Infrastructure Submit#}
+    <script>
+        $('form#infrastructureForm').on('submit', function (e) {
+            e.preventDefault();
+            if($(this).valid()){
+                let data = $(this).serialize();
+                let hh_id = $('input#householdID').val();
+                {#let hh_id = '5';#}
+                let url__ = '';
+                if (hh_id) {
+                    url__ = '{% url 'household.infrastructure' '123' %}';
+                    url__ = url__.replace('123', hh_id);
+                    $.ajax({
+                        method: 'POST',
+                        url: url__,
+                        data: data,
+                        success: function (res) {
+                            if (!hh_id) {  //create new case here
+
+                             } else {  // update case here
+                                let data = $.parseJSON(res);
+                                console.log(data[0].fields)
+                                let hh = data[0].fields;
+                                let hh_id = data[0].pk;
+                                $('input#houseDetailsID').val(hh_id);
+                                $('button#infrastructureBtn').text('Update');
+                             }
+
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    })
+                } else
+                    alert('Select Household');
+            }
+        })
+    </script>
+
+    {# Select Festivals #}
+    <script>
+        let festivalIds = [];
+        $('select#festivals_name').change(function(){
+            let festivalId = $(this).val();
+
+            if(festivalId && (festivalIds.indexOf(festivalId) < 0)){
+                let festivalName = $.trim($(this).find('option:selected').text());
+                let inputField = '<input type="hidden" name="festival_name" value="'+festivalId+'">';
+                let removeIcon = '<span class="fa fa-trash remove-festival pull-right" style="color:red"></span>'
+                let festivalList = '<li>'+festivalName+removeIcon+'<br>' + inputField + '</li>';
+                $('form#festivalForm').find('ul#columns').append(festivalList);
+                festivalIds.push(festivalId);
+            }
+        })
+
+        $(document).on('click', 'span.remove-festival', function(){
+            let $li = $(this).closest('li');
+            let festivalId = $li.find('input[name="festival_name"]').val();
+            let index = festivalIds.indexOf(festivalId);
+            if (index > -1) {
+                festivalIds.splice(index, 1);
+            }
+            $li.remove();
+        })
+    </script>
+
+    {# Marga #}
+    <script>
+        $(document).on('change', 'select#marg_name', function() {
+        let margaValue = $(this).val();
+            if (margaValue == 'add') {
+                $("#otherMarga").modal('show');
+            } else {
+                $("#otherMarga").modal('hide');
+            }
+        });
+    </script>
+
+    {# Religion #}
+    <script>
+        $(document).on('change', 'select#religion', function() {
+        let religionValue = $(this).val();
+            if (religionValue == 'add') {
+                $("#otherReligion").modal('show');
+            } else {
+                $("#otherReligion").modal('hide');
+            }
+        });
+    </script>
+
+    {# Caste #}
+    <script>
+        $(document).on('change', 'select#caste', function() {
+        let casteValue = $(this).val();
+            if (casteValue == 'add') {
+                $("#otherCaste").modal('show');
+            } else {
+                $("#otherCaste").modal('hide');
+            }
+        });
+    </script>
+
+    {# Mother Tongue #}
+    <script>
+        $(document).on('change', 'select#mother_tongue', function() {
+        let motherTongueValue = $(this).val();
+            if (motherTongueValue == 'add') {
+                $("#otherMotherTongue").modal('show');
+            } else {
+                $("#otherMotherTongue").modal('hide');
+            }
+        });
+    </script>
+
+    {# Family Main Occupation #}
+    <script>
+        $(document).on('change', 'select#main_occupation', function() {
+        let mainOccupationValue = $(this).val();
+            if (mainOccupationValue == 'add') {
+                $("#otherMainOccupation").modal('show');
+            } else {
+                $("#otherMainOccupation").modal('hide');
+            }
+        });
+    </script>
+
+
+    {# House Head Main Occupation #}
+    <script>
+        $(document).on('change', 'select#owner_profession', function() {
+        let mainOccupationValue = $(this).val();
+            if (mainOccupationValue == 'add') {
+                $("#otherHohOccupation").modal('show');
+            } else {
+                $("#otherHohOccupation").modal('hide');
+            }
+        });
+    </script>
+
+
+    {# Owner Disability Type #}
+    <script>
+        $(document).on('change', 'select#owner_disability_type', function() {
+        let DisabilityValue = $(this).val();
+            if (DisabilityValue == 'add') {
+                $("#otherHohDisabilityType").modal('show');
+            } else {
+                $("#otherHohDisabilityType").modal('hide');
+            }
+        });
+    </script>
+
+
+    {# Owner Technicla Skill #}
+    <script>
+        $(document).on('change', 'select#owner_tech_know_type', function() {
+        let tecnicalSkillValue = $(this).val();
+            if (tecnicalSkillValue == 'add') {
+                $("#otherHohTechnicalSkill").modal('show');
+            } else {
+                $("#otherHohTechnicalSkill").modal('hide');
+            }
+        });
+    </script>
+
+
+    {# Owner Abroad Reason #}
+    <script>
+        $(document).on('change', 'select#owner_foreign_stay_objective', function() {
+        let abroadReasonValue = $(this).val();
+            if (abroadReasonValue == 'add') {
+                $("#otherHohAbroadReason").modal('show');
+            } else {
+                $("#otherHohAbroadReason").modal('hide');
+            }
+        });
+    </script>
+
+
+    {# Owner Country #}
+    <script>
+        $(document).on('change', 'select#owner_foreign_country', function() {
+        let countryValue = $(this).val();
+            if (countryValue == 'add') {
+                $("#otherHohCountry").modal('show');
+            } else {
+                $("#otherHohCountry").modal('hide');
+            }
+        });
+    </script>
+
+
+    {# Owner Vaccine #}
+    <script>
+        $(document).on('change', 'select#owner_injection_type', function() {
+        let vaccineValue = $(this).val();
+            if (vaccineValue == 'add') {
+                $("#otherHohVaccine").modal('show');
+            } else {
+                $("#otherHohVaccine").modal('hide');
+            }
+        });
+    </script>
+
+
+    {# Member Profession #}
+    <script>
+        $(document).on('change', 'select#mem_profession', function() {
+        let memOccupationValue = $(this).val();
+            if (memOccupationValue == 'add') {
+                $("#otherMemOccupation").modal('show');
+            } else {
+                $("#otherMemOccupation").modal('hide');
+            }
+        });
+    </script>
+
+    {# Relation With HOH #}
+    <script>
+        $(document).on('change', 'select#relation_with_owner', function() {
+        let relationValue = $(this).val();
+            if (relationValue == 'add') {
+                $("#otherMemRelation").modal('show');
+            } else {
+                $("#otherMemRelation").modal('hide');
+            }
+        });
+    </script>
+
+    {# Member Disability Type #}
+    <script>
+        $(document).on('change', 'select#member_disability_type', function() {
+        let disabilityValue = $(this).val();
+            if (disabilityValue == 'add') {
+                $("#otherMemDisabilityType").modal('show');
+            } else {
+                $("#otherMemDisabilityType").modal('hide');
+            }
+        });
+    </script>
+
+    {# Member Technical Skill #}
+    <script>
+        $(document).on('change', 'select#member_tech_know_type', function() {
+        let technicalSkillValue = $(this).val();
+            if (technicalSkillValue == 'add') {
+                $("#otherMemTechnicalSkill").modal('show');
+            } else {
+                $("#otherMemTechnicalSkill").modal('hide');
+            }
+        });
+    </script>
+
+    {# Member Abroad Reason #}
+    <script>
+        $(document).on('change', 'select#member_foreign_stay_objective', function() {
+        let abroadReasonValue = $(this).val();
+            if (abroadReasonValue == 'add') {
+                $("#otherMemAbroadReason").modal('show');
+            } else {
+                $("#otherMemAbroadReason").modal('hide');
+            }
+        });
+    </script>
+
+    {# Member Country #}
+    <script>
+        $(document).on('change', 'select#member_foreign_country', function() {
+        let countryValue = $(this).val();
+            if (countryValue == 'add') {
+                $("#otherMemCountry").modal('show');
+            } else {
+                $("#otherMemCountry").modal('hide');
+            }
+        });
+    </script>
+
+    {# Caste #}
+    <script>
+        $(document).on('change', 'select#member_injection_type', function() {
+        let vaccineValue = $(this).val();
+            if (vaccineValue == 'add') {
+                $("#otherMemVaccine").modal('show');
+            } else {
+                $("#otherMemVaccine").modal('hide');
+            }
+        });
+    </script>
+
+    {# Death Reason #}
+    <script>
+        $(document).on('change', 'select#expire_reason', function() {
+        let deathReasonValue = $(this).val();
+            if (deathReasonValue == 'add') {
+                $("#otherDeathReason").modal('show');
+            } else {
+                $("#otherDeathReason").modal('hide');
+            }
+        });
+    </script>
+
+    {# House Type #}
+    <script>
+        $(document).on('change', 'select#home_type', function() {
+        let houseValue = $(this).val();
+            if (houseValue == 'add') {
+                $("#otherHouseType").modal('show');
+            } else {
+                $("#otherHouseType").modal('hide');
+            }
+        });
+    </script>
+
+    {# Roof Type #}
+    <script>
+        $(document).on('change', 'select#roof_type', function() {
+        let roofValue = $(this).val();
+            if (roofValue == 'add') {
+                $("#otherRoofType").modal('show');
+            } else {
+                $("#otherRoofType").modal('hide');
+            }
+        });
+    </script>
+
+    {# household_animal Type #}
+    <script>
+        $(document).on('change', 'select#animal_type', function() {
+        let animalValue = $(this).val();
+            if (animalValue == 'add') {
+                $("#otherAnimal").modal('show');
+            } else {
+                $("#otherAnimal").modal('hide');
+            }
+        });
+    </script>
+
+    {# Business Type #}
+    <script>
+        $(document).on('change', 'select#business_type', function() {
+        let businessValue = $(this).val();
+            if (businessValue == 'add') {
+                $("#otherBusinessDetails").modal('show');
+            } else {
+                $("#otherBusinessDetails").modal('hide');
+            }
+        });
+    </script>
+
+    {# Festival Name #}
+    <script>
+        $(document).on('change', 'select#festivals_name', function() {
+        let festivalValue = $(this).val();
+            if (festivalValue == 'add') {
+                $("#otherFestival").modal('show');
+            } else {
+                $("#otherFestival").modal('hide');
+            }
+        });
+    </script>
+
+    {# Income Source #}
+    <script>
+        $(document).on('change', 'select#earning_source', function() {
+        let incomeValue = $(this).val();
+            if (incomeValue == 'add') {
+                $("#otherIncomeSource").modal('show');
+            } else {
+                $("#otherIncomeSource").modal('hide');
+            }
+        });
+    </script>
+
+    {# Vehicle Type #}
+    <script>
+        $(document).on('change', 'select#vehicles_type', function() {
+        let vehicleValue = $(this).val();
+            if (vehicleValue == 'add') {
+                $("#otherVehicle").modal('show');
+            } else {
+                $("#otherVehicle").modal('hide');
+            }
+        });
+    </script>
+
+    {# Facility #}
+    <script>
+        $(document).on('change', 'select#facility_name', function() {
+        let facilitiesValue = $(this).val();
+            if (facilitiesValue == 'add') {
+                $("#otherFacilities").modal('show');
+            } else {
+                $("#otherFacilities").modal('hide');
+            }
+        });
+    </script>
+
+    {# Water Source #}
+    <script>
+        $(document).on('change', 'select#water_source', function() {
+        let waterValue = $(this).val();
+            if (waterValue == 'add') {
+                $("#otherWaterSource").modal('show');
+            } else {
+                $("#otherWaterSource").modal('hide');
+            }
+        });
+    </script>
+
+    {# Light Fuel #}
+    <script>
+        $(document).on('change', 'select#fuel_light', function() {
+        let lightValue = $(this).val();
+            if (lightValue == 'add') {
+                $("#otherLightFuel").modal('show');
+            } else {
+                $("#otherLightFuel").modal('hide');
+            }
+        });
+    </script>
+
+    {# Caste #}
+    <script>
+        $(document).on('change', 'select#caste', function() {
+        let casteValue = $(this).val();
+            if (casteValue == 'add') {
+                $("#otherCaste").modal('show');
+            } else {
+                $("#otherCaste").modal('hide');
+            }
+        });
+    </script>
+
+    {# Cooking Fuel #}
+    <script>
+        $(document).on('change', 'select#fuel_cooking', function() {
+        let cookingValue = $(this).val();
+            if (cookingValue == 'add') {
+                $("#otherCookingFuel").modal('show');
+            } else {
+                $("#otherCookingFuel").modal('hide');
+            }
+        });
+    </script>
+
+    {# Garbage Management #}
+    <script>
+        $(document).on('change', 'select#fuel_garbage', function() {
+        let garbageValue = $(this).val();
+            if (garbageValue == 'add') {
+                $("#otherGarbageType").modal('show');
+            } else {
+                $("#otherGarbageType").modal('hide');
+            }
+        });
+    </script>
+
+    {# Add Religion #}
+    <script>
+        $('button#addReligionButton').on('click', function (e) {
+            e.preventDefault();
+            let newData = {};
+            newData['name']= $('input#other_religion').val();
+            newData['csrfmiddlewaretoken'] = $('input[name = "csrfmiddlewaretoken"]').val();
+            let url_ = '{% url 'setting.religion.create' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: newData,
+                success: function (res) {
+                    let data = $.parseJSON(res);
+                    $('button#addReligionButton').text('Update');
+                    console.log($);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# Add Caste #}
+    <script>
+        $('button#addCasteButton').on('click', function (e) {
+            e.preventDefault();
+            let newData = {};
+            newData['name']= $('input#other_caste').val();
+            newData['csrfmiddlewaretoken'] = $('input[name = "csrfmiddlewaretoken"]').val();
+            let url_ = '{% url 'setting.jaati.create' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: newData,
+                success: function (res) {
+                    let data = $.parseJSON(res);
+                    $('button#addCasteButton').text('Update');
+                    console.log($);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# Add Mother Tongue #}
+    <script>
+        $('button#addMotherTongueButton').on('click', function (e) {
+            e.preventDefault();
+            let newData = {};
+            newData['name']= $('input#other_mother_tongue').val();
+            newData['csrfmiddlewaretoken'] = $('input[name = "csrfmiddlewaretoken"]').val();
+            let url_ = '{% url 'setting.mother_tongue.create' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: newData,
+                success: function (res) {
+                    let data = $.parseJSON(res);
+                    $('button#addMotherTongueButton').text('Update');
+                    console.log($);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# Add Main Occupation #}
+    <script>
+        $('button#addMainOccupationButton').on('click', function (e) {
+            e.preventDefault();
+            let newData = {};
+            newData['name']= $('input#other_main_occupation').val();
+            newData['csrfmiddlewaretoken'] = $('input[name = "csrfmiddlewaretoken"]').val();
+            let url_ = '{% url 'setting.main_occupation.create' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: newData,
+                success: function (res) {
+                    let data = $.parseJSON(res);
+                    $('button#addMainOccupationButton').text('Update');
+                    console.log($);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# Add Hoh Occupation #}
+    <script>
+        $('button#addHohOccupationButton').on('click', function (e) {
+            e.preventDefault();
+            let newData = {};
+            newData['name']= $('input#other_owner_profession').val();
+            newData['csrfmiddlewaretoken'] = $('input[name = "csrfmiddlewaretoken"]').val();
+            let url_ = '{% url 'setting.main_occupation.create' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: newData,
+                success: function (res) {
+                    let data = $.parseJSON(res);
+                    $('button#addHohOccupationButton').text('Update');
+                    console.log($);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# Add Hoh Disability Type #}
+    <script>
+        $('button#addHohDisabilityTypeButton').on('click', function (e) {
+            e.preventDefault();
+            let newData = {};
+            newData['name']= $('input#owner_other_dis_type').val();
+            newData['csrfmiddlewaretoken'] = $('input[name = "csrfmiddlewaretoken"]').val();
+            let url_ = '{% url 'setting.disability_type.create' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: newData,
+                success: function (res) {
+                    let data = $.parseJSON(res);
+                    $('button#addHohDisabilityTypeButton').text('Update');
+                    console.log($);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# Add Hoh Abroad Objective #}
+    <script>
+        $('button#addHohAbroadReasonButton').on('click', function (e) {
+            e.preventDefault();
+            let newData = {};
+            newData['name']= $('input#owner_other_foreign_objective').val();
+            newData['csrfmiddlewaretoken'] = $('input[name = "csrfmiddlewaretoken"]').val();
+            let url_ = '{% url 'setting.foreign_reason.create' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: newData,
+                success: function (res) {
+                    let data = $.parseJSON(res);
+                    $('button#addHohAbroadReasonButton').text('Update');
+                    console.log($);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# Add Hoh Countries #}
+    <script>
+        $('button#addHohCountryButton').on('click', function (e) {
+            e.preventDefault();
+            let newData = {};
+            newData['name']= $('input#owner_other_countries').val();
+            newData['csrfmiddlewaretoken'] = $('input[name = "csrfmiddlewaretoken"]').val();
+            let url_ = '{% url 'setting.country.create' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: newData,
+                success: function (res) {
+                    let data = $.parseJSON(res);
+                    $('button#addHohCountryButton').text('Update');
+                    console.log($);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# Add Hoh Vaccine #}
+    <script>
+        $('button#addHohVaccineButton').on('click', function (e) {
+            e.preventDefault();
+            let newData = {};
+            newData['name']= $('input#owner_other_injection').val();
+            newData['csrfmiddlewaretoken'] = $('input[name = "csrfmiddlewaretoken"]').val();
+            let url_ = '{% url 'setting.vaccine_name.create' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: newData,
+                success: function (res) {
+                    let data = $.parseJSON(res);
+                    $('button#addHohVaccineButton').text('Update');
+                    console.log($);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# Add Member Relation #}
+    <script>
+        $('button#addMemRelationButton').on('click', function (e) {
+            e.preventDefault();
+            let newData = {};
+            newData['name']= $('input#other_mem_relationship').val();
+            newData['csrfmiddlewaretoken'] = $('input[name = "csrfmiddlewaretoken"]').val();
+            let url_ = '{% url 'setting.relation_with_hoh.create' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: newData,
+                success: function (res) {
+                    let data = $.parseJSON(res);
+                    $('button#addMemRelationButton').text('Update');
+                    console.log($);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# Add Member Occupation #}
+    <script>
+        $('button#addMemOccupationButton').on('click', function (e) {
+            e.preventDefault();
+            let newData = {};
+            newData['name']= $('input#other_mem_profession').val();
+            newData['csrfmiddlewaretoken'] = $('input[name = "csrfmiddlewaretoken"]').val();
+            let url_ = '{% url 'setting.main_occupation.create' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: newData,
+                success: function (res) {
+                    let data = $.parseJSON(res);
+                    $('button#addMemOccupationButton').text('Update');
+                    console.log($);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# Add Member Disability Type #}
+    <script>
+        $('button#addMemDisabilityTypeButton').on('click', function (e) {
+            e.preventDefault();
+            let newData = {};
+            newData['name']= $('input#member_other_dis_type').val();
+            newData['csrfmiddlewaretoken'] = $('input[name = "csrfmiddlewaretoken"]').val();
+            let url_ = '{% url 'setting.disability_type.create' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: newData,
+                success: function (res) {
+                    let data = $.parseJSON(res);
+                    $('button#addMemDisabilityTypeButton').text('Update');
+                    console.log($);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# Add Member Technical Skill #}
+    <script>
+        $('button#addMemTechnicalSkillButton').on('click', function (e) {
+            e.preventDefault();
+            let newData = {};
+            newData['name']= $('input#member_other_member_tech_name').val();
+            newData['csrfmiddlewaretoken'] = $('input[name = "csrfmiddlewaretoken"]').val();
+            let url_ = '{% url 'setting.vaccine_name.create' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: newData,
+                success: function (res) {
+                    let data = $.parseJSON(res);
+                    $('button#addMemTechnicalSkillButton').text('Update');
+                    console.log($);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# Add Member Abroad Reason #}
+    <script>
+        $('button#addMemAbroadReasonButton').on('click', function (e) {
+            e.preventDefault();
+            let newData = {};
+            newData['name']= $('input#member_other_foreign_objective').val();
+            newData['csrfmiddlewaretoken'] = $('input[name = "csrfmiddlewaretoken"]').val();
+            let url_ = '{% url 'setting.foreign_reason.create' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: newData,
+                success: function (res) {
+                    let data = $.parseJSON(res);
+                    $('button#addMemAbroadReasonButton').text('Update');
+                    console.log($);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# Add Member Country #}
+    <script>
+        $('button#addMemCountryButton').on('click', function (e) {
+            e.preventDefault();
+            let newData = {};
+            newData['name']= $('input#member_other_countries').val();
+            newData['csrfmiddlewaretoken'] = $('input[name = "csrfmiddlewaretoken"]').val();
+            let url_ = '{% url 'setting.country.create' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: newData,
+                success: function (res) {
+                    let data = $.parseJSON(res);
+                    $('button#addMemCountryButton').text('Update');
+                    console.log($);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# Add Member Vaccine #}
+    <script>
+        $('button#addMemVaccineButton').on('click', function (e) {
+            e.preventDefault();
+            let newData = {};
+            newData['name']= $('input#member_other_injection').val();
+            newData['csrfmiddlewaretoken'] = $('input[name = "csrfmiddlewaretoken"]').val();
+            let url_ = '{% url 'setting.vaccine_name.create' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: newData,
+                success: function (res) {
+                    let data = $.parseJSON(res);
+                    $('button#addMemVaccineButton').text('Update');
+                    console.log($);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# Add Death Reason #}
+    <script>
+        $('button#addDeathReasonButton').on('click', function (e) {
+            e.preventDefault();
+            let newData = {};
+            newData['name']= $('input#other_expire_reason').val();
+            newData['csrfmiddlewaretoken'] = $('input[name = "csrfmiddlewaretoken"]').val();
+            let url_ = '{% url 'setting.death_reason.create' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: newData,
+                success: function (res) {
+                    let data = $.parseJSON(res);
+                    $('button#addDeathReasonButton').text('Update');
+                    console.log($);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# Add House Type #}
+    <script>
+        $('button#addHouseTypeButton').on('click', function (e) {
+            e.preventDefault();
+            let newData = {};
+            newData['name']= $('input#other_home_type').val();
+            newData['csrfmiddlewaretoken'] = $('input[name = "csrfmiddlewaretoken"]').val();
+            let url_ = '{% url 'setting.house_type.create' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: newData,
+                success: function (res) {
+                    let data = $.parseJSON(res);
+                    $('button#addHouseTypeButton').text('Update');
+                    console.log($);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# Add Roof Type #}
+    <script>
+        $('button#addRoofTypeButton').on('click', function (e) {
+            e.preventDefault();
+            let newData = {};
+            newData['name']= $('input#other_roof_type').val();
+            newData['csrfmiddlewaretoken'] = $('input[name = "csrfmiddlewaretoken"]').val();
+            let url_ = '{% url 'setting.roof_type.create' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: newData,
+                success: function (res) {
+                    let data = $.parseJSON(res);
+                    $('button#addRoofTypeButton').text('Update');
+                    console.log($);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# Add Animals Type #}
+    <script>
+        $('button#addAnimalButton').on('click', function (e) {
+            e.preventDefault();
+            let newData = {};
+            newData['name']= $('input#other_animals').val();
+            newData['csrfmiddlewaretoken'] = $('input[name = "csrfmiddlewaretoken"]').val();
+            let url_ = '{% url 'setting.animal_type.create' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: newData,
+                success: function (res) {
+                    let data = $.parseJSON(res);
+                    $('button#addAnimalButton').text('Update');
+                    console.log($);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# Add Business Type #}
+    <script>
+        $('button#addBusinessDetailsButton').on('click', function (e) {
+            e.preventDefault();
+            let newData = {};
+            newData['name']= $('input#other_business').val();
+            newData['csrfmiddlewaretoken'] = $('input[name = "csrfmiddlewaretoken"]').val();
+            let url_ = '{% url 'setting.business_type.create' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: newData,
+                success: function (res) {
+                    let data = $.parseJSON(res);
+                    $('button#addBusinessDetailsButton').text('Update');
+                    console.log($);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# Add Festival #}
+    <script>
+        $('button#addFestivalButton').on('click', function (e) {
+            e.preventDefault();
+            let newData = {};
+            newData['name']= $('input#other_festivals').val();
+            newData['csrfmiddlewaretoken'] = $('input[name = "csrfmiddlewaretoken"]').val();
+            let url_ = '{% url 'setting.festival.create' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: newData,
+                success: function (res) {
+                    let data = $.parseJSON(res);
+                    $('button#addFestivalButton').text('Update');
+                    console.log($);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# Add Income Source #}
+    <script>
+        $('button#addIncomeSourceButton').on('click', function (e) {
+            e.preventDefault();
+            let newData = {};
+            newData['name']= $('input#other_earning_source').val();
+            newData['csrfmiddlewaretoken'] = $('input[name = "csrfmiddlewaretoken"]').val();
+            let url_ = '{% url 'setting.income_source.create' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: newData,
+                success: function (res) {
+                    let data = $.parseJSON(res);
+                    $('button#addIncomeSourceButton').text('Update');
+                    console.log($);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# Add Vehicle #}
+    <script>
+        $('button#addVehicleButton').on('click', function (e) {
+            e.preventDefault();
+            let newData = {};
+            newData['name']= $('input#other_vehicles').val();
+            newData['csrfmiddlewaretoken'] = $('input[name = "csrfmiddlewaretoken"]').val();
+            let url_ = '{% url 'setting.vehicle_type.create' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: newData,
+                success: function (res) {
+                    let data = $.parseJSON(res);
+                    $('button#addVehicleButton').text('Update');
+                    console.log($);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# Add Other Facilities #}
+    <script>
+        $('button#addFacilitiesButton').on('click', function (e) {
+            e.preventDefault();
+            let newData = {};
+            newData['name']= $('input#other_facility_type').val();
+            newData['csrfmiddlewaretoken'] = $('input[name = "csrfmiddlewaretoken"]').val();
+            let url_ = '{% url 'setting.facility.create' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: newData,
+                success: function (res) {
+                    let data = $.parseJSON(res);
+                    $('button#addFacilitiesButton').text('Update');
+                    console.log($);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# Add Water Source #}
+    <script>
+        $('button#addWaterSourceButton').on('click', function (e) {
+            e.preventDefault();
+            let newData = {};
+            newData['name']= $('input#other_water_source').val();
+            newData['csrfmiddlewaretoken'] = $('input[name = "csrfmiddlewaretoken"]').val();
+            let url_ = '{% url 'setting.water_source.create' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: newData,
+                success: function (res) {
+                    let data = $.parseJSON(res);
+                    $('button#addWaterSourceButton').text('Update');
+                    console.log($);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# Add Light Source #}
+    <script>
+        $('button#addLightFuelButton').on('click', function (e) {
+            e.preventDefault();
+            let newData = {};
+            newData['name']= $('input#other_light_type').val();
+            newData['csrfmiddlewaretoken'] = $('input[name = "csrfmiddlewaretoken"]').val();
+            let url_ = '{% url 'setting.light_fuel.create' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: newData,
+                success: function (res) {
+                    let data = $.parseJSON(res);
+                    $('button#addLightFuelButton').text('Update');
+                    console.log($);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# Add Cooking Fuel #}
+    <script>
+        $('button#addCookingFuelButton').on('click', function (e) {
+            e.preventDefault();
+            let newData = {};
+            newData['name']= $('input#other_fuel_type').val();
+            newData['csrfmiddlewaretoken'] = $('input[name = "csrfmiddlewaretoken"]').val();
+            let url_ = '{% url 'setting.cooking_fuel.create' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: newData,
+                success: function (res) {
+                    let data = $.parseJSON(res);
+                    $('button#addCookingFuelButton').text('Update');
+                    console.log($);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# Add Garbage Management Type #}
+    <script>
+        $('button#addGarbageTypeButton').on('click', function (e) {
+            e.preventDefault();
+            let newData = {};
+            newData['name']= $('input#other_garbage_type').val();
+            newData['csrfmiddlewaretoken'] = $('input[name = "csrfmiddlewaretoken"]').val();
+            let url_ = '{% url 'setting.garbage_management.create' %}';
+            $.ajax({
+                method: 'POST',
+                url: url_,
+                data: newData,
+                success: function (res) {
+                    let data = $.parseJSON(res);
+                    $('button#addGarbageTypeButton').text('Update');
+                    console.log($);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    </script>
+
+    {# ward categorization #}
+    <script>
+       $('#ward_no').on('change', function () {
+           var ward_no = $(this).val();
+
+           if(!isNaN(ward_no) && ward_no != ""){
+               let url_ = '{% url 'setting.get_bastis_by_ward' 12345 %}';
+               url_ = url_.replace(12345, ward_no);
+               $.ajax({
+                   method:"GET",
+                   url: url_,
+                   success: function (res) {
+                       let temp = $.parseJSON(res);
+                        {#console.log(temp);#}
+                        let options = '<option> --- बस्तीको नाम छान्नुहोस् --- </option>';
+                        if(temp.length > 0){
+                            $.each(temp, function () {
+                                options += '<option value="' + this.fields.id + '" >' + this.fields.name + '</option>'
+                            })
+                        } else{
+                            options += '<option value="' + temp[0].id + '" selected>' + temp[0].name + '</option>'
+                        }
+                        $('#place_name').html(options).change();
+                   }
+
+               });
+           }
+       })
+    </script>
+
+{#    <script>#}
+{#        $(document).ready(function () {#}
+{#            $('input#ward_no')#}
+{#        })#}
+{#    </script>#}
+
+    {% include 'app/backend/_scripts/household_validation.html' %}
+    {% include 'app/backend/_scripts/modaldismiss.html' %}
+
+
+{% endblock %}

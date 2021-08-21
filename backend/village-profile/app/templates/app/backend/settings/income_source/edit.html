@@ -1,0 +1,109 @@
+{% extends "app/backend/layouts/app.html" %}
+{% block title %} Income Source Edit{% endblock %}
+{% load static %}
+{% load role_check %}
+{% block content %}
+    <style>
+        .form-group {
+            margin-bottom: 10px !important;
+        }
+    </style>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                  Income Source Edit
+            </h1>
+
+            {% include 'app/backend/layouts/_notification.html' %}
+            <ol class="breadcrumb">
+                <li>
+                    <a type="button" class="btn btn-default" href="#" onClick="javascript:history.go(-1);"><i
+                        class="fa fa-arrow-left"></i> Back</a>
+                    <a type="button" class="btn btn-default" href="{% url 'setting.income_source' %}"><i
+                            class="fa fa-list"></i>List</a>
+                </li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+
+                <div class="col-md-12 col-sm-12">
+                    <!-- general form elements -->
+                    <div class="box box-primary">
+
+
+                        <!-- /.box-header -->
+                        <!-- form start -->
+
+                        <div class="box-body">
+                            <form class="" method="post"
+                                  action="{% url 'setting.update_income_source' income_sources.id %}" autocomplete="off" id="incomeSourceForm"
+                                  style="background-color: #bbb6">
+                                {% csrf_token %}
+                                {% if form.errors %}
+                                    {% for field in form %}
+                                        {% for error in field.errors %}
+                                            <div class="alert alert-danger">
+                                                <strong>{{ error|escape }}</strong>
+                                            </div>
+                                        {% endfor %}
+                                    {% endfor %}
+
+                                {% endif %}
+
+                                <div class="box-body">
+
+                                    <div class="form-group">
+                                        <label for="name"> Name <span
+                                                class="required-field">*</span></label>
+                                        <input type="text" name="name" class="form-control"
+                                               value="{{ income_sources.name }}" id="name" required>
+
+                                    </div>
+
+                                </div>
+                                <!-- /.box-body -->
+                                <div class="box-footer">
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </div>
+                                <!-- /.box-footer -->
+                            </form>
+                        </div>
+                        <!-- /.box-body -->
+                        {#                            <div class="box-footer">#}
+                        {#                               #}
+                        {#                            </div>#}
+                        <!-- /.box-footer -->
+
+                    </div>
+                    <!-- /.box -->
+                </div>
+            </div>
+
+        </section>
+        <!-- /.content -->
+    </div>
+
+{% endblock %}
+{% block scripts %}
+
+// JS Code Here
+    <script>
+        $('form#incomeSourceForm').validate({
+            rules: {
+                name:{
+                    required: true
+                }
+            },
+            messages:{
+                name:{
+                    required:'Must mention the income Source'
+                }
+            }
+        })
+    </script>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% csrf_token %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                    <label for="land_type">जग्गाको प्रकार</label>
+                </div>
+                <div class="col-sm-8">
+                    <select type="text" class="form-control" name="land_type" id="land_type">
+                        <option value="">जमिनको प्रकार छान्नुहोस्</option>
+                        {% for land_type in land_type %}
+                            <option value="{{ land_type.id }}">{{ land_type.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                    <label for="land_area1">क्षेत्रफल</label>
+                </div>
+                <div class="col-sm-8">
+                    <input class="form-control" name="land_area1" id="land_area1" placeholder="क्षेत्रफल रोपनीमा"
+                           type="number">
+                    <br>
+                    <input class="form-control" name="land_area2" id="land_area2" placeholder="क्षेत्रफल आनामा"
+                           type="number">
+                    <br>
+                    <input class="form-control" name="land_area3" id="land_area3" placeholder="क्षेत्रफल पैसामा"
+                           type="number">
+                    <br>
+                    <input class="form-control" name="land_area4" id="land_area4" placeholder="क्षेत्रफल दाममा"
+                           type="number">
+                    <br>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                    <label for="irrigation_facility">सिंचाई सुविधा</label>
+                </div>
+                <div class="col-sm-8">
+                    <select type="text" class="form-control" name="irrigation_facility" id="irrigation_facility">
+                        <option value="">सिंचाई सुविधा</option>
+                        <option value="True">छ</option>
+                        <option value="False">छैन</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                    <label for="kitta_no">कित्ता नम्वर</label>
+                </div>
+                <div class="col-sm-8">
+                    <input class="form-control" name="kitta_no" id="kitta_no" placeholder="कित्ता नम्वर" type="number">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                    <label for="land_remarks">कैफियत</label>
+                </div>
+                <div class="col-sm-8">
+                    <textarea class="form-control" name="land_remarks" id="land_remarks" placeholder="कैफियत"
+                              type="text"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

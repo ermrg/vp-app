@@ -1,0 +1,277 @@
+{% extends "app/backend/layouts/app.html" %}
+{% load static %}
+{% block title %} Animal Analytics {% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'app/bootstrap/dist/css/bootstrap.min.css' %}">
+<script src="{% static 'js/excanvas.js' %}"></script>
+{% endblock %}
+{% block content %}
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>Animal Analytics</h1>
+        {% include 'app/backend/layouts/_notification.html' %}
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="lit11">
+                    <h4 class="margin-left-140">वडागत लिंग अनुसार घरमुलीको जनसंख्या विवरण</h4>
+
+                    <div class="lit-btn-2">
+
+                    </div>
+                </div>
+                <br>
+                <table id="example" style="width: 75%;border: 1px solid;" align="center">
+                    <tbody>
+                    <tr style="text-align: center;">
+
+                        <td>वडा नं.</td>
+                        <td colspan="3">लिंग</td>
+                        <td>जम्मा</td>
+                    </tr>
+                    <tr>
+
+                        <td></td>
+                        <td>पुरूष</td>
+                        <td>महिला</td>
+                        <td>अन्य</td>
+                        <td></td>
+                    </tr>
+
+
+                    <tr>
+
+                        <td>1</td>
+
+
+                        <td class="hmps">873</td>
+                        <td class="hfmp">159</td>
+                        <td class="hops">1</td>
+
+
+                        <td class="hmtp">1033</td>
+                    </tr>
+                    <tr>
+
+
+                        <td>2</td>
+
+
+                        <td class="hmps">345</td>
+                        <td class="hfmp">56</td>
+                        <td class="hops">0</td>
+
+
+                        <td class="hmtp">401</td>
+
+                    </tr>
+                    <tr>
+
+
+                        <td>3</td>
+
+
+                        <td class="hmps">968</td>
+                        <td class="hfmp">255</td>
+                        <td class="hops">0</td>
+
+
+                        <td class="hmtp">1223</td>
+                    </tr>
+                    <tr>
+
+
+                        <td>4</td>
+
+
+                        <td class="hmps">698</td>
+                        <td class="hfmp">122</td>
+                        <td class="hops">0</td>
+
+
+                        <td class="hmtp">820</td>
+                    </tr>
+                    <tr>
+
+
+                        <td>5</td>
+
+
+                        <td class="hmps">451</td>
+                        <td class="hfmp">98</td>
+                        <td class="hops">0</td>
+
+
+                        <td class="hmtp">549</td>
+                    </tr>
+                    <tr>
+
+
+                        <td>6</td>
+
+
+                        <td class="hmps">352</td>
+                        <td class="hfmp">76</td>
+                        <td class="hops">0</td>
+
+
+                        <td class="hmtp">428</td>
+                    </tr>
+                    <tr>
+
+
+                        <td>7</td>
+
+
+                        <td class="hmps">898</td>
+                        <td class="hfmp">131</td>
+                        <td class="hops">0</td>
+
+
+                        <td class="hmtp">1029</td>
+                    </tr>
+                    <tr>
+
+
+                        <td>8</td>
+
+
+                        <td class="hmps">577</td>
+                        <td class="hfmp">127</td>
+                        <td class="hops">0</td>
+
+
+                        <td class="hmtp">704</td>
+                    </tr>
+                    <tr>
+
+
+                        <td>9</td>
+
+
+                        <td class="hmps">332</td>
+                        <td class="hfmp">71</td>
+                        <td class="hops">0</td>
+
+
+                        <td class="hmtp">403</td>
+                    </tr>
+                    <tr style="background-color: darkgray">
+                        <th style="border-right: 1px solid !important;">जम्मा</th>
+                        <th style="border-right: 1px solid !important;" id="hmps">5494</th>
+                        <th style="border-right: 1px solid !important;" id="hfmp">1095</th>
+                        <th style="border-right: 1px solid !important;" id="hops">1</th>
+                        <th style="border-right: 1px solid !important;" id="hmtp">6590</th>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </section>
+</div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            calhmps()
+
+            function calhmps() {
+                var sum = 0;
+
+                $(".hmps").each(function () {
+                    // console.log(this.text)
+                    console.log(this)
+                    console.log($(this).text())
+
+                    //add only if the value is number
+                    if (!isNaN($(this).text()) && $(this).text().length != 0) {
+                        sum += parseFloat($(this).text());
+                    }
+
+                });
+                $('#hmps').text(sum);
+
+            }
+
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            calhfmp()
+
+            function calhfmp() {
+                var sum = 0;
+
+                $(".hfmp").each(function () {
+                    // console.log(this.text)
+                    console.log(this)
+                    console.log($(this).text())
+
+                    //add only if the value is number
+                    if (!isNaN($(this).text()) && $(this).text().length != 0) {
+                        sum += parseFloat($(this).text());
+                    }
+
+                });
+                $('#hfmp').text(sum);
+
+            }
+
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            calhops()
+
+            function calhops() {
+                var sum = 0;
+
+                $(".hops").each(function () {
+                    // console.log(this.text)
+                    console.log(this)
+                    console.log($(this).text())
+
+                    //add only if the value is number
+                    if (!isNaN($(this).text()) && $(this).text().length != 0) {
+                        sum += parseFloat($(this).text());
+                    }
+
+                });
+                $('#hops').text(sum);
+
+            }
+
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            calhmtp()
+
+            function calhmtp() {
+                var sum = 0;
+
+                $(".hmtp").each(function () {
+                    // console.log(this.text)
+                    console.log(this)
+                    console.log($(this).text())
+
+                    //add only if the value is number
+                    if (!isNaN($(this).text()) && $(this).text().length != 0) {
+                        sum += parseFloat($(this).text());
+                    }
+
+                });
+                $('#hmtp').text(sum);
+
+            }
+
+        });
+    </script>
+
+{% endblock %}

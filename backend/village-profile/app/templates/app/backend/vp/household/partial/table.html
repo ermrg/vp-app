@@ -1,0 +1,60 @@
+<table class="table table-bordered">
+    <thead>
+    <th>SN</th>
+    <th title="Head Of House">घरमुलिको नाम</th>
+    <th>घर नम्बर</th>
+    <th title="No Of Member">परिवार संख्या</th>
+    <th title="Contact">फोन नम्बर</th>
+    <th title="basti">बस्ती</th>
+    <th title="ward">वडा</th>
+    <th title="Marga">मार्ग</th>
+    <th title="resident type">बसोबासको प्रकार</th>
+    <th title="local level">गाँउपालिका</th>
+{#    <th>Creating Step</th>#}
+    <th>Action</th>
+    </thead>
+    <tbody>
+    {% for household in households %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ household.hoh_name }}</td>
+            <td>{{ household.house_num }}</td>
+            <td>{{ household.num_of_member }}</td>
+            <td>{{ household.phone_num }}</td>
+            <td>{{ household.basti }}</td>
+            <td>{{ household.ward }}</td>
+            <td>{{ household.marga }}</td>
+            <td>{{ household.resident_type }}</td>
+            <td>{{ household.local_level }}</td>
+{#            <td>#}
+{#                {% if household.step < 10 %}#}
+{#                <span class="label label-warning">Incomplete {{ household.step }}</span>#}
+{#                {% else %}#}
+{#                <span class="label label-primary">Complete</span>#}
+{#                {% endif %}#}
+{#            </td>#}
+
+        <td>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle"
+                        data-toggle="dropdown" aria-expanded="false">Action
+                    <span class="caret"></span></button>
+
+                <ul class="dropdown-menu" role="menu">
+
+                    <li><a href=""><i class="fa fa-eye"></i> View</a></li>
+
+{#                    <li class="divider"></li>#}
+
+                    <li><a href="{% url 'household.edit' household.id  %}" class="edit-data"><i class="fa fa-edit"></i> Edit</a></li>
+
+                    <li class="divider"></li>
+
+                    <li><a href="{% url 'delete_household' household.id %}" class="delete-data"><i class="fa fa-trash-o"></i> Delete</a></li>
+                </ul>
+            </div>
+        </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
