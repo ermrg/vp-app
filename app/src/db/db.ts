@@ -1,6 +1,6 @@
 import Dexie from "dexie";
 import { IBasti } from "./models/BastiModel";
-import { ICollector } from "./models/CollectorModel";
+import { IHousehold } from "./models/Household";
 import { IUser } from "./models/UserModel";
 import { IWard } from "./models/WardModel";
 import { syncDb } from "./seed";
@@ -9,7 +9,7 @@ export class AppDatabase extends Dexie {
   users: Dexie.Table<IUser>;
   wards: Dexie.Table<IWard>;
   bastis: Dexie.Table<IBasti>;
-  collectors: Dexie.Table<ICollector>;
+  households: Dexie.Table<IHousehold>;
 
   constructor() {
     super("VPDB");
@@ -29,12 +29,11 @@ export class AppDatabase extends Dexie {
       users: "++id, name, phone, password",
       wards: "id, name, status",
       bastis: "id, name, status, wardId",
-      collectors: "id, name, phone, password",
+      households: "++id, name, phone, password, [user_id+is_posted]",
     });
     db.open()
       .then(async function (db) {
         console.log("DB opened Succefully");
-        await syncDb();
         console.log("Sync Complete");
       })
       .catch(function (err) {

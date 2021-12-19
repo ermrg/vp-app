@@ -1,27 +1,10 @@
-import React, { useEffect, useState } from "react";
-import {
-  getAllBasti,
-  getBastiByWardId,
-  IBasti,
-} from "../../../db/models/BastiModel";
-import { getAllWards, IWard } from "../../../db/models/WardModel";
+import { IBasti } from "../../../db/models/BastiModel";
+import { IWard } from "../../../db/models/WardModel";
 
 export default function GharKoBiabarn(props: any) {
-  let { data } = props;
-  const [wards, setWards] = useState([] as IWard[]);
-  const [bastis, setBastis] = useState([] as IBasti[]);
-  useEffect(() => {
-    loadAllWada();
-  }, []);
-  async function loadAllWada() {
-    let wards = await getAllWards();
-    setWards([...wards]);
-  }
-  const loadBastiByWadaId = async (e: any) => {
-    let wardId = e.target.value;
-    let bastis = await getBastiByWardId(wardId);
-    setBastis([...bastis]);
-  };
+  let { data, bastis, wards, household } = props;
+  let { handleChange } = props;
+
   const checkRequired = (id: number) => {
     let requiredFields = data?.requiredFields || [];
     return requiredFields.indexOf(id) > -1;
@@ -33,11 +16,15 @@ export default function GharKoBiabarn(props: any) {
         id="1"
       >
         <label className="label">1. Ward No</label>
-        <div className="options-verical" onChange={loadBastiByWadaId}>
-          {wards.map((w, key) => (
+        <div className="options-verical" onChange={(e) => handleChange(e)}>
+          {wards.map((w: IWard, key: any) => (
             <div className="radio" key={key}>
               <label>
-                <input type="radio" value={w.id} name="ward_no" />
+                {household.ward_id == w.id ? (
+                  <input type="radio" value={w.id} name="ward_id" defaultChecked/>
+                ) : (
+                  <input type="radio" value={w.id} name="ward_id" />
+                )}
                 {w.name}
               </label>
             </div>
@@ -45,13 +32,16 @@ export default function GharKoBiabarn(props: any) {
         </div>
       </div>
 
-      <div className={`form-group ${data && checkRequired(2) ? "required" : ""}`} id="2">
+      <div
+        className={`form-group ${data && checkRequired(2) ? "required" : ""}`}
+        id="2"
+      >
         <label className="label">2. Basti ko Naam</label>
-        <div className="options-verical">
-          {bastis.map((b, key) => (
+        <div className="options-verical" onChange={(e) => handleChange(e)}>
+          {bastis.map((b: IBasti, key: any) => (
             <div className="radio" key={key}>
               <label>
-                <input type="radio" value={b.id} name="basti" />
+                <input type="radio" value={b.id} name="basti_id" />
                 {b.name}
               </label>
             </div>

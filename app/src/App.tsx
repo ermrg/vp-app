@@ -6,6 +6,7 @@ import PendingData from "./Components/VillageProfile/PendingData";
 import VillageProfileHome from "./Components/VillageProfileHome";
 import "./App.css"
 import { db } from "./db/db";
+import AllData from "./Components/VillageProfile/AllData";
 
 export default function App() {
   db.open();
@@ -17,6 +18,9 @@ export default function App() {
         </Route>
         <Route path="/vp-app/app/pending">
           <PendingData />
+        </Route>
+        <Route path="/vp-app/app/all">
+          <AllData />
         </Route>
         <Route path="/vp-app/app">
           <VillageProfileHome />

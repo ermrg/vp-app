@@ -20,7 +20,8 @@ export default function AllData() {
   }, []);
 
   const getHouseholds = async () => {
-    let hhs = await getPendingHouseholds(auth.id);
+    let hhs = await getAllHousehold();
+    console.log(hhs);
     setHousholds([...hhs]);
   };
 

@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  getAllcollector,
-  getCollectorByPhoneAndPassword,
-} from "../db/models/CollectorModel";
 import Cookies from "universal-cookie";
 import { IUser } from "../db/models/UserModel";
+import api from "../Api/api";
+import { syncDb } from "../db/seed";
 
 const cookies = new Cookies();
 const initialAuth = {
   name: "",
+  username: "",
   phone: "",
   password: "",
+  office_name: "",
+  office_id: "",
 } as IUser;
 export default function VillageProfileHome() {
   const [auth, setAuth] = useState(initialAuth as IUser);
@@ -19,11 +20,11 @@ export default function VillageProfileHome() {
   const [error, setError] = useState("");
   useEffect(() => {
     checkInCookies();
-    loadAllCollectors()
+    // loadAllCollectors();
   }, []);
   // async function syncDbWithServer() {
   //   if (window.navigator.onLine) {
-  //     setLoading(true);
+  //     setLoad ing(true);
   //     syncDb();
   //     setLoading(false);
   //   }
@@ -47,10 +48,6 @@ export default function VillageProfileHome() {
   //   console.log(user);
   // }
 
-  async function loadAllCollectors() {
-    let wards = await getAllcollector();
-    console.log(wards);
-  }
 
   const handleValueChance = (e: any) => {
     e.persist();
@@ -63,18 +60,20 @@ export default function VillageProfileHome() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setLoading(true);
-    let collector = await getCollectorByPhoneAndPassword(
-      auth.phone,
-      auth.password
-    );
-    if (collector) {
+    let res = await api.login(auth);
+    if (res.data) {
+      let data = res.data;
       setAuth((auth) => ({
         ...auth,
-        id: collector?.id ? collector?.id : initialAuth.id,
-        name: collector?.name ? collector?.name : '',
-        phone: collector?.phone ? collector?.phone : initialAuth.phone,
+        id: data?.id ? data?.id : initialAuth.id,
+        name: data?.name ? data?.name : "",
+        office_name: data?.office_name
+          ? data?.office_name
+          : initialAuth.office_name,
+        office_id: data?.office_id ? data?.office_id : initialAuth.office_id,
       }));
-      setInCookies(collector);
+      setInCookies(data);
+      await syncDb(data)
     } else {
       setError("Phone or Password did not match!");
     }
@@ -98,6 +97,7 @@ export default function VillageProfileHome() {
     setAuth({ ...initialAuth });
     clearCookies();
   };
+  console.log(auth);
 
   if (loading) {
     return <div className="vp-home">Loading...</div>;
@@ -107,12 +107,12 @@ export default function VillageProfileHome() {
       <div className="vp-home">
         <form method="post" onSubmit={handleSubmit}>
           <div className="form-group">
-            <label>Phone</label>
+            <label>Username</label>
             <input
-              type="number"
-              placeholder="Phone No"
-              name="phone"
-              value={auth?.phone}
+              type="username"
+              placeholder="Username"
+              name="username"
+              value={auth?.username}
               onChange={handleValueChance}
               required
             />
@@ -134,17 +134,19 @@ export default function VillageProfileHome() {
       </div>
     );
   }
-
   return (
     <div className="vp-home">
       <div className="welcome">
         Welcome <br />
         {auth?.name}
-        <p className="logout" onClick={logout}>Logout</p>
+        <p className="logout" onClick={logout}>
+          Logout
+        </p>
       </div>
       <Link to="/vp-app/app/add-new">Add New Household</Link>
       <Link to="/vp-app/app/pending">Pending Data</Link>
       <Link to="/vp-app/app/incomplete">Incomplete Data</Link>
+      <Link to="/vp-app/app/all">All Data</Link>
     </div>
   );
 }

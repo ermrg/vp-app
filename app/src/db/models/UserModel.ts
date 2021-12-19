@@ -3,17 +3,22 @@ import { db } from "../db";
 export interface IUser {
   id?: number;
   name: string;
+  username: string;
+  office_name?: string;
+  office_id?: string;
   phone: string;
   password: string;
 }
 export class User {
   id: number;
   name: string;
+  username: string;
   phone: string;
   password: string;
 
-  constructor(name: string, phone: string, password: string, id?: number) {
+  constructor(name: string, username: string, phone: string, password: string, id?: number) {
     this.name = name;
+    this.username = username;
     this.phone = phone;
     this.password = password;
     if (id) this.id = id;
@@ -27,7 +32,7 @@ export class User {
 export async function addNewUser(data: IUser) {
   await db.transaction("rw", db.users, async function () {
     let user = await db.users.add(
-      new User(data.name, data.phone, data.password)
+      new User(data.name, data.username, data.phone, data.password)
     );
     console.log(user);
   });
@@ -48,6 +53,7 @@ export async function updateUser(data: IUser) {
   return await db.users.put({
     id: data.id,
     name: data.name,
+    username: data.username,
     password: data.password,
     phone: data.phone,
   });

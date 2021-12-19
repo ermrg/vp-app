@@ -1,26 +1,14 @@
+import Cookies from "universal-cookie";
 import api from "../Api/api";
 import { addNewBasti, getBastiByName } from "./models/BastiModel";
-import { addNewCollector, getCollectorByPhone } from "./models/CollectorModel";
 import { addNewWard, getWardByName } from "./models/WardModel";
 
-export async function getCollectors() {
-  console.log("Synchronizing Collectors...");
-  let res = await api.loadCollectors();
-  if (res.status === 200) {
-    let collectors = res.data;
-    collectors.map(async (w: any) => {
-      let checkCollector = await getCollectorByPhone(w.phone);
-      if (checkCollector.length === 0) {
-        await addNewCollector({ name: w.name, phone: w.phone, password: w.password, id: w.id });
-      }
-    });
-    console.log(collectors.length, " Collectors Synced.", collectors);
-  }
-}
+const cookies = new Cookies();
+let auth = cookies.get("auth");
 
-export async function getWadas() {
+export async function getWadas(office_id: String) {
   console.log("Synchronizing Wards...");
-  let res = await api.loadWada();
+  let res = await api.loadWada(office_id);
   if (res.status === 200) {
     let wards = res.data;
     wards.map(async (w: any) => {
@@ -30,12 +18,14 @@ export async function getWadas() {
       }
     });
     console.log(wards.length, " Wards Synced.");
+    return wards;
   }
+  return null;
 }
 
-export async function getBastis() {
+export async function getBastis(office_id: String) {
   console.log("Synchronizing Basti...");
-  let res = await api.loadBasti();
+  let res = await api.loadBasti(office_id);
     if (res.status === 200) {
       let basti = res.data;
       basti.map(async (w: any) => {
@@ -48,10 +38,9 @@ export async function getBastis() {
     }
 }
 
-export async function syncDb() {
+export async function syncDb(data: any) {
   if (window.navigator.onLine) {
-    await getCollectors()
-    await getWadas();
-    await getBastis();
+    await getWadas(data.office_id);
+    await getBastis(data.office_id);
   }
 }
